@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#07111f" />
+<title>MAZE™ — Find Your Way Out</title>
+<style>
+:root{
+  --bg:#07111f;
+  --panel:#0e1b2e;
+  --panel2:#12243b;
+  --text:#f6f8ff;
+  --muted:#9fb0c8;
+  --accent:#65d8ff;
+  --accent2:#7b6cff;
+  --good:#6ee7a8;
+  --danger:#ff7f93;
+  --wall:#d9e7ff;
+  --border:rgba(255,255,255,.10);
+  --shadow:0 20px 55px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{
+  background:
+    radial-gradient(circle at 20% 0%,rgba(88,108,255,.22),transparent 28rem),
+    linear-gradient(180deg,#09182b 0%,#07111f 58%,#050b14 100%);
+  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+}
+button,select{font:inherit}
+button{cursor:pointer}
+.app{width:min(100%,820px);margin:0 auto;min-height:100vh;padding:16px 14px 34px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{
+  width:52px;height:52px;border-radius:16px;display:grid;place-items:center;
+  background:linear-gradient(135deg,#62dcff,#736dff 60%,#9459d8);
+  box-shadow:0 10px 32px rgba(82,130,255,.35);
+  font-weight:900;font-size:24px;letter-spacing:-1px
+}
+h1{margin:0;font-size:clamp(30px,8vw,46px);line-height:.95}
+.subtitle{margin:4px 0 0;color:var(--muted);font-size:14px}
+.badge{font-size:12px;padding:7px 10px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.05);color:#dbe7ff}
+.controls-card,.maze-card,.stats-card{
+  border:1px solid var(--border);
+  background:linear-gradient(180deg,rgba(18,36,59,.95),rgba(13,27,46,.95));
+  box-shadow:var(--shadow);
+  border-radius:22px;
+}
+.controls-card{padding:13px;margin-bottom:12px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+select,.control-btn{
+  min-height:42px;border:1px solid var(--border);border-radius:13px;
+  background:rgba(255,255,255,.055);color:#edf4ff;padding:9px 12px;font-weight:700
+}
+select{flex:1;min-width:145px}
+.control-btn.primary{border:0;background:linear-gradient(135deg,#61cfff,#706bff);color:white}
+.control-btn.active{border-color:rgba(101,216,255,.45);background:rgba(101,216,255,.12)}
+.stats-card{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px 12px;margin-bottom:12px
+}
+.stat{text-align:center}
+.stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em}
+.stat-value{font-size:19px;font-weight:850;margin-top:2px}
+.maze-card{padding:12px;overflow:hidden;position:relative}
+.canvas-wrap{
+  width:100%;aspect-ratio:1/1;display:grid;place-items:center;
+  cursor:crosshair;
+  border-radius:17px;overflow:hidden;background:#07101c;position:relative;touch-action:none
+}
+canvas{width:100%;height:100%;display:block;background:#07101c}
+.hint{
+  margin:10px 2px 0;color:var(--muted);font-size:13px;text-align:center;line-height:1.45
+}
+footer{text-align:center;color:#71829b;font-size:12px;margin-top:24px}
+.modal{
+  position:fixed;inset:0;background:rgba(3,8,15,.76);display:none;align-items:center;justify-content:center;
+  padding:20px;z-index:50;backdrop-filter:blur(6px)
+}
+.modal.show{display:flex}
+.modal-card{
+  width:min(100%,420px);border-radius:24px;padding:22px;text-align:center;
+  border:1px solid var(--border);background:linear-gradient(180deg,#132746,#0d1a2e);box-shadow:var(--shadow)
+}
+.trophy{font-size:52px}
+.modal h2{font-size:31px;margin:8px 0 4px}
+.modal p{color:#c5d1e4;line-height:1.5;margin:8px 0 16px}
+.modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.modal-actions button{min-height:48px;border-radius:14px;border:1px solid var(--border);background:rgba(255,255,255,.06);color:#fff;font-weight:800}
+.modal-actions .primary{border:0;background:linear-gradient(135deg,#61cfff,#706bff)}
+@media(max-width:560px){
+  .app{padding-left:11px;padding-right:11px}
+  .badge{display:none}
+  .controls-card{padding:10px}
+  .row{display:grid;grid-template-columns:1fr 1fr}
+  select{grid-column:1/-1}
+  .control-btn{padding:8px 7px;font-size:13px}
+  .maze-card{padding:8px;border-radius:18px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">M</div>
+      <div>
+        <h1>MAZE™</h1>
+        <div class="subtitle">Find Your Way Out</div>
+      </div>
+    </div>
+    <div class="badge">Unlimited mazes</div>
+  </header>
+
+  <section class="controls-card">
+    <div class="row">
+      <select id="difficulty" aria-label="Difficulty">
+        <option value="11">Easy</option>
+        <option value="17" selected>Medium</option>
+        <option value="25">Hard</option>
+        <option value="35">Extreme</option>
+      </select>
+      <button id="newMaze" class="control-btn primary">New Maze</button>
+      <button id="restart" class="control-btn">Restart</button>
+      <button id="flashlight" class="control-btn">🔦 Flashlight</button>
+      <button id="daily" class="control-btn">📅 Daily Maze</button>
+    </div>
+  </section>
+
+  <section class="stats-card">
+    <div class="stat">
+      <div class="stat-label">Time</div>
+      <div class="stat-value" id="time">0:00</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Steps</div>
+      <div class="stat-value" id="steps">0</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Best</div>
+      <div class="stat-value" id="best">—</div>
+    </div>
+  </section>
+
+  <section class="maze-card">
+    <div class="canvas-wrap" id="canvasWrap">
+      <canvas id="maze"></canvas>
+    </div>
+    <p class="hint">Drag your finger or mouse through the maze. On a computer, you can also use the arrow keys or WASD. Reach the glowing exit.</p>
+  </section>
+
+  <footer>A DONCO-BAYCITY™ App</footer>
+</div>
+
+<div id="winModal" class="modal">
+  <div class="modal-card">
+    <div class="trophy">🏁</div>
+    <h2>You escaped!</h2>
+    <p id="winText"></p>
+    <div class="modal-actions">
+      <button id="playAgain">Restart</button>
+      <button id="nextMaze" class="primary">New Maze</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('maze');
+const ctx = canvas.getContext('2d');
+const wrap = document.getElementById('canvasWrap');
+const difficultyEl = document.getElementById('difficulty');
+const timeEl = document.getElementById('time');
+const stepsEl = document.getElementById('steps');
+const bestEl = document.getElementById('best');
+const flashlightBtn = document.getElementById('flashlight');
+const modal = document.getElementById('winModal');
+const winText = document.getElementById('winText');
+
+let size = 17;
+let grid = [];
+let player = {x:0,y:0};
+let startTime = null;
+let timer = null;
+let steps = 0;
+let won = false;
+let flashlight = false;
+let dailyMode = false;
+let rng = Math.random;
+
+function mulberry32(a){
+  return function(){
+    let t = a += 0x6D2B79F5;
+    t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  }
+}
+
+function hashString(str){
+  let h = 2166136261 >>> 0;
+  for(let i=0;i<str.length;i++){
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h,16777619);
+  }
+  return h >>> 0;
+}
+
+function makeCell(x,y){
+  return {x,y,visited:false,walls:{top:true,right:true,bottom:true,left:true}};
+}
+
+function generateMaze(){
+  grid = Array.from({length:size},(_,y)=>Array.from({length:size},(_,x)=>makeCell(x,y)));
+  const stack = [];
+  let current = grid[0][0];
+  current.visited = true;
+
+  while(true){
+    const neighbors = [];
+    const {x,y} = current;
+    if(y>0 && !grid[y-1][x].visited) neighbors.push({cell:grid[y-1][x],dir:'top'});
+    if(x<size-1 && !grid[y][x+1].visited) neighbors.push({cell:grid[y][x+1],dir:'right'});
+    if(y<size-1 && !grid[y+1][x].visited) neighbors.push({cell:grid[y+1][x],dir:'bottom'});
+    if(x>0 && !grid[y][x-1].visited) neighbors.push({cell:grid[y][x-1],dir:'left'});
+
+    if(neighbors.length){
+      const pick = neighbors[Math.floor(rng()*neighbors.length)];
+      const next = pick.cell;
+      if(pick.dir==='top'){current.walls.top=false;next.walls.bottom=false}
+      if(pick.dir==='right'){current.walls.right=false;next.walls.left=false}
+      if(pick.dir==='bottom'){current.walls.bottom=false;next.walls.top=false}
+      if(pick.dir==='left'){current.walls.left=false;next.walls.right=false}
+      stack.push(current);
+      current = next;
+      current.visited = true;
+    } else if(stack.length){
+      current = stack.pop();
+    } else break;
+  }
+}
+
+function resizeCanvas(){
+  const rect = wrap.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = Math.floor(rect.width*dpr);
+  canvas.height = Math.floor(rect.width*dpr);
+  canvas.style.width = rect.width+'px';
+  canvas.style.height = rect.width+'px';
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  draw();
+}
+
+function draw(){
+  const w = wrap.clientWidth;
+  const cell = w/size;
+  ctx.clearRect(0,0,w,w);
+  ctx.fillStyle='#07101c';
+  ctx.fillRect(0,0,w,w);
+
+  // exit glow
+  const ex=(size-1)*cell+cell/2, ey=(size-1)*cell+cell/2;
+  const grad=ctx.createRadialGradient(ex,ey,0,ex,ey,cell*.9);
+  grad.addColorStop(0,'rgba(110,231,168,.8)');
+  grad.addColorStop(1,'rgba(110,231,168,0)');
+  ctx.fillStyle=grad;
+  ctx.fillRect(ex-cell,ey-cell,cell*2,cell*2);
+
+  ctx.strokeStyle='#d9e7ff';
+  ctx.lineWidth=Math.max(1.2,Math.min(3,24/size));
+  ctx.lineCap='square';
+
+  for(let y=0;y<size;y++){
+    for(let x=0;x<size;x++){
+      const c=grid[y][x];
+      const px=x*cell, py=y*cell;
+      ctx.beginPath();
+      if(c.walls.top){ctx.moveTo(px,py);ctx.lineTo(px+cell,py)}
+      if(c.walls.right){ctx.moveTo(px+cell,py);ctx.lineTo(px+cell,py+cell)}
+      if(c.walls.bottom){ctx.moveTo(px,py+cell);ctx.lineTo(px+cell,py+cell)}
+      if(c.walls.left){ctx.moveTo(px,py);ctx.lineTo(px,py+cell)}
+      ctx.stroke();
+    }
+  }
+
+  // start
+  ctx.fillStyle='#65d8ff';
+  ctx.beginPath();
+  ctx.arc(cell/2,cell/2,Math.max(2.5,cell*.18),0,Math.PI*2);
+  ctx.fill();
+
+  // exit
+  ctx.fillStyle='#6ee7a8';
+  ctx.beginPath();
+  ctx.arc(ex,ey,Math.max(3,cell*.24),0,Math.PI*2);
+  ctx.fill();
+
+  // player touch marker
+  const px=player.x*cell+cell/2, py=player.y*cell+cell/2;
+
+  // outer touch ring
+  ctx.strokeStyle='rgba(255,255,255,.95)';
+  ctx.lineWidth=Math.max(2,cell*.10);
+  ctx.shadowColor='#65d8ff';
+  ctx.shadowBlur=Math.max(10,cell*.8);
+  ctx.beginPath();
+  ctx.arc(px,py,Math.max(6,cell*.34),0,Math.PI*2);
+  ctx.stroke();
+
+  // center dot
+  ctx.fillStyle='#65d8ff';
+  ctx.beginPath();
+  ctx.arc(px,py,Math.max(2.5,cell*.12),0,Math.PI*2);
+  ctx.fill();
+  ctx.shadowBlur=0;
+
+  if(flashlight){
+    ctx.save();
+    ctx.fillStyle='rgba(0,0,0,.93)';
+    ctx.fillRect(0,0,w,w);
+    ctx.globalCompositeOperation='destination-out';
+    const radius=Math.max(cell*2.4,Math.min(w*.19,95));
+    const light=ctx.createRadialGradient(px,py,radius*.25,px,py,radius);
+    light.addColorStop(0,'rgba(0,0,0,1)');
+    light.addColorStop(.65,'rgba(0,0,0,.85)');
+    light.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=light;
+    ctx.beginPath();
+    ctx.arc(px,py,radius,0,Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+
+    // redraw touch marker above darkness
+    ctx.strokeStyle='rgba(255,255,255,.95)';
+    ctx.lineWidth=Math.max(2,cell*.10);
+    ctx.shadowColor='#65d8ff';
+    ctx.shadowBlur=12;
+    ctx.beginPath();
+    ctx.arc(px,py,Math.max(6,cell*.34),0,Math.PI*2);
+    ctx.stroke();
+
+    ctx.fillStyle='#65d8ff';
+    ctx.beginPath();
+    ctx.arc(px,py,Math.max(2.5,cell*.12),0,Math.PI*2);
+    ctx.fill();
+    ctx.shadowBlur=0;
+  }
+}
+
+function formatTime(sec){
+  const m=Math.floor(sec/60);
+  const s=sec%60;
+  return `${m}:${String(s).padStart(2,'0')}`;
+}
+
+function startClock(){
+  if(startTime!==null) return;
+  startTime=Date.now();
+  timer=setInterval(()=>{
+    timeEl.textContent=formatTime(Math.floor((Date.now()-startTime)/1000));
+  },250);
+}
+
+function currentSeconds(){
+  if(startTime===null) return 0;
+  return Math.floor((Date.now()-startTime)/1000);
+}
+
+function bestKey(){
+  return `maze_best_${size}_${flashlight?'flash':'normal'}`;
+}
+
+function updateBest(){
+  const b=localStorage.getItem(bestKey());
+  bestEl.textContent=b?formatTime(Number(b)):'—';
+}
+
+function move(dir){
+  if(won) return;
+  const c=grid[player.y][player.x];
+  let nx=player.x, ny=player.y;
+  if(dir==='up' && !c.walls.top) ny--;
+  if(dir==='right' && !c.walls.right) nx++;
+  if(dir==='down' && !c.walls.bottom) ny++;
+  if(dir==='left' && !c.walls.left) nx--;
+
+  if(nx===player.x && ny===player.y) return;
+  startClock();
+  player={x:nx,y:ny};
+  steps++;
+  stepsEl.textContent=steps;
+  draw();
+
+  if(player.x===size-1 && player.y===size-1) finish();
+}
+
+function finish(){
+  won=true;
+  clearInterval(timer);
+  const secs=currentSeconds();
+  const key=bestKey();
+  const old=Number(localStorage.getItem(key));
+  if(!old || secs<old){
+    localStorage.setItem(key,String(secs));
+  }
+  updateBest();
+  const modeText = flashlight ? ' in Flashlight Mode' : '';
+  winText.textContent=`You finished the ${difficultyEl.options[difficultyEl.selectedIndex].text} maze${modeText} in ${formatTime(secs)} using ${steps} steps.`;
+  modal.classList.add('show');
+}
+
+function resetRun(){
+  clearInterval(timer);
+  timer=null;
+  startTime=null;
+  timeEl.textContent='0:00';
+  steps=0;
+  stepsEl.textContent='0';
+  player={x:0,y:0};
+  won=false;
+  modal.classList.remove('show');
+  draw();
+}
+
+function newMaze(useDaily=false){
+  size=Number(difficultyEl.value);
+  dailyMode=useDaily;
+  if(useDaily){
+    const d=new Date();
+    const key=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}-${size}`;
+    rng=mulberry32(hashString(key));
+  } else {
+    rng=Math.random;
+  }
+  generateMaze();
+  resetRun();
+  updateBest();
+}
+
+document.getElementById('newMaze').addEventListener('click',()=>newMaze(false));
+document.getElementById('daily').addEventListener('click',()=>newMaze(true));
+document.getElementById('restart').addEventListener('click',resetRun);
+difficultyEl.addEventListener('change',()=>newMaze(dailyMode));
+
+flashlightBtn.addEventListener('click',()=>{
+  flashlight=!flashlight;
+  flashlightBtn.classList.toggle('active',flashlight);
+  flashlightBtn.textContent=flashlight?'🔦 Flashlight ON':'🔦 Flashlight';
+  updateBest();
+  draw();
+});
+
+
+document.addEventListener('keydown',e=>{
+  const map={
+    ArrowUp:'up',ArrowRight:'right',ArrowDown:'down',ArrowLeft:'left',
+    w:'up',d:'right',s:'down',a:'left',W:'up',D:'right',S:'down',A:'left'
+  };
+  if(map[e.key]){
+    e.preventDefault();
+    move(map[e.key]);
+  }
+});
+
+function directionFromPointer(clientX, clientY){
+  const rect = canvas.getBoundingClientRect();
+  const localX = clientX - rect.left;
+  const localY = clientY - rect.top;
+  const cell = rect.width / size;
+
+  const targetX = Math.max(0, Math.min(size-1, Math.floor(localX / cell)));
+  const targetY = Math.max(0, Math.min(size-1, Math.floor(localY / cell)));
+
+  const dx = targetX - player.x;
+  const dy = targetY - player.y;
+
+  if (Math.abs(dx) > Math.abs(dy)) {
+    if (dx > 0) return 'right';
+    if (dx < 0) return 'left';
+  } else {
+    if (dy > 0) return 'down';
+    if (dy < 0) return 'up';
+  }
+  return null;
+}
+
+let dragging=false;
+let lastDragMove=0;
+
+wrap.addEventListener('pointerdown',e=>{
+  dragging=true;
+  wrap.setPointerCapture?.(e.pointerId);
+  const dir=directionFromPointer(e.clientX,e.clientY);
+  if(dir) move(dir);
+});
+
+wrap.addEventListener('pointermove',e=>{
+  if(!dragging) return;
+  const now=Date.now();
+  if(now-lastDragMove<70) return;
+  lastDragMove=now;
+  const dir=directionFromPointer(e.clientX,e.clientY);
+  if(dir) move(dir);
+});
+
+wrap.addEventListener('pointerup',e=>{
+  dragging=false;
+  wrap.releasePointerCapture?.(e.pointerId);
+});
+
+wrap.addEventListener('pointercancel',()=>{
+  dragging=false;
+});
+
+if (!window.PointerEvent) {
+  let touchStart=null;
+  wrap.addEventListener('touchstart',e=>{
+    const t=e.changedTouches[0];
+    touchStart={x:t.clientX,y:t.clientY};
+  },{passive:true});
+  wrap.addEventListener('touchend',e=>{
+    if(!touchStart) return;
+    const t=e.changedTouches[0];
+    const dx=t.clientX-touchStart.x, dy=t.clientY-touchStart.y;
+    touchStart=null;
+    if(Math.max(Math.abs(dx),Math.abs(dy))<18) return;
+    if(Math.abs(dx)>Math.abs(dy)) move(dx>0?'right':'left');
+    else move(dy>0?'down':'up');
+  },{passive:true});
+}
+
+document.getElementById('playAgain').addEventListener('click',resetRun);
+document.getElementById('nextMaze').addEventListener('click',()=>newMaze(false));
+
+window.addEventListener('resize',resizeCanvas);
+
+newMaze(false);
+requestAnimationFrame(resizeCanvas);
+</script>
+</body>
+</html>

@@ -125,43 +125,12 @@ border:1px solid var(--border);background:linear-gradient(180deg,#132746,#0d1a2e
 .modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 .modal-actions button{min-height:48px;border-radius:14px;border:1px solid var(--border);background:rgba(255,255,255,.06);color:#fff;font-weight:800}
 .modal-actions .primary{border:0;background:linear-gradient(135deg,#61cfff,#706bff)}
-
-.fp-controls{
-display:none;
-grid-template-columns:repeat(4,1fr);
-gap:8px;
-margin-top:10px
-}
-
-.fp-controls.show{
-display:grid
-}
-
-.fp-btn{
-min-height:46px;
-border:1px solid var(--border);
-border-radius:13px;
-background:rgba(255,255,255,.07);
-color:#fff;
-font-weight:850
-}
-
-.fp-btn.forward{
-background:linear-gradient(135deg,rgba(97,207,255,.26),rgba(112,107,255,.24))
-}
-
-.view-caption{
-display:none;
-margin:8px 0 0;
-text-align:center;
-font-size:12px;
-color:#9fb0c8
-}
-
-.view-caption.show{
-display:block
-}
-
+.fp-controls{display:none;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.fp-controls.show{display:grid}
+.fp-btn{min-height:46px;border:1px solid var(--border);border-radius:13px;background:rgba(255,255,255,.07);color:#fff;font-weight:850}
+.fp-btn.forward{background:linear-gradient(135deg,rgba(97,207,255,.26),rgba(112,107,255,.24))}
+.view-caption{display:none;margin:8px 0 0;text-align:center;font-size:12px;color:#9fb0c8}
+.view-caption.show{display:block}
 @media(max-width:560px){
 .app{padding-left:11px;padding-right:11px}
 .badge{display:none}
@@ -174,5984 +143,1597 @@ select{grid-column:1/-1}
 </style>
 </head>
 <body>
-
 <div class="app">
-
 <header class="topbar">
-
 <div class="brand">
-
-<div class="logo">
-M
-</div>
-
+<div class="logo">M</div>
 <div>
 <h1>MAZE™</h1>
-<div class="subtitle">
-Find Your Way Out
+<div class="subtitle">Find Your Way Out</div>
 </div>
 </div>
-
-</div>
-
-<div class="badge">
-Unlimited mazes
-</div>
-
+<div class="badge">Unlimited mazes</div>
 </header>
-
-
 <section class="controls-card">
-
 <div class="row">
-
 <select id="difficulty" aria-label="Difficulty">
-
-<option value="11">
-Easy
-</option>
-
-<option value="17" selected>
-Medium
-</option>
-
-<option value="25">
-Hard
-</option>
-
-<option value="35">
-Extreme
-</option>
-
+<option value="11">Easy</option>
+<option value="17" selected>Medium</option>
+<option value="25">Hard</option>
+<option value="35">Extreme</option>
 </select>
-
-
 <select id="mazeType" aria-label="Maze type">
-
-<option value="classic">
-Classic Maze
-</option>
-
-<option value="keys">
-🔑 Keys & Doors
-</option>
-
-<option value="memory">
-🧠 Memory Maze
-</option>
-
-<option value="portal">
-🌀 Portal Maze
-</option>
-
-<option value="twodots">
-🎯 Two Dots
-</option>
-
-<option value="treasure">
-💎 Treasure Hunt
-</option>
-
-<option value="moving">
-🧱 Moving Walls
-</option>
-
-<option value="traps">
-⚠️ Trap Tiles
-</option>
-
-<option value="ice">
-🧊 Ice Maze
-</option>
-
-<option value="ghost">
-👻 Ghost Chase
-</option>
-
-<option value="countdown">
-⏰ Countdown Escape
-</option>
-
-<option value="coins">
-🪙 Coin Challenge
-</option>
-
-<option value="mirror">
-🪞 Mirror Controls
-</option>
-
-<option value="oneway">
-➡️ One-Way Arrows
-</option>
-
-<option value="mystery">
-❓ Mystery Mode
-</option>
-
+<option value="classic">Classic Maze</option>
+<option value="keys">🔑 Keys & Doors</option>
+<option value="memory">🧠 Memory Maze</option>
+<option value="portal">🌀 Portal Maze</option>
+<option value="twodots">🎯 Two Dots</option>
+<option value="treasure">💎 Treasure Hunt</option>
+<option value="moving">🧱 Moving Walls</option>
+<option value="traps">⚠️ Trap Tiles</option>
+<option value="ice">🧊 Ice Maze</option>
+<option value="ghost">👻 Ghost Chase</option>
+<option value="countdown">⏰ Countdown Escape</option>
+<option value="coins">🪙 Coin Challenge</option>
+<option value="mirror">🪞 Mirror Controls</option>
+<option value="oneway">➡️ One-Way Arrows</option>
+<option value="mystery">❓ Mystery Mode</option>
 </select>
-
-
 <select id="viewMode" aria-label="Maze view">
-
-<option value="overhead">
-🗺️ Overhead View
-</option>
-
-<option value="first">
-👀 First-Person View
-</option>
-
-<option value="dungeon">
-🧱 Dungeon View
-</option>
-
-<option value="neon">
-🌌 Neon View
-</option>
-
+<option value="overhead">🗺️ Overhead View</option>
+<option value="first">👀 First-Person View</option>
+<option value="dungeon">🧱 Dungeon View</option>
+<option value="neon">🌌 Neon View</option>
 </select>
-
-
-<button id="newMaze" class="control-btn primary">
-New Maze
-</button>
-
-<button id="restart" class="control-btn">
-Restart
-</button>
-
-<button id="flashlight" class="control-btn">
-🔦 Flashlight
-</button>
-
-<button id="sound" class="control-btn">
-🔊 Sound ON
-</button>
-
-<button id="daily" class="control-btn">
-📅 Daily Maze
-</button>
-
+<button id="newMaze" class="control-btn primary">New Maze</button>
+<button id="restart" class="control-btn">Restart</button>
+<button id="flashlight" class="control-btn">🔦 Flashlight</button>
+<button id="sound" class="control-btn">🔊 Sound ON</button>
+<button id="daily" class="control-btn">📅 Daily Maze</button>
 </div>
-
-<div id="modeStatus" class="mode-status">
-Classic Maze — reach the glowing exit.
-</div>
-
+<div id="modeStatus" class="mode-status">Classic Maze — reach the glowing exit.</div>
 </section>
-
-
 <section class="stats-card">
-
 <div class="stat">
-<div class="stat-label">
-Time
+<div class="stat-label">Time</div>
+<div class="stat-value" id="time">0:00</div>
 </div>
-
-<div class="stat-value" id="time">
-0:00
-</div>
-</div>
-
-
 <div class="stat">
-<div class="stat-label">
-Steps
+<div class="stat-label">Steps</div>
+<div class="stat-value" id="steps">0</div>
 </div>
-
-<div class="stat-value" id="steps">
-0
-</div>
-</div>
-
-
 <div class="stat">
-<div class="stat-label">
-Best
+<div class="stat-label">Best</div>
+<div class="stat-value" id="best">—</div>
 </div>
-
-<div class="stat-value" id="best">
-—
-</div>
-</div>
-
 </section>
-
-
 <section class="maze-card">
-
 <div class="canvas-wrap" id="canvasWrap">
 <canvas id="maze"></canvas>
 </div>
-
-
 <div id="fpControls" class="fp-controls" aria-label="First-person controls">
-
-<button id="turnLeft" class="fp-btn">
-↶ Turn Left
-</button>
-
-<button id="goForward" class="fp-btn forward">
-⬆ Forward
-</button>
-
-<button id="turnRight" class="fp-btn">
-↷ Turn Right
-</button>
-
-<button id="goBack" class="fp-btn">
-⬇ Back
-</button>
-
+<button id="turnLeft" class="fp-btn">↶ Turn Left</button>
+<button id="goForward" class="fp-btn forward">⬆ Forward</button>
+<button id="turnRight" class="fp-btn">↷ Turn Right</button>
+<button id="goBack" class="fp-btn">⬇ Back</button>
 </div>
-
-
-<div id="viewCaption" class="view-caption">
-Straight-on view: use the buttons, arrow keys, WASD, or swipe on the maze.
-</div>
-
-
-<p class="hint">
-Drag your finger or mouse through the maze. On a computer, use the arrow keys or WASD.
-Try Classic, Keys & Doors, Memory, Portal, Two Dots, Treasure Hunt, Moving Walls,
-Trap Tiles, Ice Maze, Ghost Chase, Countdown Escape, Coin Challenge, Mirror Controls,
-One-Way Arrows, or Mystery Mode.
-</p>
-
+<div id="viewCaption" class="view-caption">Straight-on view: use the buttons, arrow keys, WASD, or swipe on the maze.</div>
+<p class="hint">Drag your finger or mouse through the maze. On a computer, use the arrow keys or WASD. Try Classic, Keys & Doors, Memory, Portal, Two Dots, Treasure Hunt, Moving Walls, Trap Tiles, Ice Maze, Ghost Chase, Countdown Escape, Coin Challenge, Mirror Controls, One-Way Arrows, or Mystery Mode.</p>
 </section>
-
-
-<div id="unlockToast" class="unlock-toast">
-🔓 UNLOCKED!
+<div id="unlockToast" class="unlock-toast">🔓 UNLOCKED!</div>
+<footer>A DONCO-BAYCITY™ App</footer>
 </div>
-
-
-<footer>
-A DONCO-BAYCITY™ App
-</footer>
-
-</div>
-
-
-<canvas
-id="fireworksCanvas"
-class="fireworks-canvas"
-aria-hidden="true">
-</canvas>
-
-
+<canvas id="fireworksCanvas" class="fireworks-canvas" aria-hidden="true"></canvas>
 <div id="winModal" class="modal">
-
 <div class="modal-card">
-
-<div class="trophy">
-🏁
-</div>
-
-<h2>
-You escaped!
-</h2>
-
+<div class="trophy">🏁</div>
+<h2>You escaped!</h2>
 <p id="winText"></p>
-
 <div class="modal-actions">
-
-<button id="playAgain">
-Restart
-</button>
-
-<button id="nextMaze" class="primary">
-New Maze
-</button>
-
+<button id="playAgain">Restart</button>
+<button id="nextMaze" class="primary">New Maze</button>
 </div>
-
 </div>
-
 </div>
-
-
 <script>
-
-const canvas =
-document.getElementById('maze');
-
-const ctx =
-canvas.getContext('2d');
-
-const wrap =
-document.getElementById('canvasWrap');
-
-const difficultyEl =
-document.getElementById('difficulty');
-
-const mazeTypeEl =
-document.getElementById('mazeType');
-
-const modeStatusEl =
-document.getElementById('modeStatus');
-
-const unlockToast =
-document.getElementById('unlockToast');
-
-const fireworksCanvas =
-document.getElementById('fireworksCanvas');
-
-const fireworksCtx =
-fireworksCanvas.getContext('2d');
-
-const timeEl =
-document.getElementById('time');
-
-const stepsEl =
-document.getElementById('steps');
-
-const bestEl =
-document.getElementById('best');
-
-const flashlightBtn =
-document.getElementById('flashlight');
-
-const soundBtn =
-document.getElementById('sound');
-
-const viewModeEl =
-document.getElementById('viewMode');
-
-const fpControls =
-document.getElementById('fpControls');
-
-const viewCaption =
-document.getElementById('viewCaption');
-
-const turnLeftBtn =
-document.getElementById('turnLeft');
-
-const turnRightBtn =
-document.getElementById('turnRight');
-
-const goForwardBtn =
-document.getElementById('goForward');
-
-const goBackBtn =
-document.getElementById('goBack');
-
-const modal =
-document.getElementById('winModal');
-
-const winText =
-document.getElementById('winText');
-
+const canvas = document.getElementById('maze');
+const ctx = canvas.getContext('2d');
+const wrap = document.getElementById('canvasWrap');
+const difficultyEl = document.getElementById('difficulty');
+const mazeTypeEl = document.getElementById('mazeType');
+const modeStatusEl = document.getElementById('modeStatus');
+const unlockToast = document.getElementById('unlockToast');
+const fireworksCanvas = document.getElementById('fireworksCanvas');
+const fireworksCtx = fireworksCanvas.getContext('2d');
+const timeEl = document.getElementById('time');
+const stepsEl = document.getElementById('steps');
+const bestEl = document.getElementById('best');
+const flashlightBtn = document.getElementById('flashlight');
+const soundBtn = document.getElementById('sound');
+const viewModeEl = document.getElementById('viewMode');
+const fpControls = document.getElementById('fpControls');
+const viewCaption = document.getElementById('viewCaption');
+const turnLeftBtn = document.getElementById('turnLeft');
+const turnRightBtn = document.getElementById('turnRight');
+const goForwardBtn = document.getElementById('goForward');
+const goBackBtn = document.getElementById('goBack');
+const modal = document.getElementById('winModal');
+const winText = document.getElementById('winText');
 
 let size = 17;
-
 let grid = [];
-
-let player = {
-x:0,
-y:0
-};
-
-let renderPlayer = {
-x:0,
-y:0
-};
-
-let moveAnimation =
-null;
-
-let startTime =
-null;
-
-let timer =
-null;
-
-let steps =
-0;
-
-let won =
-false;
-
-let flashlight =
-false;
-
-let viewMode =
-localStorage.getItem('maze_view') || 'overhead';
-
-let facing =
-1;
-
-let firstPersonSwipeStart =
-null;
-
-let dailyMode =
-false;
-
-let selectedMazeType =
-'classic';
-
-let mazeType =
-'classic';
-
-let keyPos =
-null;
-
-let hasKey =
-false;
-
-let portals =
-[];
-
-let mysteryDots =
-[];
-
-let correctDotIndex =
-0;
-
-let dotSolved =
-false;
-
-let memoryVisible =
-true;
-
-let memoryTimer =
-null;
-
-let treasures =
-[];
-
-let treasuresCollected =
-0;
-
-let trapTiles =
-[];
-
-let coins =
-[];
-
-let coinsCollected =
-0;
-
-let ghost =
-null;
-
-let ghostMoveCounter =
-0;
-
-let countdownTimer =
-null;
-
-let countdownRemaining =
-0;
-
-let oneWayGates =
-[];
-
-let mirrorNoticeShown =
-false;
-
-let movingWallTimer =
-null;
-
-let movingWallBase =
-null;
-
-let mysteryRevealed =
-false;
-
-let rng =
-Math.random;
-
-let fireworksAnimation =
-null;
-
-let fireworksStopTimer =
-null;
-
-let soundOn =
-localStorage.getItem('maze_sound') !== 'off';
-
-let audioCtx =
-null;
-
-
+let player = {x:0,y:0};
+let renderPlayer = {x:0,y:0};
+let moveAnimation = null;
+let startTime = null;
+let timer = null;
+let steps = 0;
+let won = false;
+let flashlight = false;
+let viewMode = localStorage.getItem('maze_view') || 'overhead';
+let facing = 1;
+let firstPersonSwipeStart = null;
+let dailyMode = false;
+let selectedMazeType = 'classic';
+let mazeType = 'classic';
+let keyPos = null;
+let hasKey = false;
+let portals = [];
+let mysteryDots = [];
+let correctDotIndex = 0;
+let dotSolved = false;
+let memoryVisible = true;
+let memoryTimer = null;
+let treasures = [];
+let treasuresCollected = 0;
+let trapTiles = [];
+let coins = [];
+let coinsCollected = 0;
+let ghost = null;
+let ghostMoveCounter = 0;
+let countdownTimer = null;
+let countdownRemaining = 0;
+let oneWayGates = [];
+let mirrorNoticeShown = false;
+let movingWallTimer = null;
+let movingWallBase = null;
+let mysteryRevealed = false;
+let rng = Math.random;
+let fireworksAnimation = null;
+let fireworksStopTimer = null;
+let soundOn = localStorage.getItem('maze_sound') !== 'off';
+let audioCtx = null;
 
 function ensureAudio(){
-
-if(!soundOn)
-return null;
-
-
-const AudioClass =
-window.AudioContext ||
-window.webkitAudioContext;
-
-
-if(!AudioClass)
-return null;
-
-
-if(!audioCtx)
-audioCtx =
-new AudioClass();
-
-
-if(
-audioCtx.state === 'suspended'
-){
-
-audioCtx.resume();
-
-}
-
-
+if(!soundOn) return null;
+const AudioClass = window.AudioContext || window.webkitAudioContext;
+if(!AudioClass) return null;
+if(!audioCtx) audioCtx = new AudioClass();
+if(audioCtx.state === 'suspended') audioCtx.resume();
 return audioCtx;
-
 }
 
-
-
-function playTone(
-freq,
-duration=.08,
-type='sine',
-volume=.045,
-delay=0,
-endFreq=null
-){
-
-if(!soundOn)
-return;
-
-
-const ac =
-ensureAudio();
-
-
-if(!ac)
-return;
-
-
-const now =
-ac.currentTime + delay;
-
-
-const osc =
-ac.createOscillator();
-
-
-const gain =
-ac.createGain();
-
-
-osc.type =
-type;
-
-
-osc.frequency
-.setValueAtTime(
-Math.max(40,freq),
-now
-);
-
-
+function playTone(freq, duration=.08, type='sine', volume=.045, delay=0, endFreq=null){
+if(!soundOn) return;
+const ac = ensureAudio();
+if(!ac) return;
+const now = ac.currentTime + delay;
+const osc = ac.createOscillator();
+const gain = ac.createGain();
+osc.type = type;
+osc.frequency.setValueAtTime(Math.max(40,freq), now);
 if(endFreq){
-
-osc.frequency
-.exponentialRampToValueAtTime(
-Math.max(40,endFreq),
-now + duration
-);
-
+osc.frequency.exponentialRampToValueAtTime(Math.max(40,endFreq), now + duration);
 }
-
-
-gain.gain
-.setValueAtTime(
-.0001,
-now
-);
-
-
-gain.gain
-.exponentialRampToValueAtTime(
-Math.max(.0002,volume),
-now + Math.min(.018,duration*.25)
-);
-
-
-gain.gain
-.exponentialRampToValueAtTime(
-.0001,
-now + duration
-);
-
-
-osc.connect(
-gain
-);
-
-
-gain.connect(
-ac.destination
-);
-
-
-osc.start(
-now
-);
-
-
-osc.stop(
-now + duration + .03
-);
-
+gain.gain.setValueAtTime(.0001, now);
+gain.gain.exponentialRampToValueAtTime(Math.max(.0002,volume), now + Math.min(.018,duration*.25));
+gain.gain.exponentialRampToValueAtTime(.0001, now + duration);
+osc.connect(gain);
+gain.connect(ac.destination);
+osc.start(now);
+osc.stop(now + duration + .03);
 }
-
-
 
 function playMoveSound(){
-
-playTone(
-520,
-.028,
-'sine',
-.012
-);
-
+playTone(520,.028,'sine',.012);
 }
-
-
 
 function playKeySound(){
-
-playTone(
-880,
-.07,
-'triangle',
-.05
-);
-
-
-playTone(
-1175,
-.10,
-'triangle',
-.045,
-.055
-);
-
+playTone(880,.07,'triangle',.05);
+playTone(1175,.10,'triangle',.045,.055);
 }
-
-
 
 function playUnlockSound(){
-
-playTone(
-523.25,
-.10,
-'sine',
-.05
-);
-
-
-playTone(
-659.25,
-.11,
-'sine',
-.05,
-.08
-);
-
-
-playTone(
-783.99,
-.16,
-'sine',
-.055,
-.16
-);
-
+playTone(523.25,.10,'sine',.05);
+playTone(659.25,.11,'sine',.05,.08);
+playTone(783.99,.16,'sine',.055,.16);
 }
-
-
 
 function playWrongSound(){
-
-playTone(
-190,
-.18,
-'sawtooth',
-.04
-);
-
-
-playTone(
-135,
-.24,
-'sawtooth',
-.035,
-.10
-);
-
+playTone(190,.18,'sawtooth',.04);
+playTone(135,.24,'sawtooth',.035,.10);
 }
-
-
 
 function playCorrectSound(){
-
-playTone(
-659.25,
-.08,
-'triangle',
-.05
-);
-
-
-playTone(
-880,
-.10,
-'triangle',
-.05,
-.07
-);
-
-
-playTone(
-1046.5,
-.16,
-'triangle',
-.055,
-.14
-);
-
+playTone(659.25,.08,'triangle',.05);
+playTone(880,.10,'triangle',.05,.07);
+playTone(1046.5,.16,'triangle',.055,.14);
 }
-
-
 
 function playPortalSound(){
-
-playTone(
-180,
-.30,
-'sine',
-.038,
-0,
-900
-);
-
-
-playTone(
-320,
-.22,
-'triangle',
-.022,
-.04,
-1200
-);
-
+playTone(180,.30,'sine',.038,0,900);
+playTone(320,.22,'triangle',.022,.04,1200);
 }
-
-
 
 function playVictorySound(){
-
-playTone(
-523.25,
-.16,
-'triangle',
-.05
-);
-
-
-playTone(
-659.25,
-.16,
-'triangle',
-.05,
-.13
-);
-
-
-playTone(
-783.99,
-.18,
-'triangle',
-.055,
-.26
-);
-
-
-playTone(
-1046.5,
-.34,
-'triangle',
-.065,
-.39
-);
-
-
-playTone(
-783.99,
-.30,
-'sine',
-.025,
-.42
-);
-
+playTone(523.25,.16,'triangle',.05);
+playTone(659.25,.16,'triangle',.05,.13);
+playTone(783.99,.18,'triangle',.055,.26);
+playTone(1046.5,.34,'triangle',.065,.39);
+playTone(783.99,.30,'sine',.025,.42);
 }
-
-
 
 function playGemSound(index=0){
-
-const notes = [
-659.25,
-783.99,
-987.77
-];
-
-
-playTone(
-notes[index%notes.length],
-.10,
-'triangle',
-.05
-);
-
-
-playTone(
-notes[index%notes.length]*1.5,
-.14,
-'sine',
-.035,
-.06
-);
-
+const notes=[659.25,783.99,987.77];
+playTone(notes[index%notes.length],.10,'triangle',.05);
+playTone(notes[index%notes.length]*1.5,.14,'sine',.035,.06);
 }
-
-
 
 function playTrapSound(){
-
-playTone(
-260,
-.10,
-'square',
-.035
-);
-
-
-playTone(
-110,
-.26,
-'sawtooth',
-.04,
-.07
-);
-
+playTone(260,.10,'square',.035);
+playTone(110,.26,'sawtooth',.04,.07);
 }
-
-
 
 function playWallShiftSound(){
-
-playTone(
-120,
-.16,
-'triangle',
-.025,
-0,
-210
-);
-
-
-playTone(
-92,
-.20,
-'sine',
-.025,
-.05,
-165
-);
-
+playTone(120,.16,'triangle',.025,0,210);
+playTone(92,.20,'sine',.025,.05,165);
 }
-
-
 
 function playIceSound(){
-
-playTone(
-780,
-.16,
-'sine',
-.018,
-0,
-1180
-);
-
+playTone(780,.16,'sine',.018,0,1180);
 }
-
-
 
 function playCoinSound(index=0){
-
-const notes = [
-740,
-880,
-1046.5,
-1175,
-1318.5
-];
-
-
-playTone(
-notes[index%notes.length],
-.07,
-'triangle',
-.045
-);
-
-
-playTone(
-notes[index%notes.length]*1.25,
-.10,
-'sine',
-.028,
-.05
-);
-
+const notes=[740,880,1046.5,1175,1318.5];
+playTone(notes[index%notes.length],.07,'triangle',.045);
+playTone(notes[index%notes.length]*1.25,.10,'sine',.028,.05);
 }
-
-
 
 function playGhostSound(){
-
-playTone(
-150,
-.28,
-'sine',
-.035,
-0,
-85
-);
-
-
-playTone(
-230,
-.20,
-'triangle',
-.018,
-.03,
-120
-);
-
+playTone(150,.28,'sine',.035,0,85);
+playTone(230,.20,'triangle',.018,.03,120);
 }
-
-
 
 function playCountdownBeep(){
-
-playTone(
-880,
-.055,
-'square',
-.025
-);
-
+playTone(880,.055,'square',.025);
 }
-
-
 
 function playBlockedSound(){
-
-playTone(
-180,
-.09,
-'square',
-.028
-);
-
-
-playTone(
-130,
-.10,
-'square',
-.022,
-.05
-);
-
+playTone(180,.09,'square',.028);
+playTone(130,.10,'square',.022,.05);
 }
-
-
 
 function playMirrorSound(){
-
-playTone(
-620,
-.08,
-'sine',
-.025,
-0,
-420
-);
-
-
-playTone(
-420,
-.08,
-'sine',
-.022,
-.07,
-620
-);
-
+playTone(620,.08,'sine',.025,0,420);
+playTone(420,.08,'sine',.022,.07,620);
 }
-
-
 
 function updateSoundButton(){
-
-soundBtn
-.classList
-.toggle(
-'active',
-soundOn
-);
-
-
-soundBtn.textContent =
-
-soundOn
-
-? '🔊 Sound ON'
-
-: '🔇 Sound OFF';
-
+soundBtn.classList.toggle('active',soundOn);
+soundBtn.textContent = soundOn ? '🔊 Sound ON' : '🔇 Sound OFF';
 }
-
-
 
 function mulberry32(a){
-
 return function(){
-
-let t =
-a += 0x6D2B79F5;
-
-
-t =
-Math.imul(
-t ^ t >>> 15,
-t | 1
-);
-
-
-t ^=
-t +
-Math.imul(
-t ^ t >>> 7,
-t | 61
-);
-
-
-return (
-(t ^ t >>> 14) >>> 0
-) / 4294967296;
-
-};
-
+let t = a += 0x6D2B79F5;
+t = Math.imul(t ^ t >>> 15, t | 1);
+t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+return ((t ^ t >>> 14) >>> 0) / 4294967296;
 }
-
-
+}
 
 function hashString(str){
-
-let h =
-2166136261 >>> 0;
-
-
-for(
-let i=0;
-i<str.length;
-i++
-){
-
-h ^=
-str.charCodeAt(i);
-
-
-h =
-Math.imul(
-h,
-16777619
-);
-
+let h = 2166136261 >>> 0;
+for(let i=0;i<str.length;i++){
+h ^= str.charCodeAt(i);
+h = Math.imul(h,16777619);
 }
-
-
 return h >>> 0;
-
 }
 
-
-
-function makeCell(
-x,
-y
-){
-
-return {
-
-x,
-y,
-
-visited:false,
-
-walls:{
-top:true,
-right:true,
-bottom:true,
-left:true
+function makeCell(x,y){
+return {x,y,visited:false,walls:{top:true,right:true,bottom:true,left:true}};
 }
 
-};
-
+function samePos(a,b){
+return a && b && a.x===b.x && a.y===b.y;
 }
 
-
-
-function samePos(
-a,
-b
-){
-
-return (
-
-a &&
-b &&
-a.x === b.x &&
-a.y === b.y
-
-);
-
-}
-
-
-
-function randomOpenCell(
-excluded=[]
-){
-
+function randomOpenCell(excluded=[]){
 let pick;
-
-let tries =
-0;
-
-
+let tries=0;
 do{
-
-pick = {
-
-x:
-Math.floor(
-rng()*size
-),
-
-y:
-Math.floor(
-rng()*size
-)
-
-};
-
-
+pick={x:Math.floor(rng()*size),y:Math.floor(rng()*size)};
 tries++;
-
-}
-
-while(
-
-tries < 500 &&
-
-(
-
-excluded.some(
-p=>samePos(p,pick)
-)
-
-||
-
-(
-pick.x === 0 &&
-pick.y === 0
-)
-
-||
-
-(
-pick.x === size-1 &&
-pick.y === size-1
-)
-
-)
-
+}while(
+tries<500 &&
+(excluded.some(p=>samePos(p,pick)) ||
+(pick.x===0 && pick.y===0) ||
+(pick.x===size-1 && pick.y===size-1))
 );
-
-
 return pick;
-
 }
 
-
-
-function updateModeStatus(
-message=''
-){
-
+function updateModeStatus(message=''){
 if(message){
-
-modeStatusEl.textContent =
-message;
-
+modeStatusEl.textContent=message;
 return;
-
 }
-
-
-const mysteryPrefix =
-
-selectedMazeType === 'mystery'
-
-? '❓ Mystery revealed — '
-
-: '';
-
-
-if(
-mazeType === 'keys'
-){
-
-modeStatusEl.textContent =
-
-mysteryPrefix +
-
-(
-hasKey
-
+const mysteryPrefix = selectedMazeType==='mystery' ? '❓ Mystery revealed — ' : '';
+if(mazeType==='keys'){
+modeStatusEl.textContent=mysteryPrefix+(hasKey
 ? '🔑 Key found — the exit is unlocked!'
-
-: '🔑 Find the gold key, then reach the exit.'
-);
-
-}
-
-
-else if(
-mazeType === 'memory'
-){
-
-modeStatusEl.textContent =
-
-mysteryPrefix +
-
-(
-memoryVisible
-
+: '🔑 Find the gold key, then reach the exit.');
+} else if(mazeType==='memory'){
+modeStatusEl.textContent=mysteryPrefix+(memoryVisible
 ? '🧠 Memorize the maze — the walls disappear in 4 seconds.'
-
-: '🧠 Walls hidden — use your memory to find the exit.'
-);
-
-}
-
-
-else if(
-mazeType === 'portal'
-){
-
-modeStatusEl.textContent =
-
-mysteryPrefix +
-
-'🌀 Purple and gold portals teleport you across the maze.';
-
-}
-
-
-else if(
-mazeType === 'twodots'
-){
-
-modeStatusEl.textContent =
-
-mysteryPrefix +
-
-(
-dotSolved
-
+: '🧠 Walls hidden — use your memory to find the exit.');
+} else if(mazeType==='portal'){
+modeStatusEl.textContent=mysteryPrefix+'🌀 Purple and gold portals teleport you across the maze.';
+} else if(mazeType==='twodots'){
+modeStatusEl.textContent=mysteryPrefix+(dotSolved
 ? '🎯 Correct dot! The exit is open — now escape.'
-
-: '🎯 Find the correct mystery dot. The wrong one sends you back to START.'
-);
-
-}
-
-
-else if(
-mazeType === 'treasure'
-){
-
-modeStatusEl.textContent =
-
-mysteryPrefix +
-
-`💎 Collect all 3 gems — ${treasuresCollected}/3 found.`;
-
-}
-
-
-else if(
-mazeType === 'moving'
-){
-
-modeStatusEl.textContent =
-
-mysteryPrefix +
-
-'🧱 The maze changes every few seconds. Keep watching the walls!';
-
-}
-
-
-else if(
-mazeType === 'traps'
-){
-
-modeStatusEl.textContent =
-
-mysteryPrefix +
-
-'⚠️ Avoid the glowing trap tiles — they teleport you away.';
-
-}
-
-
-else if(
-mazeType === 'ice'
-){
-
-modeStatusEl.textContent =
-
-mysteryPrefix +
-
-'🧊 Ice Maze — one move slides you until you hit a wall.';
-
-}
-
-
-else if(
-mazeType === 'ghost'
-){
-
-modeStatusEl.textContent =
-
-mysteryPrefix +
-
-'👻 Ghost Chase — the ghost moves toward you every few steps. Do not let it catch you!';
-
-}
-
-
-else if(
-mazeType === 'countdown'
-){
-
-modeStatusEl.textContent =
-
-mysteryPrefix +
-
-`⏰ Countdown Escape — reach the exit before time runs out! ${formatTime(countdownRemaining)} left.`;
-
-}
-
-
-else if(
-mazeType === 'coins'
-){
-
-modeStatusEl.textContent =
-
-mysteryPrefix +
-
-(
-coinsCollected >= 5
-
+: '🎯 Find the correct mystery dot. The wrong one sends you back to START.');
+} else if(mazeType==='treasure'){
+modeStatusEl.textContent=mysteryPrefix+`💎 Collect all 3 gems — ${treasuresCollected}/3 found.`;
+} else if(mazeType==='moving'){
+modeStatusEl.textContent=mysteryPrefix+'🧱 The maze changes every few seconds. Keep watching the walls!';
+} else if(mazeType==='traps'){
+modeStatusEl.textContent=mysteryPrefix+'⚠️ Avoid the glowing trap tiles — they teleport you away.';
+} else if(mazeType==='ice'){
+modeStatusEl.textContent=mysteryPrefix+'🧊 Ice Maze — one move slides you until you hit a wall.';
+} else if(mazeType==='ghost'){
+modeStatusEl.textContent=mysteryPrefix+'👻 Ghost Chase — the ghost moves toward you every few steps. Do not let it catch you!';
+} else if(mazeType==='countdown'){
+modeStatusEl.textContent=mysteryPrefix+`⏰ Countdown Escape — reach the exit before time runs out! ${formatTime(countdownRemaining)} left.`;
+} else if(mazeType==='coins'){
+modeStatusEl.textContent=mysteryPrefix+(coinsCollected>=5
 ? '🪙 All 5 coins found — the exit is unlocked!'
-
-: `🪙 Collect all 5 coins — ${coinsCollected}/5 found.`
-);
-
+: `🪙 Collect all 5 coins — ${coinsCollected}/5 found.`);
+} else if(mazeType==='mirror'){
+modeStatusEl.textContent=mysteryPrefix+'🪞 Mirror Controls — every direction is reversed.';
+} else if(mazeType==='oneway'){
+modeStatusEl.textContent=mysteryPrefix+'➡️ One-Way Arrows — you may only cross arrow gates in the direction shown.';
+} else {
+modeStatusEl.textContent='Classic Maze — reach the glowing exit.';
 }
-
-
-else if(
-mazeType === 'mirror'
-){
-
-modeStatusEl.textContent =
-
-mysteryPrefix +
-
-'🪞 Mirror Controls — every direction is reversed.';
-
 }
-
-
-else if(
-mazeType === 'oneway'
-){
-
-modeStatusEl.textContent =
-
-mysteryPrefix +
-
-'➡️ One-Way Arrows — you may only cross arrow gates in the direction shown.';
-
-}
-
-
-else{
-
-modeStatusEl.textContent =
-'Classic Maze — reach the glowing exit.';
-
-}
-
-}
-
-
 
 function flashUnlocked(){
-
-unlockToast
-.classList
-.remove(
-'show'
-);
-
-
+unlockToast.classList.remove('show');
 void unlockToast.offsetWidth;
-
-
-unlockToast
-.classList
-.add(
-'show'
-);
-
-
-setTimeout(
-
-()=>unlockToast
-.classList
-.remove(
-'show'
-),
-
-1300
-
-);
-
+unlockToast.classList.add('show');
+setTimeout(()=>unlockToast.classList.remove('show'),1300);
 }
 
-
-
-function flashMessage(
-message
-){
-
-unlockToast.textContent =
-message;
-
-
-unlockToast
-.classList
-.remove(
-'show'
-);
-
-
+function flashMessage(message){
+unlockToast.textContent=message;
+unlockToast.classList.remove('show');
 void unlockToast.offsetWidth;
-
-
-unlockToast
-.classList
-.add(
-'show'
-);
-
-
-setTimeout(
-
-()=>{
-
-unlockToast
-.classList
-.remove(
-'show'
-);
-
-
-unlockToast.textContent =
-'🔓 UNLOCKED!';
-
-},
-
-1300
-
-);
-
+unlockToast.classList.add('show');
+setTimeout(()=>{
+unlockToast.classList.remove('show');
+unlockToast.textContent='🔓 UNLOCKED!';
+},1300);
 }
-
-
 
 function setupMode(){
+keyPos=null;
+hasKey=false;
+portals=[];
+mysteryDots=[];
+correctDotIndex=0;
+dotSolved=false;
+memoryVisible=true;
+treasures=[];
+treasuresCollected=0;
+trapTiles=[];
+coins=[];
+coinsCollected=0;
+ghost=null;
+ghostMoveCounter=0;
+countdownRemaining=countdownLimit();
+oneWayGates=[];
+mirrorNoticeShown=false;
+mysteryRevealed = selectedMazeType==='mystery';
 
-keyPos =
-null;
-
-hasKey =
-false;
-
-portals =
-[];
-
-mysteryDots =
-[];
-
-correctDotIndex =
-0;
-
-dotSolved =
-false;
-
-memoryVisible =
-true;
-
-treasures =
-[];
-
-treasuresCollected =
-0;
-
-trapTiles =
-[];
-
-coins =
-[];
-
-coinsCollected =
-0;
-
-ghost =
-null;
-
-ghostMoveCounter =
-0;
-
-countdownRemaining =
-countdownLimit();
-
-oneWayGates =
-[];
-
-mirrorNoticeShown =
-false;
-
-mysteryRevealed =
-selectedMazeType === 'mystery';
-
-
-if(
-mazeType === 'keys'
-){
-
-keyPos =
-randomOpenCell();
-
+if(mazeType==='keys'){
+keyPos=randomOpenCell();
+} else if(mazeType==='portal'){
+const first=randomOpenCell();
+const second=randomOpenCell([first]);
+portals=[first,second];
+} else if(mazeType==='twodots'){
+const first=randomOpenCell();
+const second=randomOpenCell([first]);
+mysteryDots=[{...first,wrong:false},{...second,wrong:false}];
+correctDotIndex=Math.floor(rng()*2);
+} else if(mazeType==='treasure'){
+for(let i=0;i<3;i++){
+treasures.push({...randomOpenCell(treasures),collected:false});
 }
-
-
-else if(
-mazeType === 'portal'
-){
-
-const first =
-randomOpenCell();
-
-
-const second =
-randomOpenCell(
-[first]
-);
-
-
-portals = [
-first,
-second
-];
-
+} else if(mazeType==='traps'){
+for(let i=0;i<4;i++){
+trapTiles.push(randomOpenCell(trapTiles));
 }
-
-
-else if(
-mazeType === 'twodots'
-){
-
-const first =
-randomOpenCell();
-
-
-const second =
-randomOpenCell(
-[first]
-);
-
-
-mysteryDots = [
-
-{
-...first,
-wrong:false
-},
-
-{
-...second,
-wrong:false
+} else if(mazeType==='coins'){
+for(let i=0;i<5;i++){
+coins.push({...randomOpenCell(coins),collected:false});
 }
-
-];
-
-
-correctDotIndex =
-Math.floor(
-rng()*2
-);
-
-}
-
-
-else if(
-mazeType === 'treasure'
-){
-
-for(
-let i=0;
-i<3;
-i++
-){
-
-treasures.push({
-
-...randomOpenCell(
-treasures
-),
-
-collected:false
-
-});
-
-}
-
-}
-
-
-else if(
-mazeType === 'traps'
-){
-
-for(
-let i=0;
-i<4;
-i++
-){
-
-trapTiles.push(
-randomOpenCell(
-trapTiles
-)
-);
-
-}
-
-}
-
-
-else if(
-mazeType === 'coins'
-){
-
-for(
-let i=0;
-i<5;
-i++
-){
-
-coins.push({
-
-...randomOpenCell(
-coins
-),
-
-collected:false
-
-});
-
-}
-
-}
-
-
-else if(
-mazeType === 'ghost'
-){
-
-ghost = {
-
-x:size-1,
-y:0
-
-};
-
-}
-
-
-else if(
-mazeType === 'oneway'
-){
-
+} else if(mazeType==='ghost'){
+ghost={x:size-1,y:0};
+} else if(mazeType==='oneway'){
 generateOneWayGates();
-
 }
-
-
 updateModeStatus();
-
 }
-
-
 
 function modeLabel(type){
-
-const labels = {
-
+const labels={
 classic:'Classic Maze',
-
 keys:'Keys & Doors',
-
 memory:'Memory Maze',
-
 portal:'Portal Maze',
-
 twodots:'Two Dots',
-
 treasure:'Treasure Hunt',
-
 moving:'Moving Walls',
-
 traps:'Trap Tiles',
-
 ice:'Ice Maze',
-
 ghost:'Ghost Chase',
-
 countdown:'Countdown Escape',
-
 coins:'Coin Challenge',
-
 mirror:'Mirror Controls',
-
 oneway:'One-Way Arrows'
-
 };
-
-
-return labels[type] ||
-'Maze';
-
+return labels[type] || 'Maze';
 }
-
-
 
 function countdownLimit(){
-
-if(
-size <= 11
-)
-return 75;
-
-
-if(
-size <= 17
-)
-return 110;
-
-
-if(
-size <= 25
-)
-return 165;
-
-
+if(size<=11) return 75;
+if(size<=17) return 110;
+if(size<=25) return 165;
 return 240;
-
 }
-
-
 
 function startCountdownTimer(){
-
-clearInterval(
-countdownTimer
-);
-
-
-if(
-mazeType !== 'countdown'
-)
-return;
-
-
-if(
-countdownRemaining <= 0
-){
-
-countdownRemaining =
-countdownLimit();
-
-}
-
-
-timeEl.textContent =
-formatTime(
-countdownRemaining
-);
-
-
-countdownTimer =
-setInterval(
-
-()=>{
-
-if(won)
-return;
-
-
+clearInterval(countdownTimer);
+if(mazeType!=='countdown') return;
+if(countdownRemaining<=0) countdownRemaining=countdownLimit();
+timeEl.textContent=formatTime(countdownRemaining);
+countdownTimer=setInterval(()=>{
+if(won) return;
 countdownRemaining--;
-
-
-timeEl.textContent =
-formatTime(
-
-Math.max(
-0,
-countdownRemaining
-)
-
-);
-
-
-if(
-countdownRemaining > 0 &&
-countdownRemaining <= 10
-){
-
-playCountdownBeep();
-
-}
-
-
-if(
-countdownRemaining <= 0
-){
-
-clearInterval(
-countdownTimer
-);
-
-
-countdownTimer =
-null;
-
-
-won =
-true;
-
-
+timeEl.textContent=formatTime(Math.max(0,countdownRemaining));
+if(countdownRemaining>0 && countdownRemaining<=10) playCountdownBeep();
+if(countdownRemaining<=0){
+clearInterval(countdownTimer);
+countdownTimer=null;
+won=true;
 playWrongSound();
-
-
-flashMessage(
-'⏰ TIME UP — BACK TO START!'
-);
-
-
-modeStatusEl.textContent =
-'⏰ Time is up! Restarting this maze...';
-
-
-setTimeout(
-
-()=>{
-
-resetRun(
-false
-);
-
-},
-
-900
-
-);
-
+flashMessage('⏰ TIME UP — BACK TO START!');
+modeStatusEl.textContent='⏰ Time is up! Restarting this maze...';
+setTimeout(()=>{
+resetRun(false);
+},900);
 }
-
-},
-
-1000
-
-);
-
+},1000);
 }
-
-
 
 function handleCoin(){
-
-if(
-mazeType !== 'coins'
-)
-return;
-
-
-for(
-let i=0;
-i<coins.length;
-i++
-){
-
-const coin =
-coins[i];
-
-
-if(
-!coin.collected &&
-samePos(
-player,
-coin
-)
-){
-
-coin.collected =
-true;
-
-
+if(mazeType!=='coins') return;
+for(let i=0;i<coins.length;i++){
+const coin=coins[i];
+if(!coin.collected && samePos(player,coin)){
+coin.collected=true;
 coinsCollected++;
-
-
-playCoinSound(
-i
-);
-
-
-if(
-coinsCollected === 5
-){
-
+playCoinSound(i);
+if(coinsCollected===5){
 playUnlockSound();
-
-
-flashMessage(
-'🪙 ALL COINS FOUND — EXIT UNLOCKED!'
-);
-
+flashMessage('🪙 ALL COINS FOUND — EXIT UNLOCKED!');
+}else{
+flashMessage(`🪙 COIN ${coinsCollected} OF 5!`);
 }
-
-
-else{
-
-flashMessage(
-`🪙 COIN ${coinsCollected} OF 5!`
-);
-
-}
-
-
 updateModeStatus();
-
-
 break;
-
 }
-
 }
-
 }
-
-
 
 function ghostNextStep(){
-
-if(!ghost)
-return null;
-
-
-const start = {
-
-x:ghost.x,
-y:ghost.y
-
-};
-
-
-const target = {
-
-x:player.x,
-y:player.y
-
-};
-
-
-const q = [
-start
-];
-
-
-const seen =
-new Set(
-[
-`${start.x},${start.y}`
-]
-);
-
-
-const parent =
-new Map();
-
-
-const dirs = [
-
-[
-'top',
-0,
--1
-],
-
-[
-'right',
-1,
-0
-],
-
-[
-'bottom',
-0,
-1
-],
-
-[
-'left',
--1,
-0
-]
-
-];
-
-
-while(
-q.length
-){
-
-const p =
-q.shift();
-
-
-if(
-p.x === target.x &&
-p.y === target.y
-)
-break;
-
-
-const c =
-grid[p.y][p.x];
-
-
-for(
-const [
-wall,
-dx,
-dy
-]
-of dirs
-){
-
-if(
-c.walls[wall]
-)
-continue;
-
-
-const nx =
-p.x + dx;
-
-
-const ny =
-p.y + dy;
-
-
-if(
-nx < 0 ||
-ny < 0 ||
-nx >= size ||
-ny >= size
-)
-continue;
-
-
-const key =
-`${nx},${ny}`;
-
-
-if(
-seen.has(key)
-)
-continue;
-
-
+if(!ghost) return null;
+const start={x:ghost.x,y:ghost.y};
+const target={x:player.x,y:player.y};
+const q=[start];
+const seen=new Set([`${start.x},${start.y}`]);
+const parent=new Map();
+const dirs=[['top',0,-1],['right',1,0],['bottom',0,1],['left',-1,0]];
+while(q.length){
+const p=q.shift();
+if(p.x===target.x && p.y===target.y) break;
+const c=grid[p.y][p.x];
+for(const [wall,dx,dy] of dirs){
+if(c.walls[wall]) continue;
+const nx=p.x+dx, ny=p.y+dy;
+if(nx<0||ny<0||nx>=size||ny>=size) continue;
+const key=`${nx},${ny}`;
+if(seen.has(key)) continue;
 seen.add(key);
-
-
-parent.set(
-key,
-`${p.x},${p.y}`
-);
-
-
-q.push({
-
-x:nx,
-y:ny
-
-});
-
+parent.set(key,`${p.x},${p.y}`);
+q.push({x:nx,y:ny});
 }
-
 }
-
-
-const targetKey =
-`${target.x},${target.y}`;
-
-
-if(
-!seen.has(
-targetKey
-)
-)
-return null;
-
-
-let cur =
-targetKey;
-
-
-let prev =
-parent.get(
-cur
-);
-
-
-const startKey =
-`${start.x},${start.y}`;
-
-
-while(
-prev &&
-prev !== startKey
-){
-
-cur =
-prev;
-
-
-prev =
-parent.get(
-cur
-);
-
+const targetKey=`${target.x},${target.y}`;
+if(!seen.has(targetKey)) return null;
+let cur=targetKey;
+let prev=parent.get(cur);
+const startKey=`${start.x},${start.y}`;
+while(prev && prev!==startKey){
+cur=prev;
+prev=parent.get(cur);
 }
-
-
-const [
-x,
-y
-] =
-cur
-.split(',')
-.map(
-Number
-);
-
-
-return {
-x,
-y
-};
-
+const [x,y]=cur.split(',').map(Number);
+return {x,y};
 }
-
-
 
 function ghostCaught(){
-
-if(
-
-mazeType !== 'ghost' ||
-
-!ghost ||
-
-!samePos(
-player,
-ghost
-)
-
-)
-return false;
-
-
+if(mazeType!=='ghost' || !ghost || !samePos(player,ghost)) return false;
 playGhostSound();
-
-
-flashMessage(
-'👻 CAUGHT — BACK TO START!'
-);
-
-
-if(
-moveAnimation
-){
-
-cancelAnimationFrame(
-moveAnimation
-);
-
-
-moveAnimation =
-null;
-
+flashMessage('👻 CAUGHT — BACK TO START!');
+if(moveAnimation){
+cancelAnimationFrame(moveAnimation);
+moveAnimation=null;
 }
-
-
-player = {
-x:0,
-y:0
-};
-
-
-renderPlayer = {
-x:0,
-y:0
-};
-
-
-ghost = {
-
-x:size-1,
-y:0
-
-};
-
-
-ghostMoveCounter =
-0;
-
-
-modeStatusEl.textContent =
-'👻 The ghost caught you! Back to START.';
-
-
+player={x:0,y:0};
+renderPlayer={x:0,y:0};
+ghost={x:size-1,y:0};
+ghostMoveCounter=0;
+modeStatusEl.textContent='👻 The ghost caught you! Back to START.';
 draw();
-
-
-setTimeout(
-
-()=>{
-
-if(
-mazeType === 'ghost' &&
-!won
-){
-
-updateModeStatus();
-
-}
-
-},
-
-1200
-
-);
-
-
+setTimeout(()=>{
+if(mazeType==='ghost' && !won) updateModeStatus();
+},1200);
 return true;
-
 }
-
-
 
 function handleGhostAfterMove(){
-
-if(
-mazeType !== 'ghost' ||
-!ghost
-)
-return false;
-
-
-if(
-ghostCaught()
-)
-return true;
-
-
+if(mazeType!=='ghost' || !ghost) return false;
+if(ghostCaught()) return true;
 ghostMoveCounter++;
-
-
-const interval =
-
-size >= 25
-
-? 2
-
-: 3;
-
-
-if(
-ghostMoveCounter >= interval
-){
-
-ghostMoveCounter =
-0;
-
-
-const next =
-ghostNextStep();
-
-
+const interval=size>=25 ? 2 : 3;
+if(ghostMoveCounter>=interval){
+ghostMoveCounter=0;
+const next=ghostNextStep();
 if(next){
-
-ghost = {
-...next
-};
-
-
+ghost={...next};
 playGhostSound();
-
 }
-
-
-if(
-ghostCaught()
-)
-return true;
-
+if(ghostCaught()) return true;
 }
-
-
 return false;
-
 }
 
-
-
-function canPassOneWay(
-x,
-y,
-nx,
-ny
-){
-
-if(
-mazeType !== 'oneway'
-)
-return true;
-
-
-for(
-const g of oneWayGates
-){
-
-const sameEdge = (
-
-(
-g.fromX === x &&
-g.fromY === y &&
-g.toX === nx &&
-g.toY === ny
-)
-
-||
-
-(
-g.fromX === nx &&
-g.fromY === ny &&
-g.toX === x &&
-g.toY === y
-)
-
+function canPassOneWay(x,y,nx,ny){
+if(mazeType!=='oneway') return true;
+for(const g of oneWayGates){
+const sameEdge=(
+(g.fromX===x && g.fromY===y && g.toX===nx && g.toY===ny) ||
+(g.fromX===nx && g.fromY===ny && g.toX===x && g.toY===y)
 );
-
-
 if(sameEdge){
-
-return (
-
-g.fromX === x &&
-g.fromY === y &&
-g.toX === nx &&
-g.toY === ny
-
-);
-
+return g.fromX===x && g.fromY===y && g.toX===nx && g.toY===ny;
 }
-
 }
-
-
 return true;
-
 }
 
-
-
-function directedPathExists(
-start,
-end
-){
-
-const q = [
-
-{
-x:start.x,
-y:start.y
+function directedPathExists(start,end){
+const q=[{x:start.x,y:start.y}];
+const seen=new Set([`${start.x},${start.y}`]);
+const dirs=[['top',0,-1],['right',1,0],['bottom',0,1],['left',-1,0]];
+while(q.length){
+const p=q.shift();
+if(p.x===end.x && p.y===end.y) return true;
+const c=grid[p.y][p.x];
+for(const [wall,dx,dy] of dirs){
+if(c.walls[wall]) continue;
+const nx=p.x+dx, ny=p.y+dy;
+if(nx<0||ny<0||nx>=size||ny>=size) continue;
+if(!canPassOneWay(p.x,p.y,nx,ny)) continue;
+const key=`${nx},${ny}`;
+if(seen.has(key)) continue;
+seen.add(key);
+q.push({x:nx,y:ny});
 }
-
-];
-
-
-const seen =
-new Set(
-[
-`${start.x},${start.y}`
-]
-);
-
-
-const dirs = [
-
-[
-'top',
-0,
--1
-],
-
-[
-'right',
-1,
-0
-],
-
-[
-'bottom',
-0,
-1
-],
-
-[
-'left',
--1,
-0
-]
-
-];
-
-
-while(
-q.length
-){
-
-const p =
-q.shift();
-
-
-if(
-p.x === end.x &&
-p.y === end.y
-)
-return true;
-
-
-const c =
-grid[p.y][p.x];
-
-
-for(
-const [
-wall,
-dx,
-dy
-]
-of dirs
-){
-
-if(
-c.walls[wall]
-)
-continue;
-
-
-const nx =
-p.x + dx;
-
-
-const ny =
-p.y + dy;
-
-
-if(
-nx < 0 ||
-ny < 0 ||
-nx >= size ||
-ny >= size
-)
-continue;
-
-
-if(
-!canPassOneWay(
-p.x,
-p.y,
-nx,
-ny
-)
-)
-continue;
-
-
-const key =
-`${nx},${ny}`;
-
-
-if(
-seen.has(key)
-)
-continue;
-
-
-seen.add(
-key
-);
-
-
-q.push({
-
-x:nx,
-y:ny
-
-});
-
 }
-
-}
-
-
 return false;
-
 }
-
-
 
 function findMainPath(){
-
-const start = {
-x:0,
-y:0
-};
-
-
-const end = {
-x:size-1,
-y:size-1
-};
-
-
-const q = [
-start
-];
-
-
-const seen =
-new Set(
-[
-'0,0'
-]
-);
-
-
-const parent =
-new Map();
-
-
-const dirs = [
-
-[
-'top',
-0,
--1
-],
-
-[
-'right',
-1,
-0
-],
-
-[
-'bottom',
-0,
-1
-],
-
-[
-'left',
--1,
-0
-]
-
-];
-
-
-while(
-q.length
-){
-
-const p =
-q.shift();
-
-
-if(
-p.x === end.x &&
-p.y === end.y
-)
-break;
-
-
-const c =
-grid[p.y][p.x];
-
-
-for(
-const [
-wall,
-dx,
-dy
-]
-of dirs
-){
-
-if(
-c.walls[wall]
-)
-continue;
-
-
-const nx =
-p.x + dx;
-
-
-const ny =
-p.y + dy;
-
-
-if(
-nx < 0 ||
-ny < 0 ||
-nx >= size ||
-ny >= size
-)
-continue;
-
-
-const key =
-`${nx},${ny}`;
-
-
-if(
-seen.has(key)
-)
-continue;
-
-
+const start={x:0,y:0};
+const end={x:size-1,y:size-1};
+const q=[start];
+const seen=new Set(['0,0']);
+const parent=new Map();
+const dirs=[['top',0,-1],['right',1,0],['bottom',0,1],['left',-1,0]];
+while(q.length){
+const p=q.shift();
+if(p.x===end.x && p.y===end.y) break;
+const c=grid[p.y][p.x];
+for(const [wall,dx,dy] of dirs){
+if(c.walls[wall]) continue;
+const nx=p.x+dx, ny=p.y+dy;
+if(nx<0||ny<0||nx>=size||ny>=size) continue;
+const key=`${nx},${ny}`;
+if(seen.has(key)) continue;
 seen.add(key);
-
-
-parent.set(
-key,
-`${p.x},${p.y}`
-);
-
-
-q.push({
-
-x:nx,
-y:ny
-
-});
-
+parent.set(key,`${p.x},${p.y}`);
+q.push({x:nx,y:ny});
 }
-
 }
-
-
-const path =
-[];
-
-
-let cur =
-`${end.x},${end.y}`;
-
-
-if(
-!seen.has(cur)
-)
-return path;
-
-
+const path=[];
+let cur=`${end.x},${end.y}`;
+if(!seen.has(cur)) return path;
 while(cur){
-
-const [
-x,
-y
-] =
-cur
-.split(',')
-.map(
-Number
-);
-
-
-path.push({
-x,
-y
-});
-
-
-if(
-cur === '0,0'
-)
-break;
-
-
-cur =
-parent.get(
-cur
-);
-
+const [x,y]=cur.split(',').map(Number);
+path.push({x,y});
+if(cur==='0,0') break;
+cur=parent.get(cur);
 }
-
-
 return path.reverse();
-
 }
-
-
 
 function generateOneWayGates(){
-
-oneWayGates =
-[];
-
-
-const path =
-findMainPath();
-
-
-if(
-path.length < 4
-)
-return;
-
-
-const edgeIndexes =
-[];
-
-
-for(
-let i=1;
-i<path.length-2;
-i++
-){
-
-edgeIndexes.push(
-i
-);
-
+oneWayGates=[];
+const path=findMainPath();
+if(path.length<4) return;
+const edgeIndexes=[];
+for(let i=1;i<path.length-2;i++) edgeIndexes.push(i);
+for(let i=edgeIndexes.length-1;i>0;i--){
+const j=Math.floor(rng()*(i+1));
+[edgeIndexes[i],edgeIndexes[j]]=[edgeIndexes[j],edgeIndexes[i]];
 }
-
-
-for(
-let i=edgeIndexes.length-1;
-i>0;
-i--
-){
-
-const j =
-Math.floor(
-rng()*(i+1)
-);
-
-
-[
-edgeIndexes[i],
-edgeIndexes[j]
-] = [
-
-edgeIndexes[j],
-edgeIndexes[i]
-
-];
-
+const target=Math.min(8,Math.max(4,Math.floor(size/4)),edgeIndexes.length);
+for(let k=0;k<target;k++){
+const i=edgeIndexes[k];
+const from=path[i];
+const to=path[i+1];
+oneWayGates.push({fromX:from.x,fromY:from.y,toX:to.x,toY:to.y});
 }
-
-
-const target =
-Math.min(
-
-8,
-
-Math.max(
-4,
-Math.floor(size/4)
-),
-
-edgeIndexes.length
-
-);
-
-
-for(
-let k=0;
-k<target;
-k++
-){
-
-const i =
-edgeIndexes[k];
-
-
-const from =
-path[i];
-
-
-const to =
-path[i+1];
-
-
-oneWayGates.push({
-
-fromX:from.x,
-fromY:from.y,
-toX:to.x,
-toY:to.y
-
-});
-
 }
-
-}
-
-
 
 function cloneWalls(){
-
-return grid.map(
-
-row=>
-
-row.map(
-
-c=>(
-{
-...c.walls
+return grid.map(row=>row.map(c=>({...c.walls})));
 }
-)
-
-)
-
-);
-
-}
-
-
 
 function restoreWalls(snapshot){
-
-if(!snapshot)
-return;
-
-
-for(
-let y=0;
-y<size;
-y++
-){
-
-for(
-let x=0;
-x<size;
-x++
-){
-
-grid[y][x].walls =
-{
-...snapshot[y][x]
-};
-
+if(!snapshot) return;
+for(let y=0;y<size;y++){
+for(let x=0;x<size;x++){
+grid[y][x].walls={...snapshot[y][x]};
+}
+}
 }
 
+function setWallBetween(x,y,nx,ny,closed){
+if(nx===x+1){
+grid[y][x].walls.right=closed;
+grid[ny][nx].walls.left=closed;
+}else if(nx===x-1){
+grid[y][x].walls.left=closed;
+grid[ny][nx].walls.right=closed;
+}else if(ny===y+1){
+grid[y][x].walls.bottom=closed;
+grid[ny][nx].walls.top=closed;
+}else if(ny===y-1){
+grid[y][x].walls.top=closed;
+grid[ny][nx].walls.bottom=closed;
+}
 }
 
-}
-
-
-
-function setWallBetween(
-x,
-y,
-nx,
-ny,
-closed
-){
-
-if(
-nx === x+1
-){
-
-grid[y][x].walls.right =
-closed;
-
-
-grid[ny][nx].walls.left =
-closed;
-
-}
-
-
-else if(
-nx === x-1
-){
-
-grid[y][x].walls.left =
-closed;
-
-
-grid[ny][nx].walls.right =
-closed;
-
-}
-
-
-else if(
-ny === y+1
-){
-
-grid[y][x].walls.bottom =
-closed;
-
-
-grid[ny][nx].walls.top =
-closed;
-
-}
-
-
-else if(
-ny === y-1
-){
-
-grid[y][x].walls.top =
-closed;
-
-
-grid[ny][nx].walls.bottom =
-closed;
-
-}
-
-}
-
-
-
-function pathExists(
-start,
-end
-){
-
-const q = [
-
-{
-x:start.x,
-y:start.y
-}
-
+function pathExists(start,end){
+const q=[{x:start.x,y:start.y}];
+const seen=new Set([`${start.x},${start.y}`]);
+while(q.length){
+const p=q.shift();
+if(p.x===end.x && p.y===end.y) return true;
+const c=grid[p.y][p.x];
+const moves=[
+['top',0,-1],
+['right',1,0],
+['bottom',0,1],
+['left',-1,0]
 ];
-
-
-const seen =
-new Set(
-[
-`${start.x},${start.y}`
-]
-);
-
-
-while(
-q.length
-){
-
-const p =
-q.shift();
-
-
-if(
-p.x === end.x &&
-p.y === end.y
-)
-return true;
-
-
-const c =
-grid[p.y][p.x];
-
-
-const moves = [
-
-[
-'top',
-0,
--1
-],
-
-[
-'right',
-1,
-0
-],
-
-[
-'bottom',
-0,
-1
-],
-
-[
-'left',
--1,
-0
-]
-
-];
-
-
-for(
-const [
-wall,
-dx,
-dy
-]
-of moves
-){
-
-if(
-c.walls[wall]
-)
-continue;
-
-
-const nx =
-p.x + dx;
-
-
-const ny =
-p.y + dy;
-
-
-if(
-nx < 0 ||
-ny < 0 ||
-nx >= size ||
-ny >= size
-)
-continue;
-
-
-const key =
-`${nx},${ny}`;
-
-
-if(
-!seen.has(key)
-){
-
+for(const [wall,dx,dy] of moves){
+if(c.walls[wall]) continue;
+const nx=p.x+dx, ny=p.y+dy;
+if(nx<0||ny<0||nx>=size||ny>=size) continue;
+const key=`${nx},${ny}`;
+if(!seen.has(key)){
 seen.add(key);
-
-
-q.push({
-
-x:nx,
-y:ny
-
-});
-
+q.push({x:nx,y:ny});
 }
-
 }
-
 }
-
-
 return false;
-
 }
-
-
 
 function shiftOneWall(){
-
-if(
-mazeType !== 'moving' ||
-won
-)
-return;
-
-
-for(
-let attempt=0;
-attempt<60;
-attempt++
-){
-
-const x =
-Math.floor(
-rng()*size
-);
-
-
-const y =
-Math.floor(
-rng()*size
-);
-
-
-const horizontal =
-rng() < .5;
-
-
-let nx =
-x +
-(horizontal?1:0);
-
-
-let ny =
-y +
-(horizontal?0:1);
-
-
-if(
-nx >= size ||
-ny >= size
-)
-continue;
-
-
-if(
-
-(
-x === player.x &&
-y === player.y
-)
-
-||
-
-(
-nx === player.x &&
-ny === player.y
-)
-
-)
-continue;
-
-
-if(
-
-(
-x === 0 &&
-y === 0
-)
-
-||
-
-(
-nx === 0 &&
-ny === 0
-)
-
-)
-continue;
-
-
-if(
-
-(
-x === size-1 &&
-y === size-1
-)
-
-||
-
-(
-nx === size-1 &&
-ny === size-1
-)
-
-)
-continue;
-
-
-const oldClosed =
-
-horizontal
-
-? grid[y][x].walls.right
-
-: grid[y][x].walls.bottom;
-
-
-setWallBetween(
-x,
-y,
-nx,
-ny,
-!oldClosed
-);
-
-
-if(
-pathExists(
-
-player,
-
-{
-x:size-1,
-y:size-1
-}
-
-)
-){
-
+if(mazeType!=='moving' || won) return;
+for(let attempt=0;attempt<60;attempt++){
+const x=Math.floor(rng()*size);
+const y=Math.floor(rng()*size);
+const horizontal=rng()<.5;
+let nx=x+(horizontal?1:0);
+let ny=y+(horizontal?0:1);
+if(nx>=size || ny>=size) continue;
+if((x===player.x&&y===player.y)||(nx===player.x&&ny===player.y)) continue;
+if((x===0&&y===0)||(nx===0&&ny===0)) continue;
+if((x===size-1&&y===size-1)||(nx===size-1&&ny===size-1)) continue;
+const oldClosed=horizontal ? grid[y][x].walls.right : grid[y][x].walls.bottom;
+setWallBetween(x,y,nx,ny,!oldClosed);
+if(pathExists(player,{x:size-1,y:size-1})){
 playWallShiftSound();
-
-
 draw();
-
-
-updateModeStatus(
-'🧱 WHOOSH — a wall just shifted!'
-);
-
-
-setTimeout(
-
-()=>{
-
-if(
-mazeType === 'moving' &&
-!won
-){
-
-updateModeStatus();
-
-}
-
-},
-
-1200
-
-);
-
-
+updateModeStatus('🧱 WHOOSH — a wall just shifted!');
+setTimeout(()=>{
+if(mazeType==='moving' && !won) updateModeStatus();
+},1200);
 return;
-
 }
-
-
-setWallBetween(
-x,
-y,
-nx,
-ny,
-oldClosed
-);
-
+setWallBetween(x,y,nx,ny,oldClosed);
 }
-
 }
-
-
 
 function startMovingWalls(){
-
-clearInterval(
-movingWallTimer
-);
-
-
-movingWallTimer =
-null;
-
-
-if(
-mazeType !== 'moving'
-)
-return;
-
-
-movingWallTimer =
-setInterval(
-shiftOneWall,
-4500
-);
-
+clearInterval(movingWallTimer);
+movingWallTimer=null;
+if(mazeType!=='moving') return;
+movingWallTimer=setInterval(shiftOneWall,4500);
 }
-
-
 
 function handleTreasure(){
-
-if(
-mazeType !== 'treasure'
-)
-return;
-
-
-for(
-let i=0;
-i<treasures.length;
-i++
-){
-
-const gem =
-treasures[i];
-
-
-if(
-!gem.collected &&
-samePos(
-player,
-gem
-)
-){
-
-gem.collected =
-true;
-
-
+if(mazeType!=='treasure') return;
+for(let i=0;i<treasures.length;i++){
+const gem=treasures[i];
+if(!gem.collected && samePos(player,gem)){
+gem.collected=true;
 treasuresCollected++;
-
-
-playGemSound(
-i
-);
-
-
-if(
-treasuresCollected === 3
-){
-
+playGemSound(i);
+if(treasuresCollected===3){
 playUnlockSound();
-
-
-flashMessage(
-'💎 ALL GEMS FOUND — EXIT UNLOCKED!'
-);
-
+flashMessage('💎 ALL GEMS FOUND — EXIT UNLOCKED!');
+}else{
+flashMessage(`💎 GEM ${treasuresCollected} OF 3!`);
 }
-
-
-else{
-
-flashMessage(
-`💎 GEM ${treasuresCollected} OF 3!`
-);
-
-}
-
-
 updateModeStatus();
-
-
 break;
-
 }
-
 }
-
 }
-
-
 
 function handleTrap(){
-
-if(
-mazeType !== 'traps'
-)
-return false;
-
-
-if(
-!trapTiles.some(
-t=>samePos(
-player,
-t
-)
-)
-)
-return false;
-
-
+if(mazeType!=='traps') return false;
+if(!trapTiles.some(t=>samePos(player,t))) return false;
 playTrapSound();
-
-
-const landing =
-randomOpenCell(
-trapTiles
-);
-
-
-player = {
-...landing
-};
-
-
-renderPlayer = {
-...landing
-};
-
-
-flashMessage(
-'⚠️ TRAP! TELEPORTED!'
-);
-
-
-updateModeStatus(
-'⚠️ Trap tile! You were teleported somewhere else.'
-);
-
-
+const landing=randomOpenCell(trapTiles);
+player={...landing};
+renderPlayer={...landing};
+flashMessage('⚠️ TRAP! TELEPORTED!');
+updateModeStatus('⚠️ Trap tile! You were teleported somewhere else.');
 draw();
-
-
-setTimeout(
-
-()=>{
-
-if(
-mazeType === 'traps' &&
-!won
-){
-
-updateModeStatus();
-
-}
-
-},
-
-1300
-
-);
-
-
+setTimeout(()=>{
+if(mazeType==='traps' && !won) updateModeStatus();
+},1300);
 return true;
-
 }
 
-
-
-function moveIce(
-dir
-){
-
-if(won)
-return;
-
-
-const delta = {
-
-up:[
-0,
--1,
-'top'
-],
-
-right:[
-1,
-0,
-'right'
-],
-
-down:[
-0,
-1,
-'bottom'
-],
-
-left:[
--1,
-0,
-'left'
-]
-
+function moveIce(dir){
+if(won) return;
+const delta={
+up:[0,-1,'top'],
+right:[1,0,'right'],
+down:[0,1,'bottom'],
+left:[-1,0,'left']
 }[dir];
-
-
-if(!delta)
-return;
-
-
-let x =
-player.x;
-
-
-let y =
-player.y;
-
-
-let traveled =
-0;
-
-
+if(!delta) return;
+let x=player.x, y=player.y;
+let traveled=0;
 while(true){
-
-const c =
-grid[y][x];
-
-
-if(
-c.walls[
-delta[2]
-]
-)
-break;
-
-
-const nx =
-x + delta[0];
-
-
-const ny =
-y + delta[1];
-
-
-if(
-nx < 0 ||
-ny < 0 ||
-nx >= size ||
-ny >= size
-)
-break;
-
-
-x =
-nx;
-
-
-y =
-ny;
-
-
-traveled++;
-
+const c=grid[y][x];
+if(c.walls[delta[2]]) break;
+const nx=x+delta[0], ny=y+delta[1];
+if(nx<0||ny<0||nx>=size||ny>=size) break;
+x=nx; y=ny; traveled++;
 }
-
-
-if(!traveled)
-return;
-
-
+if(!traveled) return;
 startClock();
-
-
-steps +=
-traveled;
-
-
-stepsEl.textContent =
-steps;
-
-
-player = {
-x,
-y
-};
-
-
+steps+=traveled;
+stepsEl.textContent=steps;
+player={x,y};
 playIceSound();
-
-
-const duration =
-Math.min(
-380,
-90+traveled*28
-);
-
-
-animatePlayerTo(
-x,
-y,
-duration
-);
-
-
-if(
-player.x === size-1 &&
-player.y === size-1
-){
-
-setTimeout(
-
-()=>{
-
-if(
-
-!won &&
-
-player.x === size-1 &&
-
-player.y === size-1
-
-){
-
-finish();
-
+const duration=Math.min(380,90+traveled*28);
+animatePlayerTo(x,y,duration);
+if(player.x===size-1 && player.y===size-1){
+setTimeout(()=>{
+if(!won && player.x===size-1 && player.y===size-1) finish();
+},duration);
 }
-
-},
-
-duration
-
-);
-
 }
-
-}
-
-
 
 function startMemoryCountdown(){
-
-clearTimeout(
-memoryTimer
-);
-
-
-memoryTimer =
-null;
-
-
-if(
-mazeType !== 'memory'
-){
-
+clearTimeout(memoryTimer);
+memoryTimer=null;
+if(mazeType!=='memory'){
 updateModeStatus();
-
 return;
-
 }
-
-
-memoryVisible =
-true;
-
-
+memoryVisible=true;
 updateModeStatus();
-
-
 draw();
-
-
-memoryTimer =
-setTimeout(
-
-()=>{
-
-memoryVisible =
-false;
-
-
+memoryTimer=setTimeout(()=>{
+memoryVisible=false;
 updateModeStatus();
-
-
 draw();
-
-},
-
-4000
-
-);
-
+},4000);
 }
-
-
 
 function generateMaze(){
-
-grid =
-Array.from(
-
-{
-length:size
-},
-
-(_,y)=>
-
-Array.from(
-
-{
-length:size
-},
-
-(_,x)=>
-makeCell(
-x,
-y
-)
-
-)
-
-);
-
-
-const stack =
-[];
-
-
-let current =
-grid[0][0];
-
-
-current.visited =
-true;
-
-
+grid = Array.from({length:size},(_,y)=>Array.from({length:size},(_,x)=>makeCell(x,y)));
+const stack = [];
+let current = grid[0][0];
+current.visited = true;
 while(true){
-
-const neighbors =
-[];
-
-
-const {
-x,
-y
-} =
-current;
-
-
-if(
-y>0 &&
-!grid[y-1][x].visited
-){
-
-neighbors.push({
-
-cell:
-grid[y-1][x],
-
-dir:
-'top'
-
-});
-
+const neighbors = [];
+const {x,y} = current;
+if(y>0 && !grid[y-1][x].visited) neighbors.push({cell:grid[y-1][x],dir:'top'});
+if(x<size-1 && !grid[y][x+1].visited) neighbors.push({cell:grid[y][x+1],dir:'right'});
+if(y<size-1 && !grid[y+1][x].visited) neighbors.push({cell:grid[y+1][x],dir:'bottom'});
+if(x>0 && !grid[y][x-1].visited) neighbors.push({cell:grid[y][x-1],dir:'left'});
+if(neighbors.length){
+const pick = neighbors[Math.floor(rng()*neighbors.length)];
+const next = pick.cell;
+if(pick.dir==='top'){current.walls.top=false;next.walls.bottom=false}
+if(pick.dir==='right'){current.walls.right=false;next.walls.left=false}
+if(pick.dir==='bottom'){current.walls.bottom=false;next.walls.top=false}
+if(pick.dir==='left'){current.walls.left=false;next.walls.right=false}
+stack.push(current);
+current = next;
+current.visited = true;
+} else if(stack.length){
+current = stack.pop();
+} else break;
 }
-
-
-if(
-x<size-1 &&
-!grid[y][x+1].visited
-){
-
-neighbors.push({
-
-cell:
-grid[y][x+1],
-
-dir:
-'right'
-
-});
-
 }
-
-
-if(
-y<size-1 &&
-!grid[y+1][x].visited
-){
-
-neighbors.push({
-
-cell:
-grid[y+1][x],
-
-dir:
-'bottom'
-
-});
-
-}
-
-
-if(
-x>0 &&
-!grid[y][x-1].visited
-){
-
-neighbors.push({
-
-cell:
-grid[y][x-1],
-
-dir:
-'left'
-
-});
-
-}
-
-
-if(
-neighbors.length
-){
-
-const pick =
-
-neighbors[
-Math.floor(
-rng()*neighbors.length
-)
-];
-
-
-const next =
-pick.cell;
-
-
-if(
-pick.dir === 'top'
-){
-
-current.walls.top =
-false;
-
-
-next.walls.bottom =
-false;
-
-}
-
-
-if(
-pick.dir === 'right'
-){
-
-current.walls.right =
-false;
-
-
-next.walls.left =
-false;
-
-}
-
-
-if(
-pick.dir === 'bottom'
-){
-
-current.walls.bottom =
-false;
-
-
-next.walls.top =
-false;
-
-}
-
-
-if(
-pick.dir === 'left'
-){
-
-current.walls.left =
-false;
-
-
-next.walls.right =
-false;
-
-}
-
-
-stack.push(
-current
-);
-
-
-current =
-next;
-
-
-current.visited =
-true;
-
-}
-
-
-else if(
-stack.length
-){
-
-current =
-stack.pop();
-
-}
-
-
-else{
-
-break;
-
-}
-
-}
-
-}
-
-
 
 function resizeCanvas(){
-
-const rect =
-wrap.getBoundingClientRect();
-
-
-const dpr =
-window.devicePixelRatio || 1;
-
-
-canvas.width =
-Math.floor(
-rect.width*dpr
-);
-
-
-canvas.height =
-Math.floor(
-rect.width*dpr
-);
-
-
-canvas.style.width =
-rect.width+'px';
-
-
-canvas.style.height =
-rect.width+'px';
-
-
-ctx.setTransform(
-dpr,
-0,
-0,
-dpr,
-0,
-0
-);
-
-
+const rect = wrap.getBoundingClientRect();
+const dpr = window.devicePixelRatio || 1;
+canvas.width = Math.floor(rect.width*dpr);
+canvas.height = Math.floor(rect.width*dpr);
+canvas.style.width = rect.width+'px';
+canvas.style.height = rect.width+'px';
+ctx.setTransform(dpr,0,0,dpr,0,0);
 draw();
-
 }
-
-
 
 function drawOverhead(){
+const w = wrap.clientWidth;
+const cell = w/size;
+ctx.clearRect(0,0,w,w);
+ctx.fillStyle='#07101c';
+ctx.fillRect(0,0,w,w);
 
-const w =
-wrap.clientWidth;
-
-
-const cell =
-w/size;
-
-
-ctx.clearRect(
-0,
-0,
-w,
-w
-);
-
-
-ctx.fillStyle =
-'#07101c';
-
-
-ctx.fillRect(
-0,
-0,
-w,
-w
-);
-
-
-if(
-mazeType === 'ice'
-){
-
-const iceGlow =
-ctx.createLinearGradient(
-0,
-0,
-w,
-w
-);
-
-
-iceGlow.addColorStop(
-0,
-'rgba(80,190,255,.12)'
-);
-
-
-iceGlow.addColorStop(
-1,
-'rgba(180,235,255,.04)'
-);
-
-
-ctx.fillStyle =
-iceGlow;
-
-
-ctx.fillRect(
-0,
-0,
-w,
-w
-);
-
+if(mazeType==='ice'){
+const iceGlow=ctx.createLinearGradient(0,0,w,w);
+iceGlow.addColorStop(0,'rgba(80,190,255,.12)');
+iceGlow.addColorStop(1,'rgba(180,235,255,.04)');
+ctx.fillStyle=iceGlow;
+ctx.fillRect(0,0,w,w);
 }
 
-
-if(
-mazeType === 'mirror'
-){
-
-const mirrorGlow =
-ctx.createLinearGradient(
-0,
-0,
-w,
-w
-);
-
-
-mirrorGlow.addColorStop(
-0,
-'rgba(190,110,255,.10)'
-);
-
-
-mirrorGlow.addColorStop(
-1,
-'rgba(95,210,255,.06)'
-);
-
-
-ctx.fillStyle =
-mirrorGlow;
-
-
-ctx.fillRect(
-0,
-0,
-w,
-w
-);
-
+if(mazeType==='mirror'){
+const mirrorGlow=ctx.createLinearGradient(0,0,w,w);
+mirrorGlow.addColorStop(0,'rgba(190,110,255,.10)');
+mirrorGlow.addColorStop(1,'rgba(95,210,255,.06)');
+ctx.fillStyle=mirrorGlow;
+ctx.fillRect(0,0,w,w);
 }
 
-
-
-const ex =
-(size-1)*cell +
-cell/2;
-
-
-const ey =
-(size-1)*cell +
-cell/2;
-
+const ex=(size-1)*cell+cell/2;
+const ey=(size-1)*cell+cell/2;
 
 const exitLocked =
+(mazeType==='keys' && !hasKey) ||
+(mazeType==='twodots' && !dotSolved) ||
+(mazeType==='treasure' && treasuresCollected<3) ||
+(mazeType==='coins' && coinsCollected<5);
 
-(
-mazeType === 'keys' &&
-!hasKey
-)
+const grad=ctx.createRadialGradient(ex,ey,0,ex,ey,cell*.9);
+grad.addColorStop(0,exitLocked?'rgba(255,127,147,.82)':'rgba(110,231,168,.8)');
+grad.addColorStop(1,exitLocked?'rgba(255,127,147,0)':'rgba(110,231,168,0)');
+ctx.fillStyle=grad;
+ctx.fillRect(ex-cell,ey-cell,cell*2,cell*2);
 
-||
+ctx.strokeStyle='#d9e7ff';
+ctx.lineWidth=Math.max(1.2,Math.min(3,24/size));
+ctx.lineCap='square';
 
-(
-mazeType === 'twodots' &&
-!dotSolved
-)
+const showWalls = mazeType!=='memory' || memoryVisible;
 
-||
-
-(
-mazeType === 'treasure' &&
-treasuresCollected < 3
-)
-
-||
-
-(
-mazeType === 'coins' &&
-coinsCollected < 5
-);
-
-
-
-const grad =
-ctx.createRadialGradient(
-ex,
-ey,
-0,
-ex,
-ey,
-cell*.9
-);
-
-
-grad.addColorStop(
-
-0,
-
-exitLocked
-
-? 'rgba(255,127,147,.82)'
-
-: 'rgba(110,231,168,.8)'
-
-);
-
-
-grad.addColorStop(
-
-1,
-
-exitLocked
-
-? 'rgba(255,127,147,0)'
-
-: 'rgba(110,231,168,0)'
-
-);
-
-
-ctx.fillStyle =
-grad;
-
-
-ctx.fillRect(
-ex-cell,
-ey-cell,
-cell*2,
-cell*2
-);
-
-
-
-ctx.strokeStyle =
-'#d9e7ff';
-
-
-ctx.lineWidth =
-Math.max(
-1.2,
-Math.min(
-3,
-24/size
-)
-);
-
-
-ctx.lineCap =
-'square';
-
-
-const showWalls =
-
-mazeType !== 'memory'
-
-||
-
-memoryVisible;
-
-
-
-if(
-showWalls
-){
-
-for(
-let y=0;
-y<size;
-y++
-){
-
-for(
-let x=0;
-x<size;
-x++
-){
-
-const c =
-grid[y][x];
-
-
-const px =
-x*cell;
-
-
-const py =
-y*cell;
-
-
+if(showWalls){
+for(let y=0;y<size;y++){
+for(let x=0;x<size;x++){
+const c=grid[y][x];
+const px=x*cell;
+const py=y*cell;
 ctx.beginPath();
-
-
-if(
-c.walls.top
-){
-
-ctx.moveTo(
-px,
-py
-);
-
-ctx.lineTo(
-px+cell,
-py
-);
-
-}
-
-
-if(
-c.walls.right
-){
-
-ctx.moveTo(
-px+cell,
-py
-);
-
-ctx.lineTo(
-px+cell,
-py+cell
-);
-
-}
-
-
-if(
-c.walls.bottom
-){
-
-ctx.moveTo(
-px,
-py+cell
-);
-
-ctx.lineTo(
-px+cell,
-py+cell
-);
-
-}
-
-
-if(
-c.walls.left
-){
-
-ctx.moveTo(
-px,
-py
-);
-
-ctx.lineTo(
-px,
-py+cell
-);
-
-}
-
-
+if(c.walls.top){ctx.moveTo(px,py);ctx.lineTo(px+cell,py)}
+if(c.walls.right){ctx.moveTo(px+cell,py);ctx.lineTo(px+cell,py+cell)}
+if(c.walls.bottom){ctx.moveTo(px,py+cell);ctx.lineTo(px+cell,py+cell)}
+if(c.walls.left){ctx.moveTo(px,py);ctx.lineTo(px,py+cell)}
 ctx.stroke();
-
+}
+}
+} else {
+ctx.strokeStyle='rgba(217,231,255,.18)';
+ctx.lineWidth=2;
+ctx.strokeRect(1,1,w-2,w-2);
 }
 
-}
-
-}
-
-
-else{
-
-ctx.strokeStyle =
-'rgba(217,231,255,.18)';
-
-
-ctx.lineWidth =
-2;
-
-
-ctx.strokeRect(
-1,
-1,
-w-2,
-w-2
-);
-
-}
-
-
-
-ctx.fillStyle =
-'#65d8ff';
-
-
+ctx.fillStyle='#65d8ff';
 ctx.beginPath();
-
-
-ctx.arc(
-cell/2,
-cell/2,
-Math.max(
-2.5,
-cell*.18
-),
-0,
-Math.PI*2
-);
-
-
+ctx.arc(cell/2,cell/2,Math.max(2.5,cell*.18),0,Math.PI*2);
 ctx.fill();
 
-
-
-ctx.fillStyle =
-
-exitLocked
-
-? '#ff7f93'
-
-: '#6ee7a8';
-
-
+ctx.fillStyle=exitLocked?'#ff7f93':'#6ee7a8';
 ctx.beginPath();
-
-
-ctx.arc(
-ex,
-ey,
-Math.max(
-3,
-cell*.24
-),
-0,
-Math.PI*2
-);
-
-
+ctx.arc(ex,ey,Math.max(3,cell*.24),0,Math.PI*2);
 ctx.fill();
 
-
-
-if(
-exitLocked
-){
-
-ctx.strokeStyle =
-'#ffffff';
-
-
-ctx.lineWidth =
-Math.max(
-1.5,
-cell*.08
-);
-
-
-ctx.strokeRect(
-ex-cell*.18,
-ey-cell*.02,
-cell*.36,
-cell*.28
-);
-
-
+if(exitLocked){
+ctx.strokeStyle='#ffffff';
+ctx.lineWidth=Math.max(1.5,cell*.08);
+ctx.strokeRect(ex-cell*.18,ey-cell*.02,cell*.36,cell*.28);
 ctx.beginPath();
-
-
-ctx.arc(
-ex,
-ey-cell*.04,
-cell*.13,
-Math.PI,
-0
-);
-
-
+ctx.arc(ex,ey-cell*.04,cell*.13,Math.PI,0);
 ctx.stroke();
-
 }
 
-
-
-if(
-mazeType === 'keys' &&
-keyPos
-){
-
-const kx =
-keyPos.x*cell +
-cell/2;
-
-
-const ky =
-keyPos.y*cell +
-cell/2;
-
-
-ctx.strokeStyle =
-'#ffd76a';
-
-
-ctx.lineWidth =
-Math.max(
-2,
-cell*.10
-);
-
-
+if(mazeType==='keys' && keyPos){
+const kx=keyPos.x*cell+cell/2;
+const ky=keyPos.y*cell+cell/2;
+ctx.strokeStyle='#ffd76a';
+ctx.lineWidth=Math.max(2,cell*.10);
 ctx.beginPath();
-
-
-ctx.arc(
-kx-cell*.10,
-ky,
-Math.max(
-3,
-cell*.16
-),
-0,
-Math.PI*2
-);
-
-
+ctx.arc(kx-cell*.10,ky,Math.max(3,cell*.16),0,Math.PI*2);
 ctx.stroke();
-
-
 ctx.beginPath();
-
-
-ctx.moveTo(
-kx+cell*.05,
-ky
-);
-
-
-ctx.lineTo(
-kx+cell*.28,
-ky
-);
-
-
-ctx.lineTo(
-kx+cell*.28,
-ky+cell*.12
-);
-
-
-ctx.moveTo(
-kx+cell*.17,
-ky
-);
-
-
-ctx.lineTo(
-kx+cell*.17,
-ky+cell*.10
-);
-
-
+ctx.moveTo(kx+cell*.05,ky);
+ctx.lineTo(kx+cell*.28,ky);
+ctx.lineTo(kx+cell*.28,ky+cell*.12);
+ctx.moveTo(kx+cell*.17,ky);
+ctx.lineTo(kx+cell*.17,ky+cell*.10);
 ctx.stroke();
-
 }
 
-
-
-if(
-mazeType === 'portal' &&
-portals.length === 2
-){
-
-const colors = [
-'#9a6cff',
-'#ffd166'
-];
-
-
-portals.forEach(
-(p,i)=>{
-
-const qx =
-p.x*cell +
-cell/2;
-
-
-const qy =
-p.y*cell +
-cell/2;
-
-
-ctx.strokeStyle =
-colors[i];
-
-
-ctx.lineWidth =
-Math.max(
-2.5,
-cell*.12
-);
-
-
-ctx.shadowColor =
-colors[i];
-
-
-ctx.shadowBlur =
-Math.max(
-7,
-cell*.5
-);
-
-
+if(mazeType==='portal' && portals.length===2){
+const colors=['#9a6cff','#ffd166'];
+portals.forEach((p,i)=>{
+const qx=p.x*cell+cell/2;
+const qy=p.y*cell+cell/2;
+ctx.strokeStyle=colors[i];
+ctx.lineWidth=Math.max(2.5,cell*.12);
+ctx.shadowColor=colors[i];
+ctx.shadowBlur=Math.max(7,cell*.5);
 ctx.beginPath();
-
-
-ctx.arc(
-qx,
-qy,
-Math.max(
-5,
-cell*.28
-),
-0,
-Math.PI*2
-);
-
-
+ctx.arc(qx,qy,Math.max(5,cell*.28),0,Math.PI*2);
 ctx.stroke();
-
-
-ctx.shadowBlur =
-0;
-
-}
-);
-
+ctx.shadowBlur=0;
+});
 }
 
-
-
-if(
-mazeType === 'twodots' &&
-!dotSolved &&
-mysteryDots.length === 2
-){
-
-mysteryDots.forEach(
-(p)=>{
-
-const qx =
-p.x*cell +
-cell/2;
-
-
-const qy =
-p.y*cell +
-cell/2;
-
-
-const dotColor =
-
-p.wrong
-
-? '#ff7f93'
-
-: '#f6f8ff';
-
-
-ctx.fillStyle =
-dotColor;
-
-
-ctx.strokeStyle =
-
-p.wrong
-
-? 'rgba(255,127,147,.45)'
-
-: '#b96cff';
-
-
-ctx.lineWidth =
-Math.max(
-2,
-cell*.10
-);
-
-
-ctx.shadowColor =
-
-p.wrong
-
-? '#ff7f93'
-
-: '#b96cff';
-
-
-ctx.shadowBlur =
-Math.max(
-8,
-cell*.55
-);
-
-
+if(mazeType==='twodots' && !dotSolved && mysteryDots.length===2){
+mysteryDots.forEach((p)=>{
+const qx=p.x*cell+cell/2;
+const qy=p.y*cell+cell/2;
+const dotColor=p.wrong?'#ff7f93':'#f6f8ff';
+ctx.fillStyle=dotColor;
+ctx.strokeStyle=p.wrong?'rgba(255,127,147,.45)':'#b96cff';
+ctx.lineWidth=Math.max(2,cell*.10);
+ctx.shadowColor=p.wrong?'#ff7f93':'#b96cff';
+ctx.shadowBlur=Math.max(8,cell*.55);
 ctx.beginPath();
-
-
-ctx.arc(
-qx,
-qy,
-Math.max(
-4,
-cell*.22
-),
-0,
-Math.PI*2
-);
-
-
+ctx.arc(qx,qy,Math.max(4,cell*.22),0,Math.PI*2);
 ctx.fill();
-
-
 ctx.stroke();
-
-
-ctx.shadowBlur =
-0;
-
-}
-);
-
+ctx.shadowBlur=0;
+});
 }
 
-
-
-if(
-mazeType === 'treasure'
-){
-
-treasures.forEach(
-(gem,i)=>{
-
-if(
-gem.collected
-)
-return;
-
-
-const gx =
-gem.x*cell +
-cell/2;
-
-
-const gy =
-gem.y*cell +
-cell/2;
-
-
+if(mazeType==='treasure'){
+treasures.forEach((gem,i)=>{
+if(gem.collected) return;
+const gx=gem.x*cell+cell/2;
+const gy=gem.y*cell+cell/2;
 ctx.save();
-
-
-ctx.translate(
-gx,
-gy
-);
-
-
-ctx.rotate(
-Math.PI/4
-);
-
-
-ctx.fillStyle =
-
-[
-'#60e5ff',
-'#8dffb7',
-'#ffd76a'
-][i%3];
-
-
-ctx.shadowColor =
-ctx.fillStyle;
-
-
-ctx.shadowBlur =
-Math.max(
-8,
-cell*.55
-);
-
-
-const s =
-Math.max(
-4,
-cell*.20
-);
-
-
-ctx.fillRect(
--s,
--s,
-s*2,
-s*2
-);
-
-
+ctx.translate(gx,gy);
+ctx.rotate(Math.PI/4);
+ctx.fillStyle=['#60e5ff','#8dffb7','#ffd76a'][i%3];
+ctx.shadowColor=ctx.fillStyle;
+ctx.shadowBlur=Math.max(8,cell*.55);
+const s=Math.max(4,cell*.20);
+ctx.fillRect(-s,-s,s*2,s*2);
 ctx.restore();
-
-
-ctx.shadowBlur =
-0;
-
-}
-);
-
+ctx.shadowBlur=0;
+});
 }
 
-
-
-if(
-mazeType === 'traps'
-){
-
-trapTiles.forEach(
-t=>{
-
-const tx =
-t.x*cell +
-cell/2;
-
-
-const ty =
-t.y*cell +
-cell/2;
-
-
+if(mazeType==='traps'){
+trapTiles.forEach(t=>{
+const tx=t.x*cell+cell/2;
+const ty=t.y*cell+cell/2;
 ctx.save();
-
-
-ctx.translate(
-tx,
-ty
-);
-
-
-ctx.rotate(
-Math.PI/4
-);
-
-
-ctx.fillStyle =
-'rgba(255,112,77,.90)';
-
-
-ctx.strokeStyle =
-'#ffd0c4';
-
-
-ctx.lineWidth =
-Math.max(
-1.5,
-cell*.07
-);
-
-
-ctx.shadowColor =
-'#ff704d';
-
-
-ctx.shadowBlur =
-Math.max(
-7,
-cell*.45
-);
-
-
-const s =
-Math.max(
-4,
-cell*.20
-);
-
-
-ctx.fillRect(
--s,
--s,
-s*2,
-s*2
-);
-
-
-ctx.strokeRect(
--s,
--s,
-s*2,
-s*2
-);
-
-
+ctx.translate(tx,ty);
+ctx.rotate(Math.PI/4);
+ctx.fillStyle='rgba(255,112,77,.90)';
+ctx.strokeStyle='#ffd0c4';
+ctx.lineWidth=Math.max(1.5,cell*.07);
+ctx.shadowColor='#ff704d';
+ctx.shadowBlur=Math.max(7,cell*.45);
+const s=Math.max(4,cell*.20);
+ctx.fillRect(-s,-s,s*2,s*2);
+ctx.strokeRect(-s,-s,s*2,s*2);
 ctx.restore();
-
-
-ctx.shadowBlur =
-0;
-
-}
-);
-
+ctx.shadowBlur=0;
+});
 }
 
-
-
-if(
-mazeType === 'coins'
-){
-
-coins.forEach(
-coin=>{
-
-if(
-coin.collected
-)
-return;
-
-
-const cx =
-coin.x*cell +
-cell/2;
-
-
-const cy =
-coin.y*cell +
-cell/2;
-
-
-ctx.fillStyle =
-'#ffd84f';
-
-
-ctx.strokeStyle =
-'#fff3a1';
-
-
-ctx.lineWidth =
-Math.max(
-1.5,
-cell*.07
-);
-
-
-ctx.shadowColor =
-'#ffd84f';
-
-
-ctx.shadowBlur =
-Math.max(
-7,
-cell*.45
-);
-
-
+if(mazeType==='coins'){
+coins.forEach((coin)=>{
+if(coin.collected) return;
+const cx=coin.x*cell+cell/2;
+const cy=coin.y*cell+cell/2;
+ctx.fillStyle='#ffd84f';
+ctx.strokeStyle='#fff3a1';
+ctx.lineWidth=Math.max(1.5,cell*.07);
+ctx.shadowColor='#ffd84f';
+ctx.shadowBlur=Math.max(7,cell*.45);
 ctx.beginPath();
-
-
-ctx.arc(
-cx,
-cy,
-Math.max(
-4,
-cell*.22
-),
-0,
-Math.PI*2
-);
-
-
+ctx.arc(cx,cy,Math.max(4,cell*.22),0,Math.PI*2);
 ctx.fill();
-
-
 ctx.stroke();
-
-
-ctx.shadowBlur =
-0;
-
-
-ctx.fillStyle =
-'#8b6500';
-
-
-ctx.font =
-`${Math.max(7,cell*.24)}px sans-serif`;
-
-
-ctx.textAlign =
-'center';
-
-
-ctx.textBaseline =
-'middle';
-
-
-ctx.fillText(
-'¢',
-cx,
-cy+.5
-);
-
-}
-);
-
+ctx.shadowBlur=0;
+ctx.fillStyle='#8b6500';
+ctx.font=`${Math.max(7,cell*.24)}px sans-serif`;
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText('¢',cx,cy+.5);
+});
 }
 
-
-
-if(
-mazeType === 'ghost' &&
-ghost
-){
-
-const gx =
-ghost.x*cell +
-cell/2;
-
-
-const gy =
-ghost.y*cell +
-cell/2;
-
-
+if(mazeType==='ghost' && ghost){
+const gx=ghost.x*cell+cell/2;
+const gy=ghost.y*cell+cell/2;
 ctx.save();
-
-
-ctx.fillStyle =
-'rgba(190,105,255,.92)';
-
-
-ctx.shadowColor =
-'#c46cff';
-
-
-ctx.shadowBlur =
-Math.max(
-10,
-cell*.7
-);
-
-
+ctx.fillStyle='rgba(190,105,255,.92)';
+ctx.shadowColor='#c46cff';
+ctx.shadowBlur=Math.max(10,cell*.7);
 ctx.beginPath();
-
-
-ctx.arc(
-gx,
-gy,
-Math.max(
-5,
-cell*.28
-),
-Math.PI,
-0
-);
-
-
-ctx.lineTo(
-gx+Math.max(5,cell*.28),
-gy+Math.max(4,cell*.22)
-);
-
-
-ctx.lineTo(
-gx+Math.max(2,cell*.10),
-gy+Math.max(2,cell*.12)
-);
-
-
-ctx.lineTo(
-gx,
-gy+Math.max(4,cell*.22)
-);
-
-
-ctx.lineTo(
-gx-Math.max(2,cell*.10),
-gy+Math.max(2,cell*.12)
-);
-
-
-ctx.lineTo(
-gx-Math.max(5,cell*.28),
-gy+Math.max(4,cell*.22)
-);
-
-
+ctx.arc(gx,gy,Math.max(5,cell*.28),Math.PI,0);
+ctx.lineTo(gx+Math.max(5,cell*.28),gy+Math.max(4,cell*.22));
+ctx.lineTo(gx+Math.max(2,cell*.10),gy+Math.max(2,cell*.12));
+ctx.lineTo(gx,gy+Math.max(4,cell*.22));
+ctx.lineTo(gx-Math.max(2,cell*.10),gy+Math.max(2,cell*.12));
+ctx.lineTo(gx-Math.max(5,cell*.28),gy+Math.max(4,cell*.22));
 ctx.closePath();
-
-
 ctx.fill();
-
-
-ctx.shadowBlur =
-0;
-
-
-ctx.fillStyle =
-'#ffffff';
-
-
-const er =
-Math.max(
-1.6,
-cell*.065
-);
-
-
+ctx.shadowBlur=0;
+ctx.fillStyle='#ffffff';
+const er=Math.max(1.6,cell*.065);
 ctx.beginPath();
-
-
-ctx.arc(
-gx-cell*.08,
-gy-cell*.03,
-er,
-0,
-Math.PI*2
-);
-
-
+ctx.arc(gx-cell*.08,gy-cell*.03,er,0,Math.PI*2);
 ctx.fill();
-
-
 ctx.beginPath();
-
-
-ctx.arc(
-gx+cell*.08,
-gy-cell*.03,
-er,
-0,
-Math.PI*2
-);
-
-
+ctx.arc(gx+cell*.08,gy-cell*.03,er,0,Math.PI*2);
 ctx.fill();
-
-
 ctx.restore();
-
 }
 
-
-
-if(
-mazeType === 'oneway'
-){
-
-oneWayGates.forEach(
-g=>{
-
-const x1 =
-g.fromX*cell +
-cell/2;
-
-
-const y1 =
-g.fromY*cell +
-cell/2;
-
-
-const x2 =
-g.toX*cell +
-cell/2;
-
-
-const y2 =
-g.toY*cell +
-cell/2;
-
-
-const mx =
-(x1+x2)/2;
-
-
-const my =
-(y1+y2)/2;
-
-
-const angle =
-Math.atan2(
-y2-y1,
-x2-x1
-);
-
-
+if(mazeType==='oneway'){
+oneWayGates.forEach(g=>{
+const x1=g.fromX*cell+cell/2;
+const y1=g.fromY*cell+cell/2;
+const x2=g.toX*cell+cell/2;
+const y2=g.toY*cell+cell/2;
+const mx=(x1+x2)/2;
+const my=(y1+y2)/2;
+const angle=Math.atan2(y2-y1,x2-x1);
 ctx.save();
-
-
-ctx.translate(
-mx,
-my
-);
-
-
-ctx.rotate(
-angle
-);
-
-
-ctx.strokeStyle =
-'#ffcc66';
-
-
-ctx.fillStyle =
-'#ffcc66';
-
-
-ctx.lineWidth =
-Math.max(
-2,
-cell*.09
-);
-
-
-ctx.shadowColor =
-'#ffcc66';
-
-
-ctx.shadowBlur =
-Math.max(
-5,
-cell*.32
-);
-
-
+ctx.translate(mx,my);
+ctx.rotate(angle);
+ctx.strokeStyle='#ffcc66';
+ctx.fillStyle='#ffcc66';
+ctx.lineWidth=Math.max(2,cell*.09);
+ctx.shadowColor='#ffcc66';
+ctx.shadowBlur=Math.max(5,cell*.32);
 ctx.beginPath();
-
-
-ctx.moveTo(
--cell*.22,
-0
-);
-
-
-ctx.lineTo(
-cell*.16,
-0
-);
-
-
+ctx.moveTo(-cell*.22,0);
+ctx.lineTo(cell*.16,0);
 ctx.stroke();
-
-
 ctx.beginPath();
-
-
-ctx.moveTo(
-cell*.25,
-0
-);
-
-
-ctx.lineTo(
-cell*.08,
--cell*.13
-);
-
-
-ctx.lineTo(
-cell*.08,
-cell*.13
-);
-
-
+ctx.moveTo(cell*.25,0);
+ctx.lineTo(cell*.08,-cell*.13);
+ctx.lineTo(cell*.08,cell*.13);
 ctx.closePath();
-
-
 ctx.fill();
-
-
 ctx.restore();
-
-}
-);
-
+});
 }
 
+const px=renderPlayer.x*cell+cell/2;
+const py=renderPlayer.y*cell+cell/2;
 
-
-const px =
-renderPlayer.x*cell +
-cell/2;
-
-
-const py =
-renderPlayer.y*cell +
-cell/2;
-
-
-
-ctx.strokeStyle =
-'rgba(255,255,255,.95)';
-
-
-ctx.lineWidth =
-Math.max(
-2,
-cell*.10
-);
-
-
-ctx.shadowColor =
-'#65d8ff';
-
-
-ctx.shadowBlur =
-Math.max(
-10,
-cell*.8
-);
-
-
+ctx.strokeStyle='rgba(255,255,255,.95)';
+ctx.lineWidth=Math.max(2,cell*.10);
+ctx.shadowColor='#65d8ff';
+ctx.shadowBlur=Math.max(10,cell*.8);
 ctx.beginPath();
-
-
-ctx.arc(
-px,
-py,
-Math.max(
-6,
-cell*.34
-),
-0,
-Math.PI*2
-);
-
-
+ctx.arc(px,py,Math.max(6,cell*.34),0,Math.PI*2);
 ctx.stroke();
 
-
-
-ctx.fillStyle =
-'#65d8ff';
-
-
+ctx.fillStyle='#65d8ff';
 ctx.beginPath();
-
-
-ctx.arc(
-px,
-py,
-Math.max(
-2.5,
-cell*.12
-),
-0,
-Math.PI*2
-);
-
-
+ctx.arc(px,py,Math.max(2.5,cell*.12),0,Math.PI*2);
 ctx.fill();
+ctx.shadowBlur=0;
 
-
-ctx.shadowBlur =
-0;
-
-
-
-if(
-flashlight
-){
-
+if(flashlight){
 ctx.save();
-
-
-const radius =
-Math.max(
-
-cell*2.7,
-
-Math.min(
-w*.21,
-108
-)
-
-);
-
-
-const light =
-ctx.createRadialGradient(
-
-px,
-py,
-0,
-
-px,
-py,
-radius
-
-);
-
-
-light.addColorStop(
-0,
-'rgba(0,0,0,0)'
-);
-
-
-light.addColorStop(
-.52,
-'rgba(0,0,0,0)'
-);
-
-
-light.addColorStop(
-.72,
-'rgba(0,0,0,.45)'
-);
-
-
-light.addColorStop(
-.88,
-'rgba(0,0,0,.88)'
-);
-
-
-light.addColorStop(
-1,
-'rgba(0,0,0,.985)'
-);
-
-
-ctx.fillStyle =
-light;
-
-
-ctx.fillRect(
-0,
-0,
-w,
-w
-);
-
-
+const radius=Math.max(cell*2.7,Math.min(w*.21,108));
+const light=ctx.createRadialGradient(px,py,0,px,py,radius);
+light.addColorStop(0,'rgba(0,0,0,0)');
+light.addColorStop(.52,'rgba(0,0,0,0)');
+light.addColorStop(.72,'rgba(0,0,0,.45)');
+light.addColorStop(.88,'rgba(0,0,0,.88)');
+light.addColorStop(1,'rgba(0,0,0,.985)');
+ctx.fillStyle=light;
+ctx.fillRect(0,0,w,w);
 ctx.restore();
 
-
-
-ctx.strokeStyle =
-'rgba(255,255,255,1)';
-
-
-ctx.lineWidth =
-Math.max(
-2,
-cell*.10
-);
-
-
-ctx.shadowColor =
-'#65d8ff';
-
-
-ctx.shadowBlur =
-15;
-
-
+ctx.strokeStyle='rgba(255,255,255,1)';
+ctx.lineWidth=Math.max(2,cell*.10);
+ctx.shadowColor='#65d8ff';
+ctx.shadowBlur=15;
 ctx.beginPath();
-
-
-ctx.arc(
-px,
-py,
-Math.max(
-6,
-cell*.34
-),
-0,
-Math.PI*2
-);
-
-
+ctx.arc(px,py,Math.max(6,cell*.34),0,Math.PI*2);
 ctx.stroke();
 
-
-
-ctx.fillStyle =
-'#65d8ff';
-
-
+ctx.fillStyle='#65d8ff';
 ctx.beginPath();
-
-
-ctx.arc(
-px,
-py,
-Math.max(
-2.5,
-cell*.12
-),
-0,
-Math.PI*2
-);
-
-
+ctx.arc(px,py,Math.max(2.5,cell*.12),0,Math.PI*2);
 ctx.fill();
-
-
-ctx.shadowBlur =
-0;
-
+ctx.shadowBlur=0;
 }
-
 }
-
-
 
 function normalizeDir(n){
-
-return (
-n%4 + 4
-)%4;
-
+return (n%4+4)%4;
 }
-
-
 
 function dirName(index){
-
-return [
-
-'up',
-'right',
-'down',
-'left'
-
-][
-normalizeDir(index)
-];
-
+return ['up','right','down','left'][normalizeDir(index)];
 }
-
-
 
 function dirVector(index){
-
-return [
-
-[
-0,
--1
-],
-
-[
-1,
-0
-],
-
-[
-0,
-1
-],
-
-[
--1,
-0
-]
-
-][
-normalizeDir(index)
-];
-
+return [[0,-1],[1,0],[0,1],[-1,0]][normalizeDir(index)];
 }
 
-
-
-function wallForDir(
-cell,
-index
-){
-
-return cell.walls[
-dirName(index)
-];
-
+function wallForDir(cell,index){
+return cell.walls[dirName(index)];
 }
-
-
 
 function setInitialFacing(){
-
-if(
-!grid.length ||
-!grid[0] ||
-!grid[0][0]
-)
+if(!grid.length || !grid[0] || !grid[0][0]) return;
+const start=grid[0][0];
+for(const d of [1,2,3,0]){
+if(!wallForDir(start,d)){
+facing=d;
 return;
-
-
-const start =
-grid[0][0];
-
-
-for(
-const d of [
-1,
-2,
-3,
-0
-]
-){
-
-if(
-!wallForDir(
-start,
-d
-)
-){
-
-facing =
-d;
-
-
-return;
-
 }
-
 }
-
-
-facing =
-1;
-
+facing=1;
 }
-
-
 
 function updateViewUI(){
-
-if(
-![
-'overhead',
-'first',
-'dungeon',
-'neon'
-].includes(
-viewMode
-)
-){
-
-viewMode =
-'overhead';
-
+if(!['overhead','first','dungeon','neon'].includes(viewMode)) viewMode='overhead';
+viewModeEl.value=viewMode;
+const straight=viewMode!=='overhead';
+fpControls.classList.toggle('show',straight);
+viewCaption.classList.toggle('show',straight);
+wrap.style.cursor=straight?'default':'crosshair';
 }
 
-
-viewModeEl.value =
-viewMode;
-
-
-const straight =
-viewMode !== 'overhead';
-
-
-fpControls
-.classList
-.toggle(
-'show',
-straight
-);
-
-
-viewCaption
-.classList
-.toggle(
-'show',
-straight
-);
-
-
-wrap.style.cursor =
-
-straight
-
-? 'default'
-
-: 'crosshair';
-
-}
-
-
-
-function turnFirstPerson(
-amount
-){
-
-if(
-viewMode === 'overhead'
-)
-return;
-
-
-if(
-mazeType === 'mirror'
-){
-
-amount =
--amount;
-
-}
-
-
-facing =
-normalizeDir(
-facing + amount
-);
-
-
-playTone(
-420,
-.045,
-'sine',
-.018
-);
-
-
+function turnFirstPerson(amount){
+if(viewMode==='overhead') return;
+if(mazeType==='mirror') amount=-amount;
+facing=normalizeDir(facing+amount);
+playTone(420,.045,'sine',.018);
 draw();
-
 }
 
-
-
-function moveFirstPerson(
-forward=true
-){
-
-if(
-viewMode === 'overhead'
-)
-return;
-
-
-const directionIndex =
-
-forward
-
-? facing
-
-: normalizeDir(
-facing+2
-);
-
-
-move(
-dirName(
-directionIndex
-)
-);
-
+function moveFirstPerson(forward=true){
+if(viewMode==='overhead') return;
+const directionIndex=forward?facing:normalizeDir(facing+2);
+move(dirName(directionIndex));
 }
-
-
 
 function fpPalette(){
-
-if(
-viewMode === 'dungeon'
-){
-
+if(viewMode==='dungeon'){
 return {
-
 skyTop:'#11100f',
-
 skyBottom:'#2a2118',
-
 floorTop:'#2b241f',
-
 floorBottom:'#080707',
-
 wallNear:'#685848',
-
 wallFar:'#2d2823',
-
 edge:'#b59a78',
-
 opening:'#050505',
-
 front:'#54483b'
-
 };
-
 }
 
-
-if(
-viewMode === 'neon'
-){
-
+if(viewMode==='neon'){
 return {
-
 skyTop:'#090521',
-
 skyBottom:'#140b38',
-
 floorTop:'#10133c',
-
 floorBottom:'#02030d',
-
 wallNear:'#1b2a50',
-
 wallFar:'#10172c',
-
 edge:'#65d8ff',
-
 opening:'#01020a',
-
 front:'#18264a'
-
 };
-
 }
-
 
 return {
-
 skyTop:'#13253c',
-
 skyBottom:'#253b54',
-
 floorTop:'#26364a',
-
 floorBottom:'#070b12',
-
 wallNear:'#53687f',
-
 wallFar:'#243345',
-
 edge:'#d9e7ff',
-
 opening:'#03070c',
-
 front:'#43566b'
-
 };
-
 }
 
+function fpRect(depth,w,h){
+const frames=[
+{l:.07,r:.93,t:.08,b:.92},
+{l:.25,r:.75,t:.23,b:.77},
+{l:.36,r:.64,t:.34,b:.66},
+{l:.43,r:.57,t:.41,b:.59},
+{l:.47,r:.53,t:.455,b:.545}
+];
+const d=Math.max(0,Math.min(frames.length-1,Math.round(depth)));
+const f=frames[d];
+return {
+left:w*f.l,
+right:w*f.r,
+top:h*f.t,
+bottom:h*f.b
+};
+}
 
+function fpQuad(points,fill,stroke=null,alpha=1){
+ctx.save();
+ctx.globalAlpha=alpha;
+ctx.fillStyle=fill;
+ctx.beginPath();
+ctx.moveTo(points[0][0],points[0][1]);
 
-function fpRect(
-depth,
-w,
-h
-){
+for(let i=1;i<points.length;i++){
+ctx.lineTo(points[i][0],points[i][1]);
+}
 
-const d =
-Math.min(
-depth,
-6
+ctx.closePath();
+ctx.fill();
+
+if(stroke){
+ctx.strokeStyle=stroke;
+ctx.lineWidth=1.5;
+ctx.stroke();
+}
+
+ctx.restore();
+}
+
+function fpInterp(a,b,t){
+return a+(b-a)*t;
+}
+
+function drawSideOpening(side,near,far,p,depth,w,h){
+const nearX=side==='left'?near.left:near.right;
+const farX=side==='left'?far.left:far.right;
+
+const t1=.14;
+const t2=.82;
+
+const x1=fpInterp(nearX,farX,t1);
+const x2=fpInterp(nearX,farX,t2);
+
+const top1=fpInterp(near.top,far.top,t1);
+const top2=fpInterp(near.top,far.top,t2);
+
+const bottom1=fpInterp(near.bottom,far.bottom,t1);
+const bottom2=fpInterp(near.bottom,far.bottom,t2);
+
+const height1=bottom1-top1;
+const height2=bottom2-top2;
+
+const insetTop1=height1*.16;
+const insetTop2=height2*.16;
+const insetBottom1=height1*.06;
+const insetBottom2=height2*.06;
+
+const doorway=[
+[x1,top1+insetTop1],
+[x2,top2+insetTop2],
+[x2,bottom2-insetBottom2],
+[x1,bottom1-insetBottom1]
+];
+
+const doorGrad=ctx.createLinearGradient(x1,0,x2,0);
+doorGrad.addColorStop(0,'rgba(0,0,0,.92)');
+doorGrad.addColorStop(1,p.opening);
+
+fpQuad(
+doorway,
+doorGrad,
+p.edge,
+.96
 );
 
+ctx.save();
 
-const left =
-w*(.035+d*.078);
+ctx.globalAlpha=.55;
+ctx.strokeStyle=p.edge;
+ctx.lineWidth=Math.max(1,2-depth*.25);
 
+ctx.beginPath();
 
-const right =
-w-left;
+ctx.moveTo(
+doorway[0][0],
+doorway[0][1]
+);
 
+ctx.lineTo(
+doorway[3][0],
+doorway[3][1]
+);
 
-const top =
-h*(.055+d*.069);
+ctx.moveTo(
+doorway[1][0],
+doorway[1][1]
+);
 
+ctx.lineTo(
+doorway[2][0],
+doorway[2][1]
+);
 
-const bottom =
-h*(.945-d*.069);
+ctx.stroke();
+ctx.restore();
 
+if(depth===0){
 
-return {
+const cx=(x1+x2)/2;
+const cy=(top1+bottom1+top2+bottom2)/4;
 
-left,
-right,
-top,
-bottom
+ctx.save();
 
-};
+ctx.fillStyle='rgba(255,255,255,.88)';
+ctx.font=`900 ${Math.max(18,w*.038)}px system-ui`;
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.shadowColor='rgba(0,0,0,.8)';
+ctx.shadowBlur=8;
 
+ctx.fillText(
+side==='left'
+?'←'
+:'→',
+cx,
+cy
+);
+
+ctx.restore();
+}
 }
 
+function drawFrontWall(rect,p,depth,w,h){
+const grad=ctx.createLinearGradient(
+rect.left,
+rect.top,
+rect.right,
+rect.bottom
+);
 
+grad.addColorStop(0,p.front);
+grad.addColorStop(1,p.wallFar);
 
-function fpObjectAt(
-x,
-y
-){
+ctx.fillStyle=grad;
 
-const list =
-[];
+ctx.fillRect(
+rect.left,
+rect.top,
+rect.right-rect.left,
+rect.bottom-rect.top
+);
 
+ctx.save();
 
+ctx.strokeStyle=p.edge;
+ctx.globalAlpha=.55;
+ctx.lineWidth=Math.max(1,3-depth*.4);
+
+ctx.strokeRect(
+rect.left,
+rect.top,
+rect.right-rect.left,
+rect.bottom-rect.top
+);
+
+if(viewMode==='dungeon'){
+
+ctx.globalAlpha=.20;
+
+const rows=4;
+
+for(let r=1;r<rows;r++){
+
+const yy=fpInterp(
+rect.top,
+rect.bottom,
+r/rows
+);
+
+ctx.beginPath();
+
+ctx.moveTo(
+rect.left,
+yy
+);
+
+ctx.lineTo(
+rect.right,
+yy
+);
+
+ctx.stroke();
+}
+
+ctx.globalAlpha=.14;
+
+const mid=(rect.left+rect.right)/2;
+
+ctx.beginPath();
+
+ctx.moveTo(
+mid,
+rect.top
+);
+
+ctx.lineTo(
+mid,
+rect.bottom
+);
+
+ctx.stroke();
+
+}else if(viewMode==='neon'){
+
+ctx.globalAlpha=.28;
+
+ctx.beginPath();
+
+ctx.moveTo(
+rect.left,
+rect.top
+);
+
+ctx.lineTo(
+rect.right,
+rect.bottom
+);
+
+ctx.moveTo(
+rect.right,
+rect.top
+);
+
+ctx.lineTo(
+rect.left,
+rect.bottom
+);
+
+ctx.stroke();
+}
+
+ctx.restore();
+}
+
+function fpObjectAt(x,y){
+const list=[];
 
 if(
-mazeType === 'ghost' &&
+mazeType==='ghost' &&
 ghost &&
-ghost.x === x &&
-ghost.y === y
+ghost.x===x &&
+ghost.y===y
 ){
-
 list.push({
-
 icon:'👻',
-
 label:'GHOST',
-
 color:'#c46cff'
-
 });
-
 }
 
-
-
 if(
-mazeType === 'keys' &&
+mazeType==='keys' &&
 keyPos &&
-keyPos.x === x &&
-keyPos.y === y
+keyPos.x===x &&
+keyPos.y===y
 ){
-
 list.push({
-
 icon:'🔑',
-
 label:'KEY',
-
 color:'#ffd76a'
-
 });
-
 }
 
-
-
 if(
-mazeType === 'portal' &&
-portals.length === 2
+mazeType==='portal' &&
+portals.length===2
 ){
 
 portals.forEach(
 (p,i)=>{
 
 if(
-p.x === x &&
-p.y === y
+p.x===x &&
+p.y===y
 ){
 
 list.push({
-
 icon:'🌀',
-
-label:
-i===0
-? 'PURPLE PORTAL'
-: 'GOLD PORTAL',
-
-color:
-i===0
-? '#9a6cff'
-: '#ffd166'
-
+label:i===0
+?'PURPLE PORTAL'
+:'GOLD PORTAL',
+color:i===0
+?'#9a6cff'
+:'#ffd166'
 });
 
 }
-
 }
 );
-
 }
 
-
-
 if(
-mazeType === 'twodots' &&
+mazeType==='twodots' &&
 !dotSolved
 ){
 
@@ -6159,32 +1741,24 @@ mysteryDots.forEach(
 p=>{
 
 if(
-p.x === x &&
-p.y === y &&
+p.x===x &&
+p.y===y &&
 !p.wrong
 ){
 
 list.push({
-
 icon:'●',
-
 label:'MYSTERY DOT',
-
 color:'#c46cff'
-
 });
 
 }
-
 }
 );
-
 }
 
-
-
 if(
-mazeType === 'treasure'
+mazeType==='treasure'
 ){
 
 treasures.forEach(
@@ -6192,67 +1766,50 @@ treasures.forEach(
 
 if(
 !g.collected &&
-g.x === x &&
-g.y === y
+g.x===x &&
+g.y===y
 ){
 
 list.push({
-
 icon:'◆',
-
 label:'GEM',
-
-color:
-[
+color:[
 '#60e5ff',
 '#8dffb7',
 '#ffd76a'
 ][i%3]
-
 });
 
 }
-
 }
 );
-
 }
 
-
-
 if(
-mazeType === 'traps'
+mazeType==='traps'
 ){
 
 trapTiles.forEach(
 t=>{
 
 if(
-t.x === x &&
-t.y === y
+t.x===x &&
+t.y===y
 ){
 
 list.push({
-
 icon:'⚠',
-
 label:'TRAP',
-
 color:'#ff704d'
-
 });
 
 }
-
 }
 );
-
 }
 
-
-
 if(
-mazeType === 'coins'
+mazeType==='coins'
 ){
 
 coins.forEach(
@@ -6260,183 +1817,79 @@ c=>{
 
 if(
 !c.collected &&
-c.x === x &&
-c.y === y
+c.x===x &&
+c.y===y
 ){
 
 list.push({
-
 icon:'●',
-
 label:'COIN',
-
 color:'#ffd84f'
-
 });
 
 }
-
 }
 );
-
 }
-
-
 
 if(
-x === size-1 &&
-y === size-1
+x===size-1 &&
+y===size-1
 ){
 
-const locked =
-
-(
-mazeType === 'keys' &&
-!hasKey
-)
-
-||
-
-(
-mazeType === 'twodots' &&
-!dotSolved
-)
-
-||
-
-(
-mazeType === 'treasure' &&
-treasuresCollected < 3
-)
-
-||
-
-(
-mazeType === 'coins' &&
-coinsCollected < 5
-);
-
+const locked=
+(mazeType==='keys'&&!hasKey) ||
+(mazeType==='twodots'&&!dotSolved) ||
+(mazeType==='treasure'&&treasuresCollected<3) ||
+(mazeType==='coins'&&coinsCollected<5);
 
 list.push({
-
-icon:
-locked
-? '🔒'
-: '🚪',
-
-label:
-locked
-? 'EXIT LOCKED'
-: 'EXIT',
-
-color:
-locked
-? '#ff7f93'
-: '#6ee7a8'
-
+icon:locked?'🔒':'🚪',
+label:locked?'EXIT LOCKED':'EXIT',
+color:locked?'#ff7f93':'#6ee7a8'
 });
-
 }
-
 
 return list;
-
 }
 
+function drawFpObject(obj,rect,depth,w,h){
+const cx=(rect.left+rect.right)/2;
 
-
-function drawFpObject(
-obj,
-rect,
-depth,
-w,
-h
-){
-
-const cx =
-(rect.left+rect.right)/2;
-
-
-const cy =
-(rect.top+rect.bottom)/2 +
+const cy=
+(rect.top+rect.bottom)/2+
 (rect.bottom-rect.top)*.08;
 
-
-const scale =
-Math.max(
+const scale=Math.max(
 .35,
 1-depth*.12
 );
 
-
-const radius =
-Math.max(
-
+const radius=Math.max(
 14,
-
-Math.min(
-w,
-h
-)*.065*scale
-
+Math.min(w,h)*.065*scale
 );
-
 
 ctx.save();
 
-
-ctx.globalAlpha =
-Math.max(
+ctx.globalAlpha=Math.max(
 .42,
 1-depth*.11
 );
 
+ctx.shadowColor=obj.color;
+ctx.shadowBlur=Math.max(6,24-depth*3);
 
-ctx.shadowColor =
-obj.color;
-
-
-ctx.shadowBlur =
-Math.max(
-6,
-24-depth*3
-);
-
-
-ctx.fillStyle =
-'rgba(4,8,14,.72)';
-
+ctx.fillStyle='rgba(4,8,14,.72)';
 
 ctx.beginPath();
-
-
-ctx.arc(
-cx,
-cy,
-radius*1.20,
-0,
-Math.PI*2
-);
-
-
+ctx.arc(cx,cy,radius*1.20,0,Math.PI*2);
 ctx.fill();
 
-
-ctx.fillStyle =
-obj.color;
-
-
-ctx.font =
-`${Math.max(16,42-depth*5)}px system-ui, sans-serif`;
-
-
-ctx.textAlign =
-'center';
-
-
-ctx.textBaseline =
-'middle';
-
+ctx.fillStyle=obj.color;
+ctx.font=`${Math.max(16,42-depth*5)}px system-ui, sans-serif`;
+ctx.textAlign='center';
+ctx.textBaseline='middle';
 
 ctx.fillText(
 obj.icon,
@@ -6444,18 +1897,9 @@ cx,
 cy
 );
 
-
-ctx.shadowBlur =
-0;
-
-
-ctx.font =
-`800 ${Math.max(8,14-depth)}px system-ui, sans-serif`;
-
-
-ctx.fillStyle =
-'#ffffff';
-
+ctx.shadowBlur=0;
+ctx.font=`800 ${Math.max(8,14-depth)}px system-ui, sans-serif`;
+ctx.fillStyle='#ffffff';
 
 ctx.fillText(
 obj.label,
@@ -6463,41 +1907,22 @@ cx,
 cy+radius*1.55
 );
 
-
 ctx.restore();
-
 }
 
+function gateBetween(x,y,nx,ny){
+if(mazeType!=='oneway') return null;
 
+for(const g of oneWayGates){
 
-function gateBetween(
-x,
-y,
-nx,
-ny
-){
-
-if(
-mazeType !== 'oneway'
-)
-return null;
-
-
-for(
-const g of oneWayGates
-){
-
-const sameEdge =
-
+const sameEdge=
 (
 g.fromX===x &&
 g.fromY===y &&
 g.toX===nx &&
 g.toY===ny
 )
-
 ||
-
 (
 g.fromX===nx &&
 g.fromY===ny &&
@@ -6505,159 +1930,199 @@ g.toX===x &&
 g.toY===y
 );
 
-
-if(sameEdge)
-return g;
-
+if(sameEdge) return g;
 }
-
 
 return null;
-
 }
 
-
-
 function drawFirstPerson(){
+const w=wrap.clientWidth;
+const h=w;
+const p=fpPalette();
 
-const w =
-wrap.clientWidth;
+ctx.clearRect(0,0,w,h);
 
+const horizon=h*.50;
 
-const h =
-w;
-
-
-const p =
-fpPalette();
-
-
-ctx.clearRect(
-0,
-0,
-w,
-h
-);
-
-
-const sky =
+const ceiling=
 ctx.createLinearGradient(
 0,
 0,
 0,
-h*.53
+horizon
 );
 
-
-sky.addColorStop(
+ceiling.addColorStop(
 0,
 p.skyTop
 );
 
-
-sky.addColorStop(
+ceiling.addColorStop(
 1,
 p.skyBottom
 );
 
-
-ctx.fillStyle =
-sky;
-
+ctx.fillStyle=ceiling;
 
 ctx.fillRect(
 0,
 0,
 w,
-h*.53
+horizon
 );
 
-
-const floor =
+const floor=
 ctx.createLinearGradient(
 0,
-h*.47,
+horizon,
 0,
 h
 );
-
 
 floor.addColorStop(
 0,
 p.floorTop
 );
 
-
 floor.addColorStop(
 1,
 p.floorBottom
 );
 
-
-ctx.fillStyle =
-floor;
-
+ctx.fillStyle=floor;
 
 ctx.fillRect(
 0,
-h*.47,
+horizon,
 w,
-h*.53
+h-horizon
 );
 
+const first=fpRect(0,w,h);
+const vanishX=w/2;
+const vanishY=h/2;
 
-ctx.strokeStyle =
-'rgba(255,255,255,.08)';
+const outerLeft=
+ctx.createLinearGradient(
+0,
+0,
+first.left,
+0
+);
 
+outerLeft.addColorStop(
+0,
+p.wallFar
+);
 
-ctx.lineWidth =
-1;
+outerLeft.addColorStop(
+1,
+p.wallNear
+);
 
+fpQuad(
+[
+[0,0],
+[first.left,first.top],
+[first.left,first.bottom],
+[0,h]
+],
+outerLeft,
+p.edge,
+.98
+);
+
+const outerRight=
+ctx.createLinearGradient(
+w,
+0,
+first.right,
+0
+);
+
+outerRight.addColorStop(
+0,
+p.wallFar
+);
+
+outerRight.addColorStop(
+1,
+p.wallNear
+);
+
+fpQuad(
+[
+[w,0],
+[first.right,first.top],
+[first.right,first.bottom],
+[w,h]
+],
+outerRight,
+p.edge,
+.98
+);
+
+fpQuad(
+[
+[0,0],
+[w,0],
+[first.right,first.top],
+[first.left,first.top]
+],
+p.skyTop,
+null,
+.78
+);
+
+fpQuad(
+[
+[0,h],
+[first.left,first.bottom],
+[first.right,first.bottom],
+[w,h]
+],
+p.floorBottom,
+null,
+.78
+);
+
+ctx.save();
+
+ctx.strokeStyle='rgba(255,255,255,.08)';
+ctx.lineWidth=1;
 
 for(
-let i=0;
-i<8;
-i++
+const x of [
+first.left,
+w*.32,
+w*.50,
+w*.68,
+first.right
+]
 ){
-
-const gy =
-h*.53 +
-i*h*.065;
-
 
 ctx.beginPath();
 
-
 ctx.moveTo(
-0,
-gy
+x,
+first.bottom
 );
-
 
 ctx.lineTo(
-w,
-gy
+vanishX,
+vanishY
 );
 
-
 ctx.stroke();
-
 }
 
+ctx.restore();
 
+let x=player.x;
+let y=player.y;
 
-let x =
-player.x;
-
-
-let y =
-player.y;
-
-
-const maxDepth =
-5;
-
-
+const maxDepth=3;
 
 for(
 let depth=0;
@@ -6673,45 +2138,36 @@ y>=size
 )
 break;
 
+const cell=grid[y][x];
 
-const cell =
-grid[y][x];
-
-
-const near =
+const near=
 fpRect(
 depth,
 w,
 h
 );
 
-
-const far =
+const far=
 fpRect(
 depth+1,
 w,
 h
 );
 
-
-const leftDir =
+const leftDir=
 normalizeDir(
 facing-1
 );
 
-
-const rightDir =
+const rightDir=
 normalizeDir(
 facing+1
 );
 
-
-const forwardDir =
+const forwardDir=
 facing;
 
-
-
-const wallFade =
+const lg=
 ctx.createLinearGradient(
 near.left,
 0,
@@ -6719,318 +2175,151 @@ far.left,
 0
 );
 
-
-wallFade.addColorStop(
+lg.addColorStop(
 0,
 p.wallNear
 );
 
-
-wallFade.addColorStop(
+lg.addColorStop(
 1,
 p.wallFar
 );
 
+fpQuad(
+[
+[near.left,near.top],
+[far.left,far.top],
+[far.left,far.bottom],
+[near.left,near.bottom]
+],
+lg,
+p.edge,
+1
+);
+
+const rg=
+ctx.createLinearGradient(
+near.right,
+0,
+far.right,
+0
+);
+
+rg.addColorStop(
+0,
+p.wallNear
+);
+
+rg.addColorStop(
+1,
+p.wallFar
+);
+
+fpQuad(
+[
+[near.right,near.top],
+[far.right,far.top],
+[far.right,far.bottom],
+[near.right,near.bottom]
+],
+rg,
+p.edge,
+1
+);
 
 if(
-wallForDir(
+!wallForDir(
 cell,
 leftDir
 )
 ){
 
-ctx.fillStyle =
-wallFade;
-
-
-ctx.beginPath();
-
-
-ctx.moveTo(
-near.left,
-near.top
+drawSideOpening(
+'left',
+near,
+far,
+p,
+depth,
+w,
+h
 );
-
-
-ctx.lineTo(
-far.left,
-far.top
-);
-
-
-ctx.lineTo(
-far.left,
-far.bottom
-);
-
-
-ctx.lineTo(
-near.left,
-near.bottom
-);
-
-
-ctx.closePath();
-
-
-ctx.fill();
-
-
-ctx.strokeStyle =
-p.edge;
-
-
-ctx.globalAlpha =
-.34;
-
-
-ctx.stroke();
-
-
-ctx.globalAlpha =
-1;
 
 }
-
-
-else{
-
-ctx.fillStyle =
-p.opening;
-
-
-ctx.beginPath();
-
-
-ctx.moveTo(
-near.left,
-near.top
-);
-
-
-ctx.lineTo(
-far.left,
-far.top
-);
-
-
-ctx.lineTo(
-far.left,
-far.bottom
-);
-
-
-ctx.lineTo(
-near.left,
-near.bottom
-);
-
-
-ctx.closePath();
-
-
-ctx.fill();
-
-}
-
-
 
 if(
-wallForDir(
+!wallForDir(
 cell,
 rightDir
 )
 ){
 
-const rw =
-ctx.createLinearGradient(
-near.right,
-0,
-far.right,
-0
+drawSideOpening(
+'right',
+near,
+far,
+p,
+depth,
+w,
+h
 );
-
-
-rw.addColorStop(
-0,
-p.wallNear
-);
-
-
-rw.addColorStop(
-1,
-p.wallFar
-);
-
-
-ctx.fillStyle =
-rw;
-
-
-ctx.beginPath();
-
-
-ctx.moveTo(
-near.right,
-near.top
-);
-
-
-ctx.lineTo(
-far.right,
-far.top
-);
-
-
-ctx.lineTo(
-far.right,
-far.bottom
-);
-
-
-ctx.lineTo(
-near.right,
-near.bottom
-);
-
-
-ctx.closePath();
-
-
-ctx.fill();
-
-
-ctx.strokeStyle =
-p.edge;
-
-
-ctx.globalAlpha =
-.34;
-
-
-ctx.stroke();
-
-
-ctx.globalAlpha =
-1;
 
 }
 
+ctx.save();
 
-else{
-
-ctx.fillStyle =
-p.opening;
-
-
-ctx.beginPath();
-
-
-ctx.moveTo(
-near.right,
-near.top
-);
-
-
-ctx.lineTo(
-far.right,
-far.top
-);
-
-
-ctx.lineTo(
-far.right,
-far.bottom
-);
-
-
-ctx.lineTo(
-near.right,
-near.bottom
-);
-
-
-ctx.closePath();
-
-
-ctx.fill();
-
-}
-
-
-
-ctx.strokeStyle =
-p.edge;
-
-
-ctx.globalAlpha =
-.22;
-
+ctx.strokeStyle=p.edge;
+ctx.globalAlpha=.18;
+ctx.lineWidth=1;
 
 ctx.beginPath();
-
 
 ctx.moveTo(
 near.left,
 near.top
 );
 
-
 ctx.lineTo(
 far.left,
 far.top
 );
 
-
 ctx.lineTo(
 far.right,
 far.top
 );
-
 
 ctx.lineTo(
 near.right,
 near.top
 );
 
-
 ctx.stroke();
 
-
 ctx.beginPath();
-
 
 ctx.moveTo(
 near.left,
 near.bottom
 );
 
-
 ctx.lineTo(
 far.left,
 far.bottom
 );
-
 
 ctx.lineTo(
 far.right,
 far.bottom
 );
 
-
 ctx.lineTo(
 near.right,
 near.bottom
 );
 
-
 ctx.stroke();
 
-
-ctx.globalAlpha =
-1;
-
-
+ctx.restore();
 
 for(
 const obj of fpObjectAt(
@@ -7041,7 +2330,7 @@ y
 
 drawFpObject(
 obj,
-near,
+far,
 depth,
 w,
 h
@@ -7049,26 +2338,18 @@ h
 
 }
 
-
-
 const [
 fdx,
 fdy
-] =
+]=
 dirVector(
 forwardDir
 );
 
+const nx=x+fdx;
+const ny=y+fdy;
 
-const nx =
-x+fdx;
-
-
-const ny =
-y+fdy;
-
-
-const gate =
+const gate=
 gateBetween(
 x,
 y,
@@ -7076,69 +2357,42 @@ nx,
 ny
 );
 
-
 if(gate){
 
-const allowed =
-
+const allowed=
 gate.fromX===x &&
 gate.fromY===y &&
 gate.toX===nx &&
 gate.toY===ny;
 
-
 ctx.save();
 
-
-ctx.fillStyle =
-
+ctx.fillStyle=
 allowed
+?'#6ee7a8'
+:'#ff7f93';
 
-? '#6ee7a8'
-
-: '#ff7f93';
-
-
-ctx.shadowColor =
+ctx.shadowColor=
 ctx.fillStyle;
 
+ctx.shadowBlur=12;
 
-ctx.shadowBlur =
-14;
+ctx.font=
+`900 ${Math.max(16,36-depth*5)}px system-ui`;
 
-
-ctx.font =
-`900 ${Math.max(18,44-depth*6)}px system-ui`;
-
-
-ctx.textAlign =
-'center';
-
-
-ctx.textBaseline =
-'middle';
-
+ctx.textAlign='center';
+ctx.textBaseline='middle';
 
 ctx.fillText(
-
 allowed
-
-? '➜'
-
-: '⛔',
-
+?'➜'
+:'⛔',
 (far.left+far.right)/2,
-
 (far.top+far.bottom)/2
-
 );
 
-
 ctx.restore();
-
 }
-
-
 
 if(
 wallForDir(
@@ -7147,85 +2401,39 @@ forwardDir
 )
 ){
 
-ctx.fillStyle =
-p.front;
-
-
-ctx.fillRect(
-
-far.left,
-
-far.top,
-
-Math.max(
-0,
-far.right-far.left
-),
-
-Math.max(
-0,
-far.bottom-far.top
-)
-
+drawFrontWall(
+far,
+p,
+depth,
+w,
+h
 );
 
+if(depth===0){
 
-ctx.strokeStyle =
-p.edge;
+ctx.save();
 
+ctx.fillStyle='rgba(255,255,255,.68)';
+ctx.font=`800 ${Math.max(11,w*.024)}px system-ui`;
+ctx.textAlign='center';
 
-ctx.lineWidth =
-Math.max(
-1,
-4-depth*.5
+ctx.fillText(
+'TURN LEFT OR RIGHT',
+w/2,
+far.bottom-h*.025
 );
 
-
-ctx.globalAlpha =
-.65;
-
-
-ctx.strokeRect(
-
-far.left,
-
-far.top,
-
-Math.max(
-0,
-far.right-far.left
-),
-
-Math.max(
-0,
-far.bottom-far.top
-)
-
-);
-
-
-ctx.globalAlpha =
-1;
-
+ctx.restore();
+}
 
 break;
-
 }
 
-
-x =
-nx;
-
-
-y =
-ny;
-
+x=nx;
+y=ny;
 }
 
-
-
-const compass =
-
+const compass=
 [
 'N',
 'E',
@@ -7237,75 +2445,56 @@ facing
 )
 ];
 
-
 ctx.save();
 
-
-ctx.fillStyle =
-'rgba(3,8,15,.72)';
-
-
-ctx.strokeStyle =
-'rgba(255,255,255,.16)';
-
-
-ctx.lineWidth =
-1;
-
-
-ctx.fillRect(
-w*.34,
-h*.025,
-w*.32,
-h*.075
+const cr=Math.max(
+18,
+w*.035
 );
 
+const cx=
+w-cr-14;
 
-ctx.strokeRect(
-w*.34,
-h*.025,
-w*.32,
-h*.075
+const cy=
+cr+14;
+
+ctx.fillStyle='rgba(3,8,15,.78)';
+ctx.strokeStyle='rgba(255,255,255,.28)';
+ctx.lineWidth=1.5;
+
+ctx.beginPath();
+
+ctx.arc(
+cx,
+cy,
+cr,
+0,
+Math.PI*2
 );
 
+ctx.fill();
+ctx.stroke();
 
-ctx.fillStyle =
-'#ffffff';
-
-
-ctx.font =
-`800 ${Math.max(12,w*.035)}px system-ui`;
-
-
-ctx.textAlign =
-'center';
-
-
-ctx.textBaseline =
-'middle';
-
+ctx.fillStyle='#ffffff';
+ctx.font=`900 ${Math.max(13,w*.028)}px system-ui`;
+ctx.textAlign='center';
+ctx.textBaseline='middle';
 
 ctx.fillText(
-`STRAIGHT ON • ${compass}`,
-w*.50,
-h*.062
+compass,
+cx,
+cy
 );
-
 
 ctx.restore();
 
-
-
 if(
-viewMode === 'dungeon'
+viewMode==='dungeon'
 ){
 
 ctx.save();
 
-
-ctx.fillStyle =
-'rgba(255,160,70,.08)';
-
+ctx.fillStyle='rgba(255,160,70,.06)';
 
 ctx.fillRect(
 0,
@@ -7314,27 +2503,17 @@ w,
 h
 );
 
-
 ctx.restore();
-
 }
 
-
-
 if(
-viewMode === 'neon'
+viewMode==='neon'
 ){
 
 ctx.save();
 
-
-ctx.strokeStyle =
-'rgba(101,216,255,.28)';
-
-
-ctx.lineWidth =
-2;
-
+ctx.strokeStyle='rgba(101,216,255,.30)';
+ctx.lineWidth=2;
 
 ctx.strokeRect(
 3,
@@ -7343,24 +2522,17 @@ w-6,
 h-6
 );
 
-
 ctx.restore();
-
 }
 
-
-
 if(
-mazeType === 'memory' &&
+mazeType==='memory' &&
 !memoryVisible
 ){
 
 ctx.save();
 
-
-ctx.fillStyle =
-'rgba(0,0,0,.58)';
-
+ctx.fillStyle='rgba(0,0,0,.68)';
 
 ctx.fillRect(
 0,
@@ -7369,18 +2541,10 @@ w,
 h
 );
 
-
-ctx.fillStyle =
-'#ffffff';
-
-
-ctx.font =
-`900 ${Math.max(18,w*.05)}px system-ui`;
-
-
-ctx.textAlign =
-'center';
-
+ctx.fillStyle='#ffffff';
+ctx.font=`900 ${Math.max(18,w*.05)}px system-ui`;
+ctx.textAlign='center';
+ctx.textBaseline='middle';
 
 ctx.fillText(
 'MEMORY MODE',
@@ -7388,58 +2552,44 @@ w/2,
 h*.50
 );
 
-
 ctx.restore();
-
 }
 
-
-
-if(
-flashlight
-){
+if(flashlight){
 
 ctx.save();
 
-
-const beam =
+const beam=
 ctx.createRadialGradient(
 w*.5,
 h*.50,
-w*.08,
+w*.10,
 w*.5,
 h*.50,
-w*.58
+w*.54
 );
-
 
 beam.addColorStop(
 0,
 'rgba(0,0,0,0)'
 );
 
-
 beam.addColorStop(
-.42,
-'rgba(0,0,0,.03)'
+.50,
+'rgba(0,0,0,.02)'
 );
 
-
 beam.addColorStop(
-.72,
-'rgba(0,0,0,.62)'
+.76,
+'rgba(0,0,0,.68)'
 );
-
 
 beam.addColorStop(
 1,
-'rgba(0,0,0,.97)'
+'rgba(0,0,0,.985)'
 );
 
-
-ctx.fillStyle =
-beam;
-
+ctx.fillStyle=beam;
 
 ctx.fillRect(
 0,
@@ -7448,19 +2598,15 @@ w,
 h
 );
 
-
 ctx.restore();
-
 }
 
-
-
 if(
-mazeType === 'ghost' &&
+mazeType==='ghost' &&
 ghost
 ){
 
-const distance =
+const distance=
 Math.abs(
 ghost.x-player.x
 )
@@ -7469,17 +2615,13 @@ Math.abs(
 ghost.y-player.y
 );
 
-
 if(
-distance <= 2
+distance<=2
 ){
 
 ctx.save();
 
-
-ctx.fillStyle =
-'rgba(196,108,255,.14)';
-
+ctx.fillStyle='rgba(196,108,255,.13)';
 
 ctx.fillRect(
 0,
@@ -7488,380 +2630,142 @@ w,
 h
 );
 
-
 ctx.restore();
-
 }
 
 }
-
 }
-
-
 
 function draw(){
-
-if(
-viewMode === 'overhead'
-){
-
+if(viewMode==='overhead'){
 drawOverhead();
-
-}
-
-else{
-
+}else{
 drawFirstPerson();
-
+}
 }
 
+function animatePlayerTo(targetX,targetY,duration=85){
+if(moveAnimation){
+cancelAnimationFrame(moveAnimation);
+moveAnimation=null;
 }
 
-
-
-function animatePlayerTo(
-targetX,
-targetY,
-duration=85
-){
-
-if(
-moveAnimation
-){
-
-cancelAnimationFrame(
-moveAnimation
-);
-
-
-moveAnimation =
-null;
-
-}
-
-
-const startX =
-renderPlayer.x;
-
-
-const startY =
-renderPlayer.y;
-
-
-const started =
-performance.now();
-
+const startX=renderPlayer.x;
+const startY=renderPlayer.y;
+const started=performance.now();
 
 function frame(now){
+const raw=Math.min(1,(now-started)/duration);
+const eased=1-Math.pow(1-raw,3);
 
-const raw =
-Math.min(
-1,
-(now-started)/duration
-);
-
-
-const eased =
-1 -
-Math.pow(
-1-raw,
-3
-);
-
-
-renderPlayer.x =
-startX +
-(targetX-startX)*eased;
-
-
-renderPlayer.y =
-startY +
-(targetY-startY)*eased;
-
+renderPlayer.x=startX+(targetX-startX)*eased;
+renderPlayer.y=startY+(targetY-startY)*eased;
 
 draw();
 
-
-if(
-raw < 1
-){
-
-moveAnimation =
-requestAnimationFrame(
-frame
-);
-
-}
-
-
-else{
-
-renderPlayer.x =
-targetX;
-
-
-renderPlayer.y =
-targetY;
-
-
-moveAnimation =
-null;
-
-
+if(raw<1){
+moveAnimation=requestAnimationFrame(frame);
+}else{
+renderPlayer.x=targetX;
+renderPlayer.y=targetY;
+moveAnimation=null;
 draw();
-
+}
 }
 
+moveAnimation=requestAnimationFrame(frame);
 }
-
-
-moveAnimation =
-requestAnimationFrame(
-frame
-);
-
-}
-
-
 
 function formatTime(sec){
-
-const m =
-Math.floor(
-sec/60
-);
-
-
-const s =
-sec%60;
-
-
+const m=Math.floor(sec/60);
+const s=sec%60;
 return `${m}:${String(s).padStart(2,'0')}`;
-
 }
-
-
 
 function startClock(){
+if(startTime!==null) return;
 
-if(
-startTime !== null
-)
-return;
+startTime=Date.now();
 
-
-startTime =
-Date.now();
-
-
-if(
-mazeType === 'countdown'
-){
-
+if(mazeType==='countdown'){
 startCountdownTimer();
-
 return;
-
 }
 
-
-timer =
-setInterval(
-
-()=>{
-
-timeEl.textContent =
-formatTime(
-
+timer=setInterval(()=>{
+timeEl.textContent=formatTime(
 Math.floor(
-
-(
-Date.now()-startTime
-)/1000
-
+(Date.now()-startTime)/1000
 )
-
 );
-
-},
-
-250
-
-);
-
+},250);
 }
-
-
 
 function currentSeconds(){
-
-if(
-startTime === null
-)
-return 0;
-
+if(startTime===null) return 0;
 
 return Math.floor(
-
-(
-Date.now()-startTime
-)/1000
-
+(Date.now()-startTime)/1000
 );
-
 }
-
-
 
 function bestKey(){
-
-const modeKey =
-
-selectedMazeType === 'mystery'
-
-? `mystery_${mazeType}`
-
-: selectedMazeType;
-
+const modeKey=
+selectedMazeType==='mystery'
+?`mystery_${mazeType}`
+:selectedMazeType;
 
 return `maze_best_${size}_${modeKey}_${viewMode}_${flashlight?'flash':'normal'}`;
-
 }
-
-
 
 function updateBest(){
+const b=localStorage.getItem(bestKey());
 
-const b =
-localStorage.getItem(
-bestKey()
-);
-
-
-bestEl.textContent =
-
+bestEl.textContent=
 b
-
-? formatTime(
-Number(b)
-)
-
-: '—';
-
+?formatTime(Number(b))
+:'—';
 }
-
-
 
 function move(dir){
+if(won) return;
 
-if(won)
+if(mazeType==='ice'){
+moveIce(dir);
 return;
-
-
-if(
-mazeType === 'ice'
-){
-
-moveIce(
-dir
-);
-
-return;
-
 }
 
-
-
-if(
-mazeType === 'mirror'
-){
-
-const opposite = {
-
+if(mazeType==='mirror'){
+const opposite={
 up:'down',
 down:'up',
 left:'right',
 right:'left'
-
 };
 
+dir=opposite[dir] || dir;
 
-dir =
-opposite[dir] ||
-dir;
-
-
-if(
-!mirrorNoticeShown
-){
-
-mirrorNoticeShown =
-true;
-
-
+if(!mirrorNoticeShown){
+mirrorNoticeShown=true;
 playMirrorSound();
-
-
-flashMessage(
-'🪞 CONTROLS REVERSED!'
-);
-
+flashMessage('🪞 CONTROLS REVERSED!');
+}
 }
 
-}
+const c=grid[player.y][player.x];
 
+let nx=player.x;
+let ny=player.y;
 
+if(dir==='up' && !c.walls.top) ny--;
+if(dir==='right' && !c.walls.right) nx++;
+if(dir==='down' && !c.walls.bottom) ny++;
+if(dir==='left' && !c.walls.left) nx--;
 
-const c =
-grid[player.y][player.x];
-
-
-let nx =
-player.x;
-
-
-let ny =
-player.y;
-
+if(nx===player.x && ny===player.y) return;
 
 if(
-dir === 'up' &&
-!c.walls.top
-)
-ny--;
-
-
-if(
-dir === 'right' &&
-!c.walls.right
-)
-nx++;
-
-
-if(
-dir === 'down' &&
-!c.walls.bottom
-)
-ny++;
-
-
-if(
-dir === 'left' &&
-!c.walls.left
-)
-nx--;
-
-
-if(
-nx === player.x &&
-ny === player.y
-)
-return;
-
-
-
-if(
-mazeType === 'oneway' &&
+mazeType==='oneway' &&
 !canPassOneWay(
 player.x,
 player.y,
@@ -7869,272 +2773,163 @@ nx,
 ny
 )
 ){
-
 playBlockedSound();
-
-
-flashMessage(
-'➡️ WRONG WAY!'
-);
-
-
+flashMessage('➡️ WRONG WAY!');
 return;
-
 }
-
-
 
 startClock();
 
-
-player = {
+player={
 x:nx,
 y:ny
 };
 
-
 steps++;
 
-
-stepsEl.textContent =
-steps;
-
+stepsEl.textContent=steps;
 
 playMoveSound();
 
-
-
 if(
-mazeType === 'keys' &&
+mazeType==='keys' &&
 keyPos &&
-samePos(
-player,
-keyPos
-)
+samePos(player,keyPos)
 ){
-
-hasKey =
-true;
-
-
-keyPos =
-null;
-
+hasKey=true;
+keyPos=null;
 
 updateModeStatus();
 
-
 playKeySound();
-
 
 setTimeout(
 playUnlockSound,
 110
 );
 
-
 flashUnlocked();
-
 }
 
-
-
 if(
-mazeType === 'twodots' &&
+mazeType==='twodots' &&
 !dotSolved &&
-mysteryDots.length === 2
+mysteryDots.length===2
 ){
 
-for(
-let i=0;
-i<mysteryDots.length;
-i++
-){
+for(let i=0;i<mysteryDots.length;i++){
 
-const dot =
-mysteryDots[i];
+const dot=mysteryDots[i];
 
+if(dot.wrong) continue;
 
-if(
-dot.wrong
-)
-continue;
+if(samePos(player,dot)){
 
+if(i===correctDotIndex){
 
-if(
-samePos(
-player,
-dot
-)
-){
-
-if(
-i === correctDotIndex
-){
-
-dotSolved =
-true;
-
+dotSolved=true;
 
 updateModeStatus();
 
-
 playCorrectSound();
-
 
 setTimeout(
 playUnlockSound,
 120
 );
 
-
 flashMessage(
 '🎯 CORRECT! EXIT UNLOCKED!'
 );
 
-}
+}else{
 
+dot.wrong=true;
 
-else{
-
-dot.wrong =
-true;
-
-
-player = {
+player={
 x:0,
 y:0
 };
 
-
-renderPlayer = {
+renderPlayer={
 x:0,
 y:0
 };
-
 
 updateModeStatus(
 '❌ Wrong dot — back to START! Find the other dot.'
 );
 
-
 playWrongSound();
-
 
 flashMessage(
 '❌ WRONG DOT — BACK TO START!'
 );
 
-
 draw();
 
-
 return;
-
 }
 
 }
-
 }
-
 }
-
-
 
 handleTreasure();
-
-
 handleCoin();
 
+if(handleTrap()) return;
 
-
-if(
-handleTrap()
-)
-return;
-
-
-
-let teleported =
-false;
-
+let teleported=false;
 
 if(
-mazeType === 'portal' &&
-portals.length === 2
+mazeType==='portal' &&
+portals.length===2
 ){
 
-if(
-samePos(
-player,
-portals[0]
-)
-){
+if(samePos(player,portals[0])){
 
-player = {
+player={
 ...portals[1]
 };
 
-
-teleported =
-true;
-
+teleported=true;
 
 updateModeStatus(
 '🌀 Portal jump! You were transported across the maze.'
 );
 
-
 playPortalSound();
 
-}
-
-
-else if(
-samePos(
-player,
-portals[1]
-)
+}else if(
+samePos(player,portals[1])
 ){
 
-player = {
+player={
 ...portals[0]
 };
 
-
-teleported =
-true;
-
+teleported=true;
 
 updateModeStatus(
 '🌀 Portal jump! You were transported across the maze.'
 );
 
-
 playPortalSound();
-
 }
 
 }
 
+if(teleported){
 
-
-if(
-teleported
-){
-
-renderPlayer = {
+renderPlayer={
 x:player.x,
 y:player.y
 };
 
-
 draw();
 
-}
-
-
-else{
+}else{
 
 animatePlayerTo(
 player.x,
@@ -8143,22 +2938,15 @@ player.y
 
 }
 
-
-
-if(
-handleGhostAfterMove()
-)
-return;
-
-
+if(handleGhostAfterMove()) return;
 
 if(
-player.x === size-1 &&
-player.y === size-1
+player.x===size-1 &&
+player.y===size-1
 ){
 
 if(
-mazeType === 'keys' &&
+mazeType==='keys' &&
 !hasKey
 ){
 
@@ -8166,11 +2954,8 @@ updateModeStatus(
 '🔒 Exit locked — find the gold key first.'
 );
 
-}
-
-
-else if(
-mazeType === 'twodots' &&
+}else if(
+mazeType==='twodots' &&
 !dotSolved
 ){
 
@@ -8178,77 +2963,44 @@ updateModeStatus(
 '🔒 Exit locked — choose the correct mystery dot first.'
 );
 
-}
-
-
-else if(
-mazeType === 'treasure' &&
-treasuresCollected < 3
+}else if(
+mazeType==='treasure' &&
+treasuresCollected<3
 ){
 
 updateModeStatus(
 `🔒 Exit locked — collect all 3 gems. You have ${treasuresCollected}/3.`
 );
 
-}
-
-
-else if(
-mazeType === 'coins' &&
-coinsCollected < 5
+}else if(
+mazeType==='coins' &&
+coinsCollected<5
 ){
 
 updateModeStatus(
 `🔒 Exit locked — collect all 5 coins. You have ${coinsCollected}/5.`
 );
 
-}
-
-
-else{
+}else{
 
 finish();
 
 }
 
 }
-
 }
-
-
 
 function stopFireworks(){
-
-if(
-fireworksAnimation
-){
-
-cancelAnimationFrame(
-fireworksAnimation
-);
-
-
-fireworksAnimation =
-null;
-
+if(fireworksAnimation){
+cancelAnimationFrame(fireworksAnimation);
+fireworksAnimation=null;
 }
 
+clearTimeout(fireworksStopTimer);
 
-clearTimeout(
-fireworksStopTimer
-);
+fireworksStopTimer=null;
 
-
-fireworksStopTimer =
-null;
-
-
-fireworksCanvas
-.classList
-.remove(
-'show'
-);
-
+fireworksCanvas.classList.remove('show');
 
 fireworksCtx.clearRect(
 0,
@@ -8256,39 +3008,28 @@ fireworksCtx.clearRect(
 fireworksCanvas.width,
 fireworksCanvas.height
 );
-
 }
 
-
-
 function startFireworks(){
-
 stopFireworks();
 
+const dpr=window.devicePixelRatio || 1;
 
-const dpr =
-window.devicePixelRatio || 1;
-
-
-fireworksCanvas.width =
+fireworksCanvas.width=
 Math.floor(
 window.innerWidth*dpr
 );
 
-
-fireworksCanvas.height =
+fireworksCanvas.height=
 Math.floor(
 window.innerHeight*dpr
 );
 
-
-fireworksCanvas.style.width =
+fireworksCanvas.style.width=
 window.innerWidth+'px';
 
-
-fireworksCanvas.style.height =
+fireworksCanvas.style.height=
 window.innerHeight+'px';
-
 
 fireworksCtx.setTransform(
 dpr,
@@ -8299,20 +3040,11 @@ dpr,
 0
 );
 
+fireworksCanvas.classList.add('show');
 
-fireworksCanvas
-.classList
-.add(
-'show'
-);
+const particles=[];
 
-
-const particles =
-[];
-
-
-const colors = [
-
+const colors=[
 '#ff5d8f',
 '#ffd166',
 '#65d8ff',
@@ -8320,74 +3052,36 @@ const colors = [
 '#6ee7a8',
 '#ffffff',
 '#ff9f43'
-
 ];
 
+function burst(x,y,count=70){
 
+for(let i=0;i<count;i++){
 
-function burst(
-x,
-y,
-count=70
-){
+const angle=
+Math.random()*Math.PI*2;
 
-for(
-let i=0;
-i<count;
-i++
-){
-
-const angle =
-Math.random() *
-Math.PI *
-2;
-
-
-const speed =
-2.2 +
-Math.random()*5.2;
-
+const speed=
+2.2+Math.random()*5.2;
 
 particles.push({
-
 x,
 y,
-
-vx:
-Math.cos(angle)*speed,
-
-vy:
-Math.sin(angle)*speed,
-
-gravity:
-.055 +
-Math.random()*.035,
-
-life:
-1,
-
-decay:
-.010 +
-Math.random()*.010,
-
-size:
-1.8 +
-Math.random()*2.7,
-
-color:
-colors[
+vx:Math.cos(angle)*speed,
+vy:Math.sin(angle)*speed,
+gravity:.055+Math.random()*.035,
+life:1,
+decay:.010+Math.random()*.010,
+size:1.8+Math.random()*2.7,
+color:colors[
 Math.floor(
 Math.random()*colors.length
 )
 ]
-
 });
 
 }
-
 }
-
-
 
 burst(
 window.innerWidth*.25,
@@ -8395,13 +3089,11 @@ window.innerHeight*.30,
 85
 );
 
-
 burst(
 window.innerWidth*.72,
 window.innerHeight*.25,
 85
 );
-
 
 burst(
 window.innerWidth*.50,
@@ -8409,15 +3101,11 @@ window.innerHeight*.18,
 95
 );
 
-
-let lastExtra =
+let lastExtra=
 performance.now();
 
-
-const started =
+const started=
 performance.now();
-
-
 
 function frame(now){
 
@@ -8428,42 +3116,19 @@ window.innerWidth,
 window.innerHeight
 );
 
-
 if(
-
-now-lastExtra > 520
-
-&&
-
-now-started < 2400
-
+now-lastExtra>520 &&
+now-started<2400
 ){
 
 burst(
-
-window.innerWidth *
-(
-.15 +
-Math.random()*.70
-),
-
-window.innerHeight *
-(
-.12 +
-Math.random()*.32
-),
-
+window.innerWidth*(.15+Math.random()*.70),
+window.innerHeight*(.12+Math.random()*.32),
 65
-
 );
 
-
-lastExtra =
-now;
-
+lastExtra=now;
 }
-
-
 
 for(
 let i=particles.length-1;
@@ -8471,58 +3136,29 @@ i>=0;
 i--
 ){
 
-const p =
-particles[i];
+const p=particles[i];
 
+p.vy+=p.gravity;
+p.x+=p.vx;
+p.y+=p.vy;
+p.vx*=.992;
+p.life-=p.decay;
 
-p.vy +=
-p.gravity;
-
-
-p.x +=
-p.vx;
-
-
-p.y +=
-p.vy;
-
-
-p.vx *=
-.992;
-
-
-p.life -=
-p.decay;
-
-
-if(
-p.life <= 0
-){
-
-particles.splice(
-i,
-1
-);
-
-
+if(p.life<=0){
+particles.splice(i,1);
 continue;
-
 }
 
-
-fireworksCtx.globalAlpha =
+fireworksCtx.globalAlpha=
 Math.max(
 0,
 p.life
 );
 
-
-fireworksCtx.fillStyle =
+fireworksCtx.fillStyle=
 p.color;
 
-
 fireworksCtx.beginPath();
-
 
 fireworksCtx.arc(
 p.x,
@@ -8532,107 +3168,64 @@ p.size,
 Math.PI*2
 );
 
-
 fireworksCtx.fill();
-
 }
 
-
-fireworksCtx.globalAlpha =
-1;
-
+fireworksCtx.globalAlpha=1;
 
 if(
-
-now-started < 3500
-
-||
-
+now-started<3500 ||
 particles.length
-
 ){
 
-fireworksAnimation =
+fireworksAnimation=
 requestAnimationFrame(
 frame
 );
 
-}
-
-
-else{
+}else{
 
 stopFireworks();
 
 }
-
 }
 
-
-fireworksAnimation =
+fireworksAnimation=
 requestAnimationFrame(
 frame
 );
 
-
-fireworksStopTimer =
+fireworksStopTimer=
 setTimeout(
 stopFireworks,
 5200
 );
-
 }
 
-
-
 function finish(){
+won=true;
 
-won =
-true;
+clearInterval(timer);
+clearInterval(countdownTimer);
+clearInterval(movingWallTimer);
 
+movingWallTimer=null;
+countdownTimer=null;
 
-clearInterval(
-timer
-);
-
-
-clearInterval(
-countdownTimer
-);
-
-
-clearInterval(
-movingWallTimer
-);
-
-
-movingWallTimer =
-null;
-
-
-countdownTimer =
-null;
-
-
-const secs =
+const secs=
 currentSeconds();
 
-
-const key =
+const key=
 bestKey();
 
-
-const old =
+const old=
 Number(
-localStorage.getItem(
-key
-)
+localStorage.getItem(key)
 );
-
 
 if(
 !old ||
-secs < old
+secs<old
 ){
 
 localStorage.setItem(
@@ -8642,166 +3235,80 @@ String(secs)
 
 }
 
-
 updateBest();
 
-
-const label =
-
-selectedMazeType === 'mystery'
-
-? `Mystery Mode (${modeLabel(mazeType)})`
-
-: mazeTypeEl
-.options[
+const label=
+selectedMazeType==='mystery'
+?`Mystery Mode (${modeLabel(mazeType)})`
+:mazeTypeEl.options[
 mazeTypeEl.selectedIndex
-]
-.text
-.replace(
+].text.replace(
 /^[^A-Za-z]*/,
 ''
 );
 
-
-const modeText =
-
+const modeText=
 flashlight
+?' with Flashlight Mode on'
+:'';
 
-? ' with Flashlight Mode on'
-
-: '';
-
-
-winText.textContent =
-
+winText.textContent=
 `You finished the ${difficultyEl.options[difficultyEl.selectedIndex].text} ${label}${modeText} in ${formatTime(secs)} using ${steps} steps.`;
 
-
 startFireworks();
-
-
 playVictorySound();
 
-
-modal
-.classList
-.add(
-'show'
-);
-
+modal.classList.add('show');
 }
 
-
-
-function resetRun(
-resetChallenge=true
-){
-
+function resetRun(resetChallenge=true){
 stopFireworks();
 
+clearInterval(timer);
+clearTimeout(memoryTimer);
+clearInterval(countdownTimer);
+clearInterval(movingWallTimer);
 
-clearInterval(
-timer
-);
+timer=null;
+memoryTimer=null;
+countdownTimer=null;
+movingWallTimer=null;
+startTime=null;
 
-
-clearTimeout(
-memoryTimer
-);
-
-
-clearInterval(
-countdownTimer
-);
-
-
-clearInterval(
-movingWallTimer
-);
-
-
-timer =
-null;
-
-
-memoryTimer =
-null;
-
-
-countdownTimer =
-null;
-
-
-movingWallTimer =
-null;
-
-
-startTime =
-null;
-
-
-countdownRemaining =
+countdownRemaining=
 countdownLimit();
 
+timeEl.textContent=
+mazeType==='countdown'
+?formatTime(countdownRemaining)
+:'0:00';
 
-timeEl.textContent =
+steps=0;
 
-mazeType === 'countdown'
+stepsEl.textContent='0';
 
-? formatTime(
-countdownRemaining
-)
-
-: '0:00';
-
-
-steps =
-0;
-
-
-stepsEl.textContent =
-'0';
-
-
-player = {
+player={
 x:0,
 y:0
 };
 
-
-renderPlayer = {
+renderPlayer={
 x:0,
 y:0
 };
-
 
 setInitialFacing();
 
-
-
-if(
-moveAnimation
-){
-
-cancelAnimationFrame(
-moveAnimation
-);
-
-
-moveAnimation =
-null;
-
+if(moveAnimation){
+cancelAnimationFrame(moveAnimation);
+moveAnimation=null;
 }
 
-
-won =
-false;
-
-
+won=false;
 
 if(
 resetChallenge &&
-mazeType === 'moving'
+mazeType==='moving'
 ){
 
 restoreWalls(
@@ -8810,298 +3317,195 @@ movingWallBase
 
 }
 
-
-
 if(
 resetChallenge &&
-mazeType === 'keys'
+mazeType==='keys'
 ){
 
-hasKey =
-false;
+hasKey=false;
 
-
-keyPos =
+keyPos=
 randomOpenCell();
 
 }
 
-
-
 if(
 resetChallenge &&
-mazeType === 'twodots'
+mazeType==='twodots'
 ){
 
-dotSolved =
-false;
+dotSolved=false;
 
-
-const first =
+const first=
 randomOpenCell();
 
-
-const second =
+const second=
 randomOpenCell(
 [first]
 );
 
-
-mysteryDots = [
-
+mysteryDots=[
 {
 ...first,
 wrong:false
 },
-
 {
 ...second,
 wrong:false
 }
-
 ];
 
-
-correctDotIndex =
+correctDotIndex=
 Math.floor(
 rng()*2
 );
 
 }
 
-
-
 if(
 resetChallenge &&
-mazeType === 'treasure'
+mazeType==='treasure'
 ){
 
-treasuresCollected =
-0;
+treasuresCollected=0;
+treasures=[];
 
-
-treasures =
-[];
-
-
-for(
-let i=0;
-i<3;
-i++
-){
+for(let i=0;i<3;i++){
 
 treasures.push({
-
-...randomOpenCell(
-treasures
-),
-
+...randomOpenCell(treasures),
 collected:false
-
 });
 
 }
-
 }
-
-
 
 if(
 resetChallenge &&
-mazeType === 'traps'
+mazeType==='traps'
 ){
 
-trapTiles =
-[];
+trapTiles=[];
 
-
-for(
-let i=0;
-i<4;
-i++
-){
+for(let i=0;i<4;i++){
 
 trapTiles.push(
-randomOpenCell(
-trapTiles
-)
+randomOpenCell(trapTiles)
 );
 
 }
 
 }
 
-
-
 if(
 resetChallenge &&
-mazeType === 'coins'
+mazeType==='coins'
 ){
 
-coinsCollected =
-0;
+coinsCollected=0;
+coins=[];
 
-
-coins =
-[];
-
-
-for(
-let i=0;
-i<5;
-i++
-){
+for(let i=0;i<5;i++){
 
 coins.push({
-
-...randomOpenCell(
-coins
-),
-
+...randomOpenCell(coins),
 collected:false
-
 });
 
 }
 
 }
 
-
-
 if(
 resetChallenge &&
-mazeType === 'ghost'
+mazeType==='ghost'
 ){
 
-ghost = {
-
+ghost={
 x:size-1,
 y:0
-
 };
 
-
-ghostMoveCounter =
-0;
-
+ghostMoveCounter=0;
 }
-
-
 
 if(
 resetChallenge &&
-mazeType === 'oneway'
+mazeType==='oneway'
 ){
 
 generateOneWayGates();
 
 }
 
-
-
 if(
 resetChallenge &&
-mazeType === 'mirror'
+mazeType==='mirror'
 ){
 
-mirrorNoticeShown =
-false;
+mirrorNoticeShown=false;
 
 }
-
-
 
 if(
-mazeType === 'memory'
+mazeType==='memory'
 ){
 
-memoryVisible =
-true;
+memoryVisible=true;
 
 }
-
 
 updateModeStatus();
 
-
-modal
-.classList
-.remove(
-'show'
-);
-
+modal.classList.remove('show');
 
 draw();
 
-
 startMemoryCountdown();
 
-
 startMovingWalls();
-
 }
 
-
-
-function newMaze(
-useDaily=false
-){
-
-size =
+function newMaze(useDaily=false){
+size=
 Number(
 difficultyEl.value
 );
 
-
-selectedMazeType =
+selectedMazeType=
 mazeTypeEl.value;
 
-
-dailyMode =
+dailyMode=
 useDaily;
 
+if(useDaily){
 
-
-if(
-useDaily
-){
-
-const d =
+const d=
 new Date();
 
-
-const key =
+const key=
 `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}-${size}-${selectedMazeType}`;
 
-
-rng =
+rng=
 mulberry32(
 hashString(key)
 );
 
-}
+}else{
 
-
-else{
-
-rng =
+rng=
 Math.random;
 
 }
 
-
-
-mazeType =
+mazeType=
 selectedMazeType;
 
-
-
 if(
-selectedMazeType === 'mystery'
+selectedMazeType==='mystery'
 ){
 
-const mysteryModes = [
-
+const mysteryModes=[
 'keys',
 'memory',
 'portal',
@@ -9115,12 +3519,9 @@ const mysteryModes = [
 'coins',
 'mirror',
 'oneway'
-
 ];
 
-
-mazeType =
-
+mazeType=
 mysteryModes[
 Math.floor(
 rng()*mysteryModes.length
@@ -9129,28 +3530,17 @@ rng()*mysteryModes.length
 
 }
 
-
-
 generateMaze();
 
-
-movingWallBase =
+movingWallBase=
 cloneWalls();
-
 
 setupMode();
 
-
-resetRun(
-false
-);
-
+resetRun(false);
 
 updateBest();
-
 }
-
-
 
 document
 .getElementById('newMaze')
@@ -9159,16 +3549,12 @@ document
 ()=>newMaze(false)
 );
 
-
-
 document
 .getElementById('daily')
 .addEventListener(
 'click',
 ()=>newMaze(true)
 );
-
-
 
 document
 .getElementById('restart')
@@ -9177,15 +3563,11 @@ document
 ()=>resetRun(true)
 );
 
-
-
 difficultyEl
 .addEventListener(
 'change',
 ()=>newMaze(dailyMode)
 );
-
-
 
 mazeTypeEl
 .addEventListener(
@@ -9193,35 +3575,27 @@ mazeTypeEl
 ()=>newMaze(dailyMode)
 );
 
-
-
 viewModeEl
 .addEventListener(
 'change',
 ()=>{
 
-viewMode =
+viewMode=
 viewModeEl.value;
-
 
 localStorage.setItem(
 'maze_view',
 viewMode
 );
 
-
 updateViewUI();
 
-
 updateBest();
-
 
 draw();
 
 }
 );
-
-
 
 turnLeftBtn
 .addEventListener(
@@ -9229,15 +3603,11 @@ turnLeftBtn
 ()=>turnFirstPerson(-1)
 );
 
-
-
 turnRightBtn
 .addEventListener(
 'click',
 ()=>turnFirstPerson(1)
 );
-
-
 
 goForwardBtn
 .addEventListener(
@@ -9245,24 +3615,19 @@ goForwardBtn
 ()=>moveFirstPerson(true)
 );
 
-
-
 goBackBtn
 .addEventListener(
 'click',
 ()=>moveFirstPerson(false)
 );
 
-
-
 flashlightBtn
 .addEventListener(
 'click',
 ()=>{
 
-flashlight =
+flashlight=
 !flashlight;
-
 
 flashlightBtn
 .classList
@@ -9271,52 +3636,38 @@ flashlightBtn
 flashlight
 );
 
-
-flashlightBtn.textContent =
-
+flashlightBtn.textContent=
 flashlight
-
-? '🔦 Flashlight ON'
-
-: '🔦 Flashlight';
-
+?'🔦 Flashlight ON'
+:'🔦 Flashlight';
 
 updateBest();
-
 
 draw();
 
 }
 );
 
-
-
 soundBtn
 .addEventListener(
 'click',
 ()=>{
 
-soundOn =
+soundOn=
 !soundOn;
-
 
 localStorage.setItem(
 'maze_sound',
 soundOn
-? 'on'
-: 'off'
+?'on'
+:'off'
 );
-
 
 updateSoundButton();
 
-
-if(
-soundOn
-){
+if(soundOn){
 
 ensureAudio();
-
 
 playTone(
 700,
@@ -9324,7 +3675,6 @@ playTone(
 'sine',
 .035
 );
-
 
 playTone(
 950,
@@ -9339,135 +3689,89 @@ playTone(
 }
 );
 
-
-
 document
 .addEventListener(
 'keydown',
 e=>{
 
 if(
-viewMode !== 'overhead'
+viewMode!=='overhead'
 ){
 
-const k =
-e.key;
-
+const k=e.key;
 
 if(
-k === 'ArrowLeft' ||
-k === 'a' ||
-k === 'A'
+k==='ArrowLeft' ||
+k==='a' ||
+k==='A'
 ){
 
 e.preventDefault();
 
-
-turnFirstPerson(
--1
-);
-
+turnFirstPerson(-1);
 
 return;
-
 }
 
-
 if(
-k === 'ArrowRight' ||
-k === 'd' ||
-k === 'D'
+k==='ArrowRight' ||
+k==='d' ||
+k==='D'
 ){
 
 e.preventDefault();
 
-
-turnFirstPerson(
-1
-);
-
+turnFirstPerson(1);
 
 return;
-
 }
 
-
 if(
-k === 'ArrowUp' ||
-k === 'w' ||
-k === 'W'
+k==='ArrowUp' ||
+k==='w' ||
+k==='W'
 ){
 
 e.preventDefault();
 
-
-moveFirstPerson(
-true
-);
-
+moveFirstPerson(true);
 
 return;
-
 }
 
-
 if(
-k === 'ArrowDown' ||
-k === 's' ||
-k === 'S'
+k==='ArrowDown' ||
+k==='s' ||
+k==='S'
 ){
 
 e.preventDefault();
 
-
-moveFirstPerson(
-false
-);
-
+moveFirstPerson(false);
 
 return;
-
 }
 
 }
 
-
-
-const map = {
-
+const map={
 ArrowUp:'up',
-
 ArrowRight:'right',
-
 ArrowDown:'down',
-
 ArrowLeft:'left',
-
 w:'up',
-
 d:'right',
-
 s:'down',
-
 a:'left',
-
 W:'up',
-
 D:'right',
-
 S:'down',
-
 A:'left'
-
 };
 
-
-if(
-map[e.key]
-){
+if(map[e.key]){
 
 e.preventDefault();
-
 
 move(
 map[e.key]
@@ -9478,133 +3782,69 @@ map[e.key]
 }
 );
 
+function directionFromPointer(clientX,clientY){
+if(viewMode!=='overhead') return null;
 
-
-function directionFromPointer(
-clientX,
-clientY
-){
-
-if(
-viewMode !== 'overhead'
-)
-return null;
-
-
-const rect =
+const rect=
 canvas.getBoundingClientRect();
 
+const localX=
+clientX-rect.left;
 
-const localX =
-clientX -
-rect.left;
+const localY=
+clientY-rect.top;
 
+const cell=
+rect.width/size;
 
-const localY =
-clientY -
-rect.top;
-
-
-const cell =
-rect.width /
-size;
-
-
-const targetX =
+const targetX=
 Math.max(
-
 0,
-
 Math.min(
-
 size-1,
-
 Math.floor(
 localX/cell
 )
-
 )
-
 );
 
-
-const targetY =
+const targetY=
 Math.max(
-
 0,
-
 Math.min(
-
 size-1,
-
 Math.floor(
 localY/cell
 )
-
 )
-
 );
 
+const dx=
+targetX-player.x;
 
-const dx =
-targetX -
-player.x;
-
-
-const dy =
-targetY -
-player.y;
-
+const dy=
+targetY-player.y;
 
 if(
-Math.abs(dx) >
+Math.abs(dx)>
 Math.abs(dy)
 ){
 
-if(
-dx > 0
-)
-return 'right';
+if(dx>0) return 'right';
+if(dx<0) return 'left';
 
+}else{
 
-if(
-dx < 0
-)
-return 'left';
+if(dy>0) return 'down';
+if(dy<0) return 'up';
 
 }
-
-
-else{
-
-if(
-dy > 0
-)
-return 'down';
-
-
-if(
-dy < 0
-)
-return 'up';
-
-}
-
 
 return null;
-
 }
 
-
-
-let dragging =
-false;
-
-
-let lastDragMove =
-0;
-
-
+let dragging=false;
+let lastDragMove=0;
 
 wrap
 .addEventListener(
@@ -9612,23 +3852,17 @@ wrap
 e=>{
 
 if(
-viewMode === 'overhead'
+viewMode==='overhead'
 )
 return;
 
-
-firstPersonSwipeStart = {
-
+firstPersonSwipeStart={
 x:e.clientX,
-
 y:e.clientY
-
 };
 
 }
 );
-
-
 
 wrap
 .addEventListener(
@@ -9636,169 +3870,120 @@ wrap
 e=>{
 
 if(
-viewMode === 'overhead' ||
+viewMode==='overhead' ||
 !firstPersonSwipeStart
 )
 return;
 
-
-const dx =
-e.clientX -
+const dx=
+e.clientX-
 firstPersonSwipeStart.x;
 
-
-const dy =
-e.clientY -
+const dy=
+e.clientY-
 firstPersonSwipeStart.y;
 
-
-firstPersonSwipeStart =
-null;
-
+firstPersonSwipeStart=null;
 
 if(
-
 Math.max(
-
 Math.abs(dx),
-
 Math.abs(dy)
-
-)
-
-< 24
-
+)<24
 ){
 
-moveFirstPerson(
-true
-);
-
+moveFirstPerson(true);
 
 return;
-
 }
 
-
 if(
-Math.abs(dx) >
+Math.abs(dx)>
 Math.abs(dy)
 ){
 
 turnFirstPerson(
-
-dx > 0
-
-? 1
-
-: -1
-
+dx>0
+?1
+:-1
 );
 
-}
-
-
-else{
+}else{
 
 moveFirstPerson(
-dy < 0
+dy<0
 );
 
 }
 
 }
 );
-
-
 
 wrap
 .addEventListener(
 'pointerdown',
 e=>{
 
-dragging =
-true;
-
+dragging=true;
 
 wrap
 .setPointerCapture?.(
 e.pointerId
 );
 
-
-const dir =
+const dir=
 directionFromPointer(
 e.clientX,
 e.clientY
 );
 
-
 if(dir){
 
-move(
-dir
-);
+move(dir);
 
 }
 
 }
 );
-
-
 
 wrap
 .addEventListener(
 'pointermove',
 e=>{
 
-if(
-!dragging
-)
-return;
+if(!dragging) return;
 
-
-const now =
+const now=
 Date.now();
 
-
 if(
-now-lastDragMove < 40
+now-lastDragMove<40
 )
 return;
 
+lastDragMove=now;
 
-lastDragMove =
-now;
-
-
-const dir =
+const dir=
 directionFromPointer(
 e.clientX,
 e.clientY
 );
 
-
 if(dir){
 
-move(
-dir
-);
+move(dir);
 
 }
 
 }
 );
-
-
 
 wrap
 .addEventListener(
 'pointerup',
 e=>{
 
-dragging =
-false;
-
+dragging=false;
 
 wrap
 .releasePointerCapture?.(
@@ -9808,44 +3993,31 @@ e.pointerId
 }
 );
 
-
-
 wrap
 .addEventListener(
 'pointercancel',
 ()=>{
 
-dragging =
-false;
+dragging=false;
 
 }
 );
 
+if(!window.PointerEvent){
 
-
-if(
-!window.PointerEvent
-){
-
-let touchStart =
-null;
-
+let touchStart=null;
 
 wrap
 .addEventListener(
 'touchstart',
 e=>{
 
-const t =
+const t=
 e.changedTouches[0];
 
-
-touchStart = {
-
+touchStart={
 x:t.clientX,
-
 y:t.clientY
-
 };
 
 },
@@ -9854,80 +4026,51 @@ passive:true
 }
 );
 
-
 wrap
 .addEventListener(
 'touchend',
 e=>{
 
-if(
-!touchStart
-)
-return;
+if(!touchStart) return;
 
-
-const t =
+const t=
 e.changedTouches[0];
 
-
-const dx =
-t.clientX -
+const dx=
+t.clientX-
 touchStart.x;
 
-
-const dy =
-t.clientY -
+const dy=
+t.clientY-
 touchStart.y;
 
-
-touchStart =
-null;
-
+touchStart=null;
 
 if(
-
 Math.max(
-
 Math.abs(dx),
-
 Math.abs(dy)
-
-)
-
-< 18
-
+)<18
 )
 return;
 
-
 if(
-Math.abs(dx) >
+Math.abs(dx)>
 Math.abs(dy)
 ){
 
 move(
-
-dx > 0
-
-? 'right'
-
-: 'left'
-
+dx>0
+?'right'
+:'left'
 );
 
-}
-
-
-else{
+}else{
 
 move(
-
-dy > 0
-
-? 'down'
-
-: 'up'
-
+dy>0
+?'down'
+:'up'
 );
 
 }
@@ -9940,16 +4083,12 @@ passive:true
 
 }
 
-
-
 document
 .getElementById('playAgain')
 .addEventListener(
 'click',
 ()=>resetRun(true)
 );
-
-
 
 document
 .getElementById('nextMaze')
@@ -9958,32 +4097,22 @@ document
 ()=>newMaze(false)
 );
 
-
-
 window
 .addEventListener(
 'resize',
 resizeCanvas
 );
 
-
-
 updateSoundButton();
-
 
 updateViewUI();
 
-
-newMaze(
-false
-);
-
+newMaze(false);
 
 requestAnimationFrame(
 resizeCanvas
 );
 
 </script>
-
 </body>
 </html>

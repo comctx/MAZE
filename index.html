@@ -169,6 +169,11 @@ select{grid-column:1/-1}
 <option value="moving">🧱 Moving Walls</option>
 <option value="traps">⚠️ Trap Tiles</option>
 <option value="ice">🧊 Ice Maze</option>
+<option value="ghost">👻 Ghost Chase</option>
+<option value="countdown">⏰ Countdown Escape</option>
+<option value="coins">🪙 Coin Challenge</option>
+<option value="mirror">🪞 Mirror Controls</option>
+<option value="oneway">➡️ One-Way Arrows</option>
 <option value="mystery">❓ Mystery Mode</option>
 </select>
 
@@ -183,11 +188,9 @@ select{grid-column:1/-1}
 <div id="modeStatus" class="mode-status">
 Classic Maze — reach the glowing exit.
 </div>
-
 </section>
 
 <section class="stats-card">
-
 <div class="stat">
 <div class="stat-label">Time</div>
 <div class="stat-value" id="time">0:00</div>
@@ -202,11 +205,9 @@ Classic Maze — reach the glowing exit.
 <div class="stat-label">Best</div>
 <div class="stat-value" id="best">—</div>
 </div>
-
 </section>
 
 <section class="maze-card">
-
 <div class="canvas-wrap" id="canvasWrap">
 <canvas id="maze"></canvas>
 </div>
@@ -214,47 +215,29 @@ Classic Maze — reach the glowing exit.
 <p class="hint">
 Drag your finger or mouse through the maze. On a computer, use the arrow keys or WASD.
 Try Classic, Keys & Doors, Memory, Portal, Two Dots, Treasure Hunt, Moving Walls,
-Trap Tiles, Ice Maze, or Mystery Mode.
+Trap Tiles, Ice Maze, Ghost Chase, Countdown Escape, Coin Challenge, Mirror Controls,
+One-Way Arrows, or Mystery Mode.
 </p>
-
 </section>
 
-<div id="unlockToast" class="unlock-toast">
-🔓 UNLOCKED!
-</div>
+<div id="unlockToast" class="unlock-toast">🔓 UNLOCKED!</div>
 
-<footer>
-A DONCO-BAYCITY™ App
-</footer>
-
+<footer>A DONCO-BAYCITY™ App</footer>
 </div>
 
 <canvas id="fireworksCanvas" class="fireworks-canvas" aria-hidden="true"></canvas>
 
 <div id="winModal" class="modal">
 <div class="modal-card">
-
-<div class="trophy">
-🏁
-</div>
-
-<h2>
-You escaped!
-</h2>
-
+<div class="trophy">🏁</div>
+<h2>You escaped!</h2>
 <p id="winText"></p>
 
 <div class="modal-actions">
-
-<button id="playAgain">
-Restart
-</button>
-
-<button id="nextMaze" class="primary">
-New Maze
-</button>
-
+<button id="playAgain">Restart</button>
+<button id="nextMaze" class="primary">New Maze</button>
 </div>
+
 </div>
 </div>
 
@@ -310,39 +293,16 @@ document.getElementById('winText');
 
 
 let size = 17;
-
 let grid = [];
-
-let player = {
-x:0,
-y:0
-};
-
-let renderPlayer = {
-x:0,
-y:0
-};
-
-let moveAnimation =
-null;
-
-let startTime =
-null;
-
-let timer =
-null;
-
-let steps =
-0;
-
-let won =
-false;
-
-let flashlight =
-false;
-
-let dailyMode =
-false;
+let player = {x:0,y:0};
+let renderPlayer = {x:0,y:0};
+let moveAnimation = null;
+let startTime = null;
+let timer = null;
+let steps = 0;
+let won = false;
+let flashlight = false;
+let dailyMode = false;
 
 let selectedMazeType =
 'classic';
@@ -350,59 +310,45 @@ let selectedMazeType =
 let mazeType =
 'classic';
 
-let keyPos =
-null;
+let keyPos = null;
+let hasKey = false;
+let portals = [];
+let mysteryDots = [];
+let correctDotIndex = 0;
+let dotSolved = false;
+let memoryVisible = true;
+let memoryTimer = null;
+let treasures = [];
+let treasuresCollected = 0;
+let trapTiles = [];
 
-let hasKey =
-false;
+let coins = [];
+let coinsCollected = 0;
 
-let portals =
-[];
+let ghost = null;
+let ghostMoveCounter = 0;
 
-let mysteryDots =
-[];
+let countdownTimer = null;
+let countdownRemaining = 0;
 
-let correctDotIndex =
-0;
+let oneWayGates = [];
 
-let dotSolved =
-false;
+let mirrorNoticeShown = false;
 
-let memoryVisible =
-true;
+let movingWallTimer = null;
+let movingWallBase = null;
 
-let memoryTimer =
-null;
+let mysteryRevealed = false;
 
-let treasures =
-[];
+let rng = Math.random;
 
-let treasuresCollected =
-0;
-
-let trapTiles =
-[];
-
-let movingWallTimer =
-null;
-
-let movingWallBase =
-null;
-
-let rng =
-Math.random;
-
-let fireworksAnimation =
-null;
-
-let fireworksStopTimer =
-null;
+let fireworksAnimation = null;
+let fireworksStopTimer = null;
 
 let soundOn =
 localStorage.getItem('maze_sound') !== 'off';
 
-let audioCtx =
-null;
+let audioCtx = null;
 
 
 
@@ -411,29 +357,22 @@ function ensureAudio(){
 if(!soundOn)
 return null;
 
-
 const AudioClass =
 window.AudioContext ||
 window.webkitAudioContext;
 
-
 if(!AudioClass)
 return null;
-
 
 if(!audioCtx)
 audioCtx =
 new AudioClass();
 
-
 if(
 audioCtx.state === 'suspended'
 ){
-
 audioCtx.resume();
-
 }
-
 
 return audioCtx;
 
@@ -453,37 +392,29 @@ endFreq=null
 if(!soundOn)
 return;
 
-
 const ac =
 ensureAudio();
-
 
 if(!ac)
 return;
 
-
 const now =
 ac.currentTime + delay;
-
 
 const osc =
 ac.createOscillator();
 
-
 const gain =
 ac.createGain();
 
-
 osc.type =
 type;
-
 
 osc.frequency
 .setValueAtTime(
 Math.max(40,freq),
 now
 );
-
 
 if(endFreq){
 
@@ -495,13 +426,11 @@ now + duration
 
 }
 
-
 gain.gain
 .setValueAtTime(
 .0001,
 now
 );
-
 
 gain.gain
 .exponentialRampToValueAtTime(
@@ -509,46 +438,24 @@ Math.max(.0002,volume),
 now + Math.min(.018,duration*.25)
 );
 
-
 gain.gain
 .exponentialRampToValueAtTime(
 .0001,
 now + duration
 );
 
+osc.connect(gain);
+gain.connect(ac.destination);
 
-osc.connect(
-gain
-);
-
-
-gain.connect(
-ac.destination
-);
-
-
-osc.start(
-now
-);
-
-
-osc.stop(
-now + duration + .03
-);
+osc.start(now);
+osc.stop(now + duration + .03);
 
 }
 
 
 
 function playMoveSound(){
-
-playTone(
-520,
-.028,
-'sine',
-.012
-);
-
+playTone(520,.028,'sine',.012);
 }
 
 
@@ -561,7 +468,6 @@ playTone(
 'triangle',
 .05
 );
-
 
 playTone(
 1175,
@@ -584,7 +490,6 @@ playTone(
 .05
 );
 
-
 playTone(
 659.25,
 .11,
@@ -592,7 +497,6 @@ playTone(
 .05,
 .08
 );
-
 
 playTone(
 783.99,
@@ -615,7 +519,6 @@ playTone(
 .04
 );
 
-
 playTone(
 135,
 .24,
@@ -637,7 +540,6 @@ playTone(
 .05
 );
 
-
 playTone(
 880,
 .10,
@@ -645,7 +547,6 @@ playTone(
 .05,
 .07
 );
-
 
 playTone(
 1046.5,
@@ -670,7 +571,6 @@ playTone(
 900
 );
 
-
 playTone(
 320,
 .22,
@@ -693,7 +593,6 @@ playTone(
 .05
 );
 
-
 playTone(
 659.25,
 .16,
@@ -701,7 +600,6 @@ playTone(
 .05,
 .13
 );
-
 
 playTone(
 783.99,
@@ -711,7 +609,6 @@ playTone(
 .26
 );
 
-
 playTone(
 1046.5,
 .34,
@@ -719,7 +616,6 @@ playTone(
 .065,
 .39
 );
-
 
 playTone(
 783.99,
@@ -735,12 +631,11 @@ playTone(
 
 function playGemSound(index=0){
 
-const notes = [
+const notes=[
 659.25,
 783.99,
 987.77
 ];
-
 
 playTone(
 notes[index%notes.length],
@@ -748,7 +643,6 @@ notes[index%notes.length],
 'triangle',
 .05
 );
-
 
 playTone(
 notes[index%notes.length]*1.5,
@@ -770,7 +664,6 @@ playTone(
 'square',
 .035
 );
-
 
 playTone(
 110,
@@ -794,7 +687,6 @@ playTone(
 0,
 210
 );
-
 
 playTone(
 92,
@@ -824,6 +716,110 @@ playTone(
 
 
 
+function playCoinSound(index=0){
+
+const notes=[
+740,
+880,
+1046.5,
+1175,
+1318.5
+];
+
+playTone(
+notes[index%notes.length],
+.07,
+'triangle',
+.045
+);
+
+playTone(
+notes[index%notes.length]*1.25,
+.10,
+'sine',
+.028,
+.05
+);
+
+}
+
+
+
+function playGhostSound(){
+
+playTone(
+150,
+.28,
+'sine',
+.035,
+0,
+85
+);
+
+playTone(
+230,
+.20,
+'triangle',
+.018,
+.03,
+120
+);
+
+}
+
+
+
+function playCountdownBeep(){
+playTone(880,.055,'square',.025);
+}
+
+
+
+function playBlockedSound(){
+
+playTone(
+180,
+.09,
+'square',
+.028
+);
+
+playTone(
+130,
+.10,
+'square',
+.022,
+.05
+);
+
+}
+
+
+
+function playMirrorSound(){
+
+playTone(
+620,
+.08,
+'sine',
+.025,
+0,
+420
+);
+
+playTone(
+420,
+.08,
+'sine',
+.022,
+.07,
+620
+);
+
+}
+
+
+
 function updateSoundButton(){
 
 soundBtn
@@ -832,7 +828,6 @@ soundBtn
 'active',
 soundOn
 );
-
 
 soundBtn.textContent =
 
@@ -853,13 +848,11 @@ return function(){
 let t =
 a += 0x6D2B79F5;
 
-
 t =
 Math.imul(
 t ^ t >>> 15,
 t | 1
 );
-
 
 t ^=
 t +
@@ -867,7 +860,6 @@ Math.imul(
 t ^ t >>> 7,
 t | 61
 );
-
 
 return (
 (t ^ t >>> 14) >>> 0
@@ -884,7 +876,6 @@ function hashString(str){
 let h =
 2166136261 >>> 0;
 
-
 for(
 let i=0;
 i<str.length;
@@ -894,7 +885,6 @@ i++
 h ^=
 str.charCodeAt(i);
 
-
 h =
 Math.imul(
 h,
@@ -902,7 +892,6 @@ h,
 );
 
 }
-
 
 return h >>> 0;
 
@@ -923,15 +912,10 @@ y,
 visited:false,
 
 walls:{
-
 top:true,
-
 right:true,
-
 bottom:true,
-
 left:true
-
 }
 
 };
@@ -963,14 +947,11 @@ excluded=[]
 ){
 
 let pick;
-
-let tries =
-0;
-
+let tries=0;
 
 do{
 
-pick = {
+pick={
 
 x:
 Math.floor(
@@ -983,7 +964,6 @@ rng()*size
 )
 
 };
-
 
 tries++;
 
@@ -1017,16 +997,13 @@ pick.y===size-1
 
 );
 
-
 return pick;
 
 }
 
 
 
-function updateModeStatus(
-message=''
-){
+function updateModeStatus(message=''){
 
 if(message){
 
@@ -1037,18 +1014,18 @@ return;
 
 }
 
-
 const mysteryPrefix =
 
-selectedMazeType === 'mystery'
+selectedMazeType==='mystery'
 
 ? '❓ Mystery revealed — '
 
 : '';
 
 
+
 if(
-mazeType === 'keys'
+mazeType==='keys'
 ){
 
 modeStatusEl.textContent =
@@ -1066,8 +1043,9 @@ hasKey
 }
 
 
+
 else if(
-mazeType === 'memory'
+mazeType==='memory'
 ){
 
 modeStatusEl.textContent =
@@ -1085,21 +1063,21 @@ memoryVisible
 }
 
 
+
 else if(
-mazeType === 'portal'
+mazeType==='portal'
 ){
 
 modeStatusEl.textContent =
-
 mysteryPrefix +
-
 '🌀 Purple and gold portals teleport you across the maze.';
 
 }
 
 
+
 else if(
-mazeType === 'twodots'
+mazeType==='twodots'
 ){
 
 modeStatusEl.textContent =
@@ -1117,8 +1095,9 @@ dotSolved
 }
 
 
+
 else if(
-mazeType === 'treasure'
+mazeType==='treasure'
 ){
 
 modeStatusEl.textContent =
@@ -1130,8 +1109,9 @@ mysteryPrefix +
 }
 
 
+
 else if(
-mazeType === 'moving'
+mazeType==='moving'
 ){
 
 modeStatusEl.textContent =
@@ -1143,8 +1123,9 @@ mysteryPrefix +
 }
 
 
+
 else if(
-mazeType === 'traps'
+mazeType==='traps'
 ){
 
 modeStatusEl.textContent =
@@ -1156,8 +1137,9 @@ mysteryPrefix +
 }
 
 
+
 else if(
-mazeType === 'ice'
+mazeType==='ice'
 ){
 
 modeStatusEl.textContent =
@@ -1167,6 +1149,83 @@ mysteryPrefix +
 '🧊 Ice Maze — one move slides you until you hit a wall.';
 
 }
+
+
+
+else if(
+mazeType==='ghost'
+){
+
+modeStatusEl.textContent =
+
+mysteryPrefix +
+
+'👻 Ghost Chase — the ghost moves toward you every few steps. Do not let it catch you!';
+
+}
+
+
+
+else if(
+mazeType==='countdown'
+){
+
+modeStatusEl.textContent =
+
+mysteryPrefix +
+
+`⏰ Countdown Escape — reach the exit before time runs out! ${formatTime(countdownRemaining)} left.`;
+
+}
+
+
+
+else if(
+mazeType==='coins'
+){
+
+modeStatusEl.textContent =
+
+mysteryPrefix +
+
+(
+coinsCollected >= 5
+
+? '🪙 All 5 coins found — the exit is unlocked!'
+
+: `🪙 Collect all 5 coins — ${coinsCollected}/5 found.`
+);
+
+}
+
+
+
+else if(
+mazeType==='mirror'
+){
+
+modeStatusEl.textContent =
+
+mysteryPrefix +
+
+'🪞 Mirror Controls — every direction is reversed.';
+
+}
+
+
+
+else if(
+mazeType==='oneway'
+){
+
+modeStatusEl.textContent =
+
+mysteryPrefix +
+
+'➡️ One-Way Arrows — you may only cross arrow gates in the direction shown.';
+
+}
+
 
 
 else{
@@ -1188,16 +1247,13 @@ unlockToast
 'show'
 );
 
-
 void unlockToast.offsetWidth;
-
 
 unlockToast
 .classList
 .add(
 'show'
 );
-
 
 setTimeout(
 
@@ -1215,13 +1271,10 @@ setTimeout(
 
 
 
-function flashMessage(
-message
-){
+function flashMessage(message){
 
 unlockToast.textContent =
 message;
-
 
 unlockToast
 .classList
@@ -1229,16 +1282,13 @@ unlockToast
 'show'
 );
 
-
 void unlockToast.offsetWidth;
-
 
 unlockToast
 .classList
 .add(
 'show'
 );
-
 
 setTimeout(
 
@@ -1249,7 +1299,6 @@ unlockToast
 .remove(
 'show'
 );
-
 
 unlockToast.textContent =
 '🔓 UNLOCKED!';
@@ -1266,49 +1315,31 @@ unlockToast.textContent =
 
 function setupMode(){
 
-keyPos =
-null;
+keyPos=null;
+hasKey=false;
+portals=[];
+mysteryDots=[];
+correctDotIndex=0;
+dotSolved=false;
+memoryVisible=true;
+treasures=[];
+treasuresCollected=0;
+trapTiles=[];
+coins=[];
+coinsCollected=0;
+ghost=null;
+ghostMoveCounter=0;
+countdownRemaining=countdownLimit();
+oneWayGates=[];
+mirrorNoticeShown=false;
 
-
-hasKey =
-false;
-
-
-portals =
-[];
-
-
-mysteryDots =
-[];
-
-
-correctDotIndex =
-0;
-
-
-dotSolved =
-false;
-
-
-memoryVisible =
-true;
-
-
-treasures =
-[];
-
-
-treasuresCollected =
-0;
-
-
-trapTiles =
-[];
+mysteryRevealed =
+selectedMazeType==='mystery';
 
 
 
 if(
-mazeType === 'keys'
+mazeType==='keys'
 ){
 
 keyPos =
@@ -1317,21 +1348,20 @@ randomOpenCell();
 }
 
 
+
 else if(
-mazeType === 'portal'
+mazeType==='portal'
 ){
 
 const first =
 randomOpenCell();
-
 
 const second =
 randomOpenCell(
 [first]
 );
 
-
-portals = [
+portals=[
 first,
 second
 ];
@@ -1339,21 +1369,20 @@ second
 }
 
 
+
 else if(
-mazeType === 'twodots'
+mazeType==='twodots'
 ){
 
 const first =
 randomOpenCell();
-
 
 const second =
 randomOpenCell(
 [first]
 );
 
-
-mysteryDots = [
+mysteryDots=[
 
 {
 ...first,
@@ -1367,7 +1396,6 @@ wrong:false
 
 ];
 
-
 correctDotIndex =
 Math.floor(
 rng()*2
@@ -1376,8 +1404,9 @@ rng()*2
 }
 
 
+
 else if(
-mazeType === 'treasure'
+mazeType==='treasure'
 ){
 
 for(
@@ -1401,8 +1430,9 @@ collected:false
 }
 
 
+
 else if(
-mazeType === 'traps'
+mazeType==='traps'
 ){
 
 for(
@@ -1422,6 +1452,57 @@ trapTiles
 }
 
 
+
+else if(
+mazeType==='coins'
+){
+
+for(
+let i=0;
+i<5;
+i++
+){
+
+coins.push({
+
+...randomOpenCell(
+coins
+),
+
+collected:false
+
+});
+
+}
+
+}
+
+
+
+else if(
+mazeType==='ghost'
+){
+
+ghost={
+
+x:size-1,
+y:0
+
+};
+
+}
+
+
+
+else if(
+mazeType==='oneway'
+){
+
+generateOneWayGates();
+
+}
+
+
 updateModeStatus();
 
 }
@@ -1430,7 +1511,7 @@ updateModeStatus();
 
 function modeLabel(type){
 
-const labels = {
+const labels={
 
 classic:'Classic Maze',
 
@@ -1448,10 +1529,19 @@ moving:'Moving Walls',
 
 traps:'Trap Tiles',
 
-ice:'Ice Maze'
+ice:'Ice Maze',
+
+ghost:'Ghost Chase',
+
+countdown:'Countdown Escape',
+
+coins:'Coin Challenge',
+
+mirror:'Mirror Controls',
+
+oneway:'One-Way Arrows'
 
 };
-
 
 return labels[type] ||
 'Maze';
@@ -1460,22 +1550,1108 @@ return labels[type] ||
 
 
 
-function cloneWalls(){
+function countdownLimit(){
 
-return grid.map(
-row=>
-row.map(
-c=>({...c.walls})
+if(
+size<=11
 )
+return 75;
+
+if(
+size<=17
+)
+return 110;
+
+if(
+size<=25
+)
+return 165;
+
+return 240;
+
+}
+
+
+
+function startCountdownTimer(){
+
+clearInterval(
+countdownTimer
+);
+
+if(
+mazeType!=='countdown'
+)
+return;
+
+if(
+countdownRemaining<=0
+){
+
+countdownRemaining =
+countdownLimit();
+
+}
+
+timeEl.textContent =
+formatTime(
+countdownRemaining
+);
+
+
+countdownTimer =
+setInterval(
+
+()=>{
+
+if(won)
+return;
+
+
+countdownRemaining--;
+
+
+timeEl.textContent =
+formatTime(
+
+Math.max(
+0,
+countdownRemaining
+)
+
+);
+
+
+if(
+countdownRemaining > 0 &&
+countdownRemaining <= 10
+){
+
+playCountdownBeep();
+
+}
+
+
+if(
+countdownRemaining <= 0
+){
+
+clearInterval(
+countdownTimer
+);
+
+countdownTimer=null;
+
+won=true;
+
+playWrongSound();
+
+flashMessage(
+'⏰ TIME UP — BACK TO START!'
+);
+
+modeStatusEl.textContent =
+'⏰ Time is up! Restarting this maze...';
+
+setTimeout(
+
+()=>{
+
+resetRun(
+false
+);
+
+},
+
+900
+
+);
+
+}
+
+},
+
+1000
+
 );
 
 }
 
 
 
-function restoreWalls(
-snapshot
+function handleCoin(){
+
+if(
+mazeType!=='coins'
+)
+return;
+
+
+for(
+let i=0;
+i<coins.length;
+i++
 ){
+
+const coin =
+coins[i];
+
+
+if(
+!coin.collected &&
+samePos(
+player,
+coin
+)
+){
+
+coin.collected=true;
+
+coinsCollected++;
+
+playCoinSound(
+i
+);
+
+
+if(
+coinsCollected === 5
+){
+
+playUnlockSound();
+
+flashMessage(
+'🪙 ALL COINS FOUND — EXIT UNLOCKED!'
+);
+
+}
+
+else{
+
+flashMessage(
+`🪙 COIN ${coinsCollected} OF 5!`
+);
+
+}
+
+
+updateModeStatus();
+
+break;
+
+}
+
+}
+
+}
+
+
+
+function ghostNextStep(){
+
+if(!ghost)
+return null;
+
+
+const start={
+
+x:ghost.x,
+y:ghost.y
+
+};
+
+
+const target={
+
+x:player.x,
+y:player.y
+
+};
+
+
+const q=[
+start
+];
+
+
+const seen =
+new Set(
+[
+`${start.x},${start.y}`
+]
+);
+
+
+const parent =
+new Map();
+
+
+const dirs=[
+
+[
+'top',
+0,
+-1
+],
+
+[
+'right',
+1,
+0
+],
+
+[
+'bottom',
+0,
+1
+],
+
+[
+'left',
+-1,
+0
+]
+
+];
+
+
+while(
+q.length
+){
+
+const p =
+q.shift();
+
+
+if(
+p.x===target.x &&
+p.y===target.y
+)
+break;
+
+
+const c =
+grid[p.y][p.x];
+
+
+for(
+const [
+wall,
+dx,
+dy
+]
+of dirs
+){
+
+if(
+c.walls[wall]
+)
+continue;
+
+
+const nx =
+p.x+dx;
+
+
+const ny =
+p.y+dy;
+
+
+if(
+nx<0 ||
+ny<0 ||
+nx>=size ||
+ny>=size
+)
+continue;
+
+
+const key =
+`${nx},${ny}`;
+
+
+if(
+seen.has(key)
+)
+continue;
+
+
+seen.add(key);
+
+
+parent.set(
+key,
+`${p.x},${p.y}`
+);
+
+
+q.push({
+
+x:nx,
+y:ny
+
+});
+
+}
+
+}
+
+
+const targetKey =
+`${target.x},${target.y}`;
+
+
+if(
+!seen.has(
+targetKey
+)
+)
+return null;
+
+
+let cur =
+targetKey;
+
+
+let prev =
+parent.get(
+cur
+);
+
+
+const startKey =
+`${start.x},${start.y}`;
+
+
+while(
+prev &&
+prev!==startKey
+){
+
+cur =
+prev;
+
+
+prev =
+parent.get(
+cur
+);
+
+}
+
+
+const [
+x,
+y
+] =
+cur
+.split(',')
+.map(
+Number
+);
+
+
+return {
+x,
+y
+};
+
+}
+
+
+
+function ghostCaught(){
+
+if(
+
+mazeType!=='ghost' ||
+
+!ghost ||
+
+!samePos(
+player,
+ghost
+)
+
+)
+return false;
+
+
+playGhostSound();
+
+
+flashMessage(
+'👻 CAUGHT — BACK TO START!'
+);
+
+
+if(
+moveAnimation
+){
+
+cancelAnimationFrame(
+moveAnimation
+);
+
+moveAnimation =
+null;
+
+}
+
+
+player={
+x:0,
+y:0
+};
+
+
+renderPlayer={
+x:0,
+y:0
+};
+
+
+ghost={
+
+x:size-1,
+y:0
+
+};
+
+
+ghostMoveCounter=0;
+
+
+modeStatusEl.textContent =
+'👻 The ghost caught you! Back to START.';
+
+
+draw();
+
+
+setTimeout(
+
+()=>{
+
+if(
+mazeType==='ghost' &&
+!won
+){
+
+updateModeStatus();
+
+}
+
+},
+
+1200
+
+);
+
+
+return true;
+
+}
+
+
+
+function handleGhostAfterMove(){
+
+if(
+mazeType!=='ghost' ||
+!ghost
+)
+return false;
+
+
+if(
+ghostCaught()
+)
+return true;
+
+
+ghostMoveCounter++;
+
+
+const interval =
+
+size>=25
+
+? 2
+
+: 3;
+
+
+if(
+ghostMoveCounter >= interval
+){
+
+ghostMoveCounter=0;
+
+
+const next =
+ghostNextStep();
+
+
+if(next){
+
+ghost={
+...next
+};
+
+playGhostSound();
+
+}
+
+
+if(
+ghostCaught()
+)
+return true;
+
+}
+
+
+return false;
+
+}
+
+
+
+function canPassOneWay(
+x,
+y,
+nx,
+ny
+){
+
+if(
+mazeType!=='oneway'
+)
+return true;
+
+
+for(
+const g of oneWayGates
+){
+
+const sameEdge=(
+
+(
+g.fromX===x &&
+g.fromY===y &&
+g.toX===nx &&
+g.toY===ny
+)
+
+||
+
+(
+g.fromX===nx &&
+g.fromY===ny &&
+g.toX===x &&
+g.toY===y
+)
+
+);
+
+
+if(sameEdge){
+
+return (
+
+g.fromX===x &&
+g.fromY===y &&
+g.toX===nx &&
+g.toY===ny
+
+);
+
+}
+
+}
+
+
+return true;
+
+}
+
+
+
+function directedPathExists(
+start,
+end
+){
+
+const q=[
+
+{
+x:start.x,
+y:start.y
+}
+
+];
+
+
+const seen =
+new Set(
+[
+`${start.x},${start.y}`
+]
+);
+
+
+const dirs=[
+
+[
+'top',
+0,
+-1
+],
+
+[
+'right',
+1,
+0
+],
+
+[
+'bottom',
+0,
+1
+],
+
+[
+'left',
+-1,
+0
+]
+
+];
+
+
+while(
+q.length
+){
+
+const p =
+q.shift();
+
+
+if(
+p.x===end.x &&
+p.y===end.y
+)
+return true;
+
+
+const c =
+grid[p.y][p.x];
+
+
+for(
+const [
+wall,
+dx,
+dy
+]
+of dirs
+){
+
+if(
+c.walls[wall]
+)
+continue;
+
+
+const nx =
+p.x+dx;
+
+
+const ny =
+p.y+dy;
+
+
+if(
+nx<0 ||
+ny<0 ||
+nx>=size ||
+ny>=size
+)
+continue;
+
+
+if(
+!canPassOneWay(
+p.x,
+p.y,
+nx,
+ny
+)
+)
+continue;
+
+
+const key =
+`${nx},${ny}`;
+
+
+if(
+seen.has(key)
+)
+continue;
+
+
+seen.add(
+key
+);
+
+
+q.push({
+
+x:nx,
+y:ny
+
+});
+
+}
+
+}
+
+
+return false;
+
+}
+
+
+
+function findMainPath(){
+
+const start={
+
+x:0,
+y:0
+
+};
+
+
+const end={
+
+x:size-1,
+y:size-1
+
+};
+
+
+const q=[
+start
+];
+
+
+const seen =
+new Set(
+[
+'0,0'
+]
+);
+
+
+const parent =
+new Map();
+
+
+const dirs=[
+
+[
+'top',
+0,
+-1
+],
+
+[
+'right',
+1,
+0
+],
+
+[
+'bottom',
+0,
+1
+],
+
+[
+'left',
+-1,
+0
+]
+
+];
+
+
+while(
+q.length
+){
+
+const p =
+q.shift();
+
+
+if(
+p.x===end.x &&
+p.y===end.y
+)
+break;
+
+
+const c =
+grid[p.y][p.x];
+
+
+for(
+const [
+wall,
+dx,
+dy
+]
+of dirs
+){
+
+if(
+c.walls[wall]
+)
+continue;
+
+
+const nx =
+p.x+dx;
+
+
+const ny =
+p.y+dy;
+
+
+if(
+nx<0 ||
+ny<0 ||
+nx>=size ||
+ny>=size
+)
+continue;
+
+
+const key =
+`${nx},${ny}`;
+
+
+if(
+seen.has(key)
+)
+continue;
+
+
+seen.add(key);
+
+
+parent.set(
+key,
+`${p.x},${p.y}`
+);
+
+
+q.push({
+
+x:nx,
+y:ny
+
+});
+
+}
+
+}
+
+
+const path=[];
+
+
+let cur =
+`${end.x},${end.y}`;
+
+
+if(
+!seen.has(cur)
+)
+return path;
+
+
+while(cur){
+
+const [
+x,
+y
+] =
+cur
+.split(',')
+.map(
+Number
+);
+
+
+path.push({
+
+x,
+y
+
+});
+
+
+if(
+cur==='0,0'
+)
+break;
+
+
+cur =
+parent.get(
+cur
+);
+
+}
+
+
+return path.reverse();
+
+}
+
+
+
+function generateOneWayGates(){
+
+oneWayGates=[];
+
+
+const path =
+findMainPath();
+
+
+if(
+path.length < 4
+)
+return;
+
+
+const edgeIndexes=[];
+
+
+for(
+let i=1;
+i<path.length-2;
+i++
+){
+
+edgeIndexes.push(
+i
+);
+
+}
+
+
+for(
+let i=edgeIndexes.length-1;
+i>0;
+i--
+){
+
+const j =
+Math.floor(
+rng()*(i+1)
+);
+
+
+[
+edgeIndexes[i],
+edgeIndexes[j]
+] = [
+
+edgeIndexes[j],
+edgeIndexes[i]
+
+];
+
+}
+
+
+const target =
+Math.min(
+
+8,
+
+Math.max(
+4,
+Math.floor(size/4)
+),
+
+edgeIndexes.length
+
+);
+
+
+for(
+let k=0;
+k<target;
+k++
+){
+
+const i =
+edgeIndexes[k];
+
+
+const from =
+path[i];
+
+
+const to =
+path[i+1];
+
+
+oneWayGates.push({
+
+fromX:from.x,
+fromY:from.y,
+toX:to.x,
+toY:to.y
+
+});
+
+}
+
+}
+
+
+
+function cloneWalls(){
+
+return grid.map(
+
+row=>
+
+row.map(
+
+c=>(
+{
+...c.walls
+}
+)
+
+)
+
+);
+
+}
+
+
+
+function restoreWalls(snapshot){
 
 if(!snapshot)
 return;
@@ -1515,7 +2691,7 @@ closed
 ){
 
 if(
-nx === x+1
+nx===x+1
 ){
 
 grid[y][x].walls.right =
@@ -1529,7 +2705,7 @@ closed;
 
 
 else if(
-nx === x-1
+nx===x-1
 ){
 
 grid[y][x].walls.left =
@@ -1543,7 +2719,7 @@ closed;
 
 
 else if(
-ny === y+1
+ny===y+1
 ){
 
 grid[y][x].walls.bottom =
@@ -1557,7 +2733,7 @@ closed;
 
 
 else if(
-ny === y-1
+ny===y-1
 ){
 
 grid[y][x].walls.top =
@@ -1578,7 +2754,7 @@ start,
 end
 ){
 
-const q = [
+const q=[
 
 {
 x:start.x,
@@ -1605,20 +2781,17 @@ q.shift();
 
 
 if(
-p.x === end.x &&
-p.y === end.y
-){
-
+p.x===end.x &&
+p.y===end.y
+)
 return true;
-
-}
 
 
 const c =
 grid[p.y][p.x];
 
 
-const moves = [
+const moves=[
 
 [
 'top',
@@ -1663,18 +2836,18 @@ continue;
 
 
 const nx =
-p.x + dx;
+p.x+dx;
 
 
 const ny =
-p.y + dy;
+p.y+dy;
 
 
 if(
-nx < 0 ||
-ny < 0 ||
-nx >= size ||
-ny >= size
+nx<0 ||
+ny<0 ||
+nx>=size ||
+ny>=size
 )
 continue;
 
@@ -1687,9 +2860,7 @@ if(
 !seen.has(key)
 ){
 
-seen.add(
-key
-);
+seen.add(key);
 
 
 q.push({
@@ -1715,7 +2886,7 @@ return false;
 function shiftOneWall(){
 
 if(
-mazeType !== 'moving' ||
+mazeType!=='moving' ||
 won
 )
 return;
@@ -1754,8 +2925,8 @@ y +
 
 
 if(
-nx >= size ||
-ny >= size
+nx>=size ||
+ny>=size
 )
 continue;
 
@@ -1857,10 +3028,11 @@ updateModeStatus(
 
 
 setTimeout(
+
 ()=>{
 
 if(
-mazeType === 'moving' &&
+mazeType==='moving' &&
 !won
 ){
 
@@ -1869,7 +3041,9 @@ updateModeStatus();
 }
 
 },
+
 1200
+
 );
 
 
@@ -1898,13 +3072,11 @@ clearInterval(
 movingWallTimer
 );
 
-
-movingWallTimer =
-null;
+movingWallTimer=null;
 
 
 if(
-mazeType !== 'moving'
+mazeType!=='moving'
 )
 return;
 
@@ -1922,7 +3094,7 @@ shiftOneWall,
 function handleTreasure(){
 
 if(
-mazeType !== 'treasure'
+mazeType!=='treasure'
 )
 return;
 
@@ -1945,12 +3117,9 @@ gem
 )
 ){
 
-gem.collected =
-true;
-
+gem.collected=true;
 
 treasuresCollected++;
-
 
 playGemSound(
 i
@@ -1963,13 +3132,11 @@ treasuresCollected === 3
 
 playUnlockSound();
 
-
 flashMessage(
 '💎 ALL GEMS FOUND — EXIT UNLOCKED!'
 );
 
 }
-
 
 else{
 
@@ -1981,7 +3148,6 @@ flashMessage(
 
 
 updateModeStatus();
-
 
 break;
 
@@ -1996,17 +3162,19 @@ break;
 function handleTrap(){
 
 if(
-mazeType !== 'traps'
+mazeType!=='traps'
 )
 return false;
 
 
 if(
 !trapTiles.some(
+
 t=>samePos(
 player,
 t
 )
+
 )
 )
 return false;
@@ -2021,14 +3189,12 @@ trapTiles
 );
 
 
-player =
-{
+player={
 ...landing
 };
 
 
-renderPlayer =
-{
+renderPlayer={
 ...landing
 };
 
@@ -2047,10 +3213,11 @@ draw();
 
 
 setTimeout(
+
 ()=>{
 
 if(
-mazeType === 'traps' &&
+mazeType==='traps' &&
 !won
 ){
 
@@ -2059,7 +3226,9 @@ updateModeStatus();
 }
 
 },
+
 1300
+
 );
 
 
@@ -2069,15 +3238,13 @@ return true;
 
 
 
-function moveIce(
-dir
-){
+function moveIce(dir){
 
 if(won)
 return;
 
 
-const delta = {
+const delta={
 
 up:[
 0,
@@ -2118,8 +3285,7 @@ let y =
 player.y;
 
 
-let traveled =
-0;
+let traveled=0;
 
 
 while(true){
@@ -2137,29 +3303,24 @@ break;
 
 
 const nx =
-x + delta[0];
+x+delta[0];
 
 
 const ny =
-y + delta[1];
+y+delta[1];
 
 
 if(
-nx < 0 ||
-ny < 0 ||
-nx >= size ||
-ny >= size
+nx<0 ||
+ny<0 ||
+nx>=size ||
+ny>=size
 )
 break;
 
 
-x =
-nx;
-
-
-y =
-ny;
-
+x=nx;
+y=ny;
 
 traveled++;
 
@@ -2181,8 +3342,7 @@ stepsEl.textContent =
 steps;
 
 
-player =
-{
+player={
 x,
 y
 };
@@ -2194,7 +3354,7 @@ playIceSound();
 const duration =
 Math.min(
 380,
-90 + traveled*28
+90+traveled*28
 );
 
 
@@ -2206,20 +3366,21 @@ duration
 
 
 if(
-player.x === size-1 &&
-player.y === size-1
+player.x===size-1 &&
+player.y===size-1
 ){
 
 setTimeout(
+
 ()=>{
 
 if(
 
 !won &&
 
-player.x === size-1 &&
+player.x===size-1 &&
 
-player.y === size-1
+player.y===size-1
 
 ){
 
@@ -2228,7 +3389,9 @@ finish();
 }
 
 },
+
 duration
+
 );
 
 }
@@ -2243,13 +3406,11 @@ clearTimeout(
 memoryTimer
 );
 
-
-memoryTimer =
-null;
+memoryTimer=null;
 
 
 if(
-mazeType !== 'memory'
+mazeType!=='memory'
 ){
 
 updateModeStatus();
@@ -2259,31 +3420,28 @@ return;
 }
 
 
-memoryVisible =
-true;
-
+memoryVisible=true;
 
 updateModeStatus();
-
 
 draw();
 
 
 memoryTimer =
 setTimeout(
+
 ()=>{
 
-memoryVisible =
-false;
-
+memoryVisible=false;
 
 updateModeStatus();
-
 
 draw();
 
 },
+
 4000
+
 );
 
 }
@@ -2318,22 +3476,19 @@ y
 );
 
 
-const stack =
-[];
+const stack=[];
 
 
 let current =
 grid[0][0];
 
 
-current.visited =
-true;
+current.visited=true;
 
 
 while(true){
 
-const neighbors =
-[];
+const neighbors=[];
 
 
 const {
@@ -2433,57 +3588,45 @@ pick.cell;
 
 
 if(
-pick.dir === 'top'
+pick.dir==='top'
 ){
 
-current.walls.top =
-false;
+current.walls.top=false;
 
-
-next.walls.bottom =
-false;
+next.walls.bottom=false;
 
 }
 
 
 if(
-pick.dir === 'right'
+pick.dir==='right'
 ){
 
-current.walls.right =
-false;
+current.walls.right=false;
 
-
-next.walls.left =
-false;
+next.walls.left=false;
 
 }
 
 
 if(
-pick.dir === 'bottom'
+pick.dir==='bottom'
 ){
 
-current.walls.bottom =
-false;
+current.walls.bottom=false;
 
-
-next.walls.top =
-false;
+next.walls.top=false;
 
 }
 
 
 if(
-pick.dir === 'left'
+pick.dir==='left'
 ){
 
-current.walls.left =
-false;
+current.walls.left=false;
 
-
-next.walls.right =
-false;
+next.walls.right=false;
 
 }
 
@@ -2497,8 +3640,7 @@ current =
 next;
 
 
-current.visited =
-true;
+current.visited=true;
 
 }
 
@@ -2601,8 +3743,9 @@ w
 );
 
 
+
 if(
-mazeType === 'ice'
+mazeType==='ice'
 ){
 
 const iceGlow =
@@ -2641,6 +3784,46 @@ w
 
 
 
+if(
+mazeType==='mirror'
+){
+
+const mirrorGlow =
+ctx.createLinearGradient(
+0,
+0,
+w,
+w
+);
+
+
+mirrorGlow.addColorStop(
+0,
+'rgba(190,110,255,.10)'
+);
+
+
+mirrorGlow.addColorStop(
+1,
+'rgba(95,210,255,.06)'
+);
+
+
+ctx.fillStyle =
+mirrorGlow;
+
+
+ctx.fillRect(
+0,
+0,
+w,
+w
+);
+
+}
+
+
+
 const ex =
 (size-1)*cell +
 cell/2;
@@ -2654,22 +3837,29 @@ cell/2;
 const exitLocked =
 
 (
-mazeType === 'keys' &&
+mazeType==='keys' &&
 !hasKey
 )
 
 ||
 
 (
-mazeType === 'twodots' &&
+mazeType==='twodots' &&
 !dotSolved
 )
 
 ||
 
 (
-mazeType === 'treasure' &&
-treasuresCollected < 3
+mazeType==='treasure' &&
+treasuresCollected<3
+)
+
+||
+
+(
+mazeType==='coins' &&
+coinsCollected<5
 );
 
 
@@ -2744,7 +3934,7 @@ ctx.lineCap =
 
 const showWalls =
 
-mazeType !== 'memory'
+mazeType!=='memory'
 
 ||
 
@@ -2974,7 +4164,7 @@ ctx.stroke();
 
 
 if(
-mazeType === 'keys' &&
+mazeType==='keys' &&
 keyPos
 ){
 
@@ -3057,11 +4247,11 @@ ctx.stroke();
 
 
 if(
-mazeType === 'portal' &&
-portals.length === 2
+mazeType==='portal' &&
+portals.length===2
 ){
 
-const colors = [
+const colors=[
 '#9a6cff',
 '#ffd166'
 ];
@@ -3071,11 +4261,13 @@ portals.forEach(
 (p,i)=>{
 
 const qx =
-p.x*cell + cell/2;
+p.x*cell +
+cell/2;
 
 
 const qy =
-p.y*cell + cell/2;
+p.y*cell +
+cell/2;
 
 
 ctx.strokeStyle =
@@ -3118,8 +4310,7 @@ Math.PI*2
 ctx.stroke();
 
 
-ctx.shadowBlur =
-0;
+ctx.shadowBlur=0;
 
 }
 );
@@ -3129,9 +4320,9 @@ ctx.shadowBlur =
 
 
 if(
-mazeType === 'twodots' &&
+mazeType==='twodots' &&
 !dotSolved &&
-mysteryDots.length === 2
+mysteryDots.length===2
 ){
 
 mysteryDots.forEach(
@@ -3209,12 +4400,9 @@ Math.PI*2
 
 ctx.fill();
 
-
 ctx.stroke();
 
-
-ctx.shadowBlur =
-0;
+ctx.shadowBlur=0;
 
 }
 );
@@ -3224,7 +4412,7 @@ ctx.shadowBlur =
 
 
 if(
-mazeType === 'treasure'
+mazeType==='treasure'
 ){
 
 treasures.forEach(
@@ -3261,6 +4449,7 @@ Math.PI/4
 
 
 ctx.fillStyle =
+
 [
 '#60e5ff',
 '#8dffb7',
@@ -3297,8 +4486,7 @@ s*2
 ctx.restore();
 
 
-ctx.shadowBlur =
-0;
+ctx.shadowBlur=0;
 
 }
 );
@@ -3308,7 +4496,7 @@ ctx.shadowBlur =
 
 
 if(
-mazeType === 'traps'
+mazeType==='traps'
 ){
 
 trapTiles.forEach(
@@ -3390,8 +4578,375 @@ s*2
 ctx.restore();
 
 
+ctx.shadowBlur=0;
+
+}
+);
+
+}
+
+
+
+if(
+mazeType==='coins'
+){
+
+coins.forEach(
+coin=>{
+
+if(
+coin.collected
+)
+return;
+
+
+const cx =
+coin.x*cell +
+cell/2;
+
+
+const cy =
+coin.y*cell +
+cell/2;
+
+
+ctx.fillStyle =
+'#ffd84f';
+
+
+ctx.strokeStyle =
+'#fff3a1';
+
+
+ctx.lineWidth =
+Math.max(
+1.5,
+cell*.07
+);
+
+
+ctx.shadowColor =
+'#ffd84f';
+
+
 ctx.shadowBlur =
-0;
+Math.max(
+7,
+cell*.45
+);
+
+
+ctx.beginPath();
+
+
+ctx.arc(
+cx,
+cy,
+Math.max(
+4,
+cell*.22
+),
+0,
+Math.PI*2
+);
+
+
+ctx.fill();
+
+ctx.stroke();
+
+
+ctx.shadowBlur=0;
+
+
+ctx.fillStyle =
+'#8b6500';
+
+
+ctx.font =
+`${Math.max(7,cell*.24)}px sans-serif`;
+
+
+ctx.textAlign =
+'center';
+
+
+ctx.textBaseline =
+'middle';
+
+
+ctx.fillText(
+'¢',
+cx,
+cy+.5
+);
+
+}
+);
+
+}
+
+
+
+if(
+mazeType==='ghost' &&
+ghost
+){
+
+const gx =
+ghost.x*cell +
+cell/2;
+
+
+const gy =
+ghost.y*cell +
+cell/2;
+
+
+ctx.save();
+
+
+ctx.fillStyle =
+'rgba(190,105,255,.92)';
+
+
+ctx.shadowColor =
+'#c46cff';
+
+
+ctx.shadowBlur =
+Math.max(
+10,
+cell*.7
+);
+
+
+ctx.beginPath();
+
+
+ctx.arc(
+gx,
+gy,
+Math.max(
+5,
+cell*.28
+),
+Math.PI,
+0
+);
+
+
+ctx.lineTo(
+gx+Math.max(5,cell*.28),
+gy+Math.max(4,cell*.22)
+);
+
+
+ctx.lineTo(
+gx+Math.max(2,cell*.10),
+gy+Math.max(2,cell*.12)
+);
+
+
+ctx.lineTo(
+gx,
+gy+Math.max(4,cell*.22)
+);
+
+
+ctx.lineTo(
+gx-Math.max(2,cell*.10),
+gy+Math.max(2,cell*.12)
+);
+
+
+ctx.lineTo(
+gx-Math.max(5,cell*.28),
+gy+Math.max(4,cell*.22)
+);
+
+
+ctx.closePath();
+
+ctx.fill();
+
+
+ctx.shadowBlur=0;
+
+
+ctx.fillStyle =
+'#ffffff';
+
+
+const er =
+Math.max(
+1.6,
+cell*.065
+);
+
+
+ctx.beginPath();
+
+
+ctx.arc(
+gx-cell*.08,
+gy-cell*.03,
+er,
+0,
+Math.PI*2
+);
+
+
+ctx.fill();
+
+
+ctx.beginPath();
+
+
+ctx.arc(
+gx+cell*.08,
+gy-cell*.03,
+er,
+0,
+Math.PI*2
+);
+
+
+ctx.fill();
+
+
+ctx.restore();
+
+}
+
+
+
+if(
+mazeType==='oneway'
+){
+
+oneWayGates.forEach(
+g=>{
+
+const x1 =
+g.fromX*cell +
+cell/2;
+
+
+const y1 =
+g.fromY*cell +
+cell/2;
+
+
+const x2 =
+g.toX*cell +
+cell/2;
+
+
+const y2 =
+g.toY*cell +
+cell/2;
+
+
+const mx =
+(x1+x2)/2;
+
+
+const my =
+(y1+y2)/2;
+
+
+const angle =
+Math.atan2(
+y2-y1,
+x2-x1
+);
+
+
+ctx.save();
+
+
+ctx.translate(
+mx,
+my
+);
+
+
+ctx.rotate(
+angle
+);
+
+
+ctx.strokeStyle =
+'#ffcc66';
+
+
+ctx.fillStyle =
+'#ffcc66';
+
+
+ctx.lineWidth =
+Math.max(
+2,
+cell*.09
+);
+
+
+ctx.shadowColor =
+'#ffcc66';
+
+
+ctx.shadowBlur =
+Math.max(
+5,
+cell*.32
+);
+
+
+ctx.beginPath();
+
+
+ctx.moveTo(
+-cell*.22,
+0
+);
+
+
+ctx.lineTo(
+cell*.16,
+0
+);
+
+
+ctx.stroke();
+
+
+ctx.beginPath();
+
+
+ctx.moveTo(
+cell*.25,
+0
+);
+
+
+ctx.lineTo(
+cell*.08,
+-cell*.13
+);
+
+
+ctx.lineTo(
+cell*.08,
+cell*.13
+);
+
+
+ctx.closePath();
+
+ctx.fill();
+
+ctx.restore();
 
 }
 );
@@ -3474,8 +5029,7 @@ Math.PI*2
 ctx.fill();
 
 
-ctx.shadowBlur =
-0;
+ctx.shadowBlur=0;
 
 
 
@@ -3619,8 +5173,7 @@ Math.PI*2
 ctx.fill();
 
 
-ctx.shadowBlur =
-0;
+ctx.shadowBlur=0;
 
 }
 
@@ -3642,9 +5195,7 @@ cancelAnimationFrame(
 moveAnimation
 );
 
-
-moveAnimation =
-null;
+moveAnimation=null;
 
 }
 
@@ -3692,7 +5243,7 @@ draw();
 
 
 if(
-raw < 1
+raw<1
 ){
 
 moveAnimation =
@@ -3701,7 +5252,6 @@ frame
 );
 
 }
-
 
 else{
 
@@ -3713,8 +5263,7 @@ renderPlayer.y =
 targetY;
 
 
-moveAnimation =
-null;
+moveAnimation=null;
 
 
 draw();
@@ -3733,9 +5282,7 @@ frame
 
 
 
-function formatTime(
-sec
-){
+function formatTime(sec){
 
 const m =
 Math.floor(
@@ -3756,7 +5303,7 @@ return `${m}:${String(s).padStart(2,'0')}`;
 function startClock(){
 
 if(
-startTime !== null
+startTime!==null
 )
 return;
 
@@ -3765,8 +5312,20 @@ startTime =
 Date.now();
 
 
+if(
+mazeType==='countdown'
+){
+
+startCountdownTimer();
+
+return;
+
+}
+
+
 timer =
 setInterval(
+
 ()=>{
 
 timeEl.textContent =
@@ -3783,7 +5342,9 @@ Date.now()-startTime
 );
 
 },
+
 250
+
 );
 
 }
@@ -3793,7 +5354,7 @@ Date.now()-startTime
 function currentSeconds(){
 
 if(
-startTime === null
+startTime===null
 )
 return 0;
 
@@ -3814,7 +5375,7 @@ function bestKey(){
 
 const modeKey =
 
-selectedMazeType === 'mystery'
+selectedMazeType==='mystery'
 
 ? `mystery_${mazeType}`
 
@@ -3849,16 +5410,14 @@ Number(b)
 
 
 
-function move(
-dir
-){
+function move(dir){
 
 if(won)
 return;
 
 
 if(
-mazeType === 'ice'
+mazeType==='ice'
 ){
 
 moveIce(
@@ -3868,6 +5427,44 @@ dir
 return;
 
 }
+
+
+
+if(
+mazeType==='mirror'
+){
+
+const opposite={
+
+up:'down',
+down:'up',
+left:'right',
+right:'left'
+
+};
+
+
+dir =
+opposite[dir] ||
+dir;
+
+
+if(
+!mirrorNoticeShown
+){
+
+mirrorNoticeShown=true;
+
+playMirrorSound();
+
+flashMessage(
+'🪞 CONTROLS REVERSED!'
+);
+
+}
+
+}
+
 
 
 const c =
@@ -3883,56 +5480,67 @@ player.y;
 
 
 if(
-dir === 'up' &&
+dir==='up' &&
 !c.walls.top
-){
-
+)
 ny--;
 
-}
-
 
 if(
-dir === 'right' &&
+dir==='right' &&
 !c.walls.right
-){
-
+)
 nx++;
 
-}
-
 
 if(
-dir === 'down' &&
+dir==='down' &&
 !c.walls.bottom
-){
-
+)
 ny++;
 
-}
-
 
 if(
-dir === 'left' &&
+dir==='left' &&
 !c.walls.left
-){
-
+)
 nx--;
 
-}
+
+if(
+nx===player.x &&
+ny===player.y
+)
+return;
+
 
 
 if(
-nx === player.x &&
-ny === player.y
+mazeType==='oneway' &&
+!canPassOneWay(
+player.x,
+player.y,
+nx,
+ny
 )
+){
+
+playBlockedSound();
+
+flashMessage(
+'➡️ WRONG WAY!'
+);
+
 return;
+
+}
+
 
 
 startClock();
 
 
-player = {
+player={
 x:nx,
 y:ny
 };
@@ -3950,7 +5558,7 @@ playMoveSound();
 
 
 if(
-mazeType === 'keys' &&
+mazeType==='keys' &&
 keyPos &&
 samePos(
 player,
@@ -3958,25 +5566,18 @@ keyPos
 )
 ){
 
-hasKey =
-true;
+hasKey=true;
 
-
-keyPos =
-null;
-
+keyPos=null;
 
 updateModeStatus();
 
-
 playKeySound();
-
 
 setTimeout(
 playUnlockSound,
 110
 );
-
 
 flashUnlocked();
 
@@ -3985,9 +5586,9 @@ flashUnlocked();
 
 
 if(
-mazeType === 'twodots' &&
+mazeType==='twodots' &&
 !dotSolved &&
-mysteryDots.length === 2
+mysteryDots.length===2
 ){
 
 for(
@@ -4014,24 +5615,19 @@ dot
 ){
 
 if(
-i === correctDotIndex
+i===correctDotIndex
 ){
 
-dotSolved =
-true;
-
+dotSolved=true;
 
 updateModeStatus();
 
-
 playCorrectSound();
-
 
 setTimeout(
 playUnlockSound,
 120
 );
-
 
 flashMessage(
 '🎯 CORRECT! EXIT UNLOCKED!'
@@ -4039,20 +5635,18 @@ flashMessage(
 
 }
 
-
 else{
 
-dot.wrong =
-true;
+dot.wrong=true;
 
 
-player = {
+player={
 x:0,
 y:0
 };
 
 
-renderPlayer = {
+renderPlayer={
 x:0,
 y:0
 };
@@ -4088,6 +5682,8 @@ return;
 
 handleTreasure();
 
+handleCoin();
+
 
 
 if(
@@ -4097,13 +5693,13 @@ return;
 
 
 
-let teleported =
-false;
+let teleported=false;
+
 
 
 if(
-mazeType === 'portal' &&
-portals.length === 2
+mazeType==='portal' &&
+portals.length===2
 ){
 
 if(
@@ -4113,20 +5709,15 @@ portals[0]
 )
 ){
 
-player =
-{
+player={
 ...portals[1]
 };
 
-
-teleported =
-true;
-
+teleported=true;
 
 updateModeStatus(
 '🌀 Portal jump! You were transported across the maze.'
 );
-
 
 playPortalSound();
 
@@ -4140,20 +5731,15 @@ portals[1]
 )
 ){
 
-player =
-{
+player={
 ...portals[0]
 };
 
-
-teleported =
-true;
-
+teleported=true;
 
 updateModeStatus(
 '🌀 Portal jump! You were transported across the maze.'
 );
-
 
 playPortalSound();
 
@@ -4167,16 +5753,17 @@ if(
 teleported
 ){
 
-renderPlayer = {
+renderPlayer={
+
 x:player.x,
 y:player.y
+
 };
 
 
 draw();
 
 }
-
 
 else{
 
@@ -4190,12 +5777,19 @@ player.y
 
 
 if(
-player.x === size-1 &&
-player.y === size-1
+handleGhostAfterMove()
+)
+return;
+
+
+
+if(
+player.x===size-1 &&
+player.y===size-1
 ){
 
 if(
-mazeType === 'keys' &&
+mazeType==='keys' &&
 !hasKey
 ){
 
@@ -4207,7 +5801,7 @@ updateModeStatus(
 
 
 else if(
-mazeType === 'twodots' &&
+mazeType==='twodots' &&
 !dotSolved
 ){
 
@@ -4219,12 +5813,24 @@ updateModeStatus(
 
 
 else if(
-mazeType === 'treasure' &&
-treasuresCollected < 3
+mazeType==='treasure' &&
+treasuresCollected<3
 ){
 
 updateModeStatus(
 `🔒 Exit locked — collect all 3 gems. You have ${treasuresCollected}/3.`
+);
+
+}
+
+
+else if(
+mazeType==='coins' &&
+coinsCollected<5
+){
+
+updateModeStatus(
+`🔒 Exit locked — collect all 5 coins. You have ${coinsCollected}/5.`
 );
 
 }
@@ -4252,9 +5858,7 @@ cancelAnimationFrame(
 fireworksAnimation
 );
 
-
-fireworksAnimation =
-null;
+fireworksAnimation=null;
 
 }
 
@@ -4264,8 +5868,7 @@ fireworksStopTimer
 );
 
 
-fireworksStopTimer =
-null;
+fireworksStopTimer=null;
 
 
 fireworksCanvas
@@ -4332,24 +5935,17 @@ fireworksCanvas
 );
 
 
-const particles =
-[];
+const particles=[];
 
 
-const colors = [
+const colors=[
 
 '#ff5d8f',
-
 '#ffd166',
-
 '#65d8ff',
-
 '#7b6cff',
-
 '#6ee7a8',
-
 '#ffffff',
-
 '#ff9f43'
 
 ];
@@ -4382,7 +5978,6 @@ Math.random()*5.2;
 particles.push({
 
 x,
-
 y,
 
 vx:
@@ -4536,7 +6131,6 @@ i,
 1
 );
 
-
 continue;
 
 }
@@ -4619,8 +6213,7 @@ stopFireworks,
 
 function finish(){
 
-won =
-true;
+won=true;
 
 
 clearInterval(
@@ -4629,12 +6222,18 @@ timer
 
 
 clearInterval(
+countdownTimer
+);
+
+
+clearInterval(
 movingWallTimer
 );
 
 
-movingWallTimer =
-null;
+movingWallTimer=null;
+
+countdownTimer=null;
 
 
 const secs =
@@ -4671,7 +6270,7 @@ updateBest();
 
 const label =
 
-selectedMazeType === 'mystery'
+selectedMazeType==='mystery'
 
 ? `Mystery Mode (${modeLabel(mazeType)})`
 
@@ -4701,7 +6300,6 @@ winText.textContent =
 
 
 startFireworks();
-
 
 playVictorySound();
 
@@ -4734,48 +6332,59 @@ memoryTimer
 
 
 clearInterval(
+countdownTimer
+);
+
+
+clearInterval(
 movingWallTimer
 );
 
 
-timer =
-null;
+timer=null;
+
+memoryTimer=null;
+
+countdownTimer=null;
+
+movingWallTimer=null;
+
+startTime=null;
 
 
-memoryTimer =
-null;
-
-
-movingWallTimer =
-null;
-
-
-startTime =
-null;
+countdownRemaining =
+countdownLimit();
 
 
 timeEl.textContent =
-'0:00';
+
+mazeType==='countdown'
+
+? formatTime(
+countdownRemaining
+)
+
+: '0:00';
 
 
-steps =
-0;
+steps=0;
 
 
 stepsEl.textContent =
 '0';
 
 
-player = {
+player={
 x:0,
 y:0
 };
 
 
-renderPlayer = {
+renderPlayer={
 x:0,
 y:0
 };
+
 
 
 if(
@@ -4786,21 +6395,18 @@ cancelAnimationFrame(
 moveAnimation
 );
 
-
-moveAnimation =
-null;
+moveAnimation=null;
 
 }
 
 
-won =
-false;
+won=false;
 
 
 
 if(
 resetChallenge &&
-mazeType === 'moving'
+mazeType==='moving'
 ){
 
 restoreWalls(
@@ -4813,12 +6419,10 @@ movingWallBase
 
 if(
 resetChallenge &&
-mazeType === 'keys'
+mazeType==='keys'
 ){
 
-hasKey =
-false;
-
+hasKey=false;
 
 keyPos =
 randomOpenCell();
@@ -4829,11 +6433,10 @@ randomOpenCell();
 
 if(
 resetChallenge &&
-mazeType === 'twodots'
+mazeType==='twodots'
 ){
 
-dotSolved =
-false;
+dotSolved=false;
 
 
 const first =
@@ -4846,7 +6449,7 @@ randomOpenCell(
 );
 
 
-mysteryDots = [
+mysteryDots=[
 
 {
 ...first,
@@ -4872,15 +6475,12 @@ rng()*2
 
 if(
 resetChallenge &&
-mazeType === 'treasure'
+mazeType==='treasure'
 ){
 
-treasuresCollected =
-0;
+treasuresCollected=0;
 
-
-treasures =
-[];
+treasures=[];
 
 
 for(
@@ -4907,11 +6507,10 @@ collected:false
 
 if(
 resetChallenge &&
-mazeType === 'traps'
+mazeType==='traps'
 ){
 
-trapTiles =
-[];
+trapTiles=[];
 
 
 for(
@@ -4933,11 +6532,82 @@ trapTiles
 
 
 if(
-mazeType === 'memory'
+resetChallenge &&
+mazeType==='coins'
 ){
 
-memoryVisible =
-true;
+coinsCollected=0;
+
+coins=[];
+
+
+for(
+let i=0;
+i<5;
+i++
+){
+
+coins.push({
+
+...randomOpenCell(
+coins
+),
+
+collected:false
+
+});
+
+}
+
+}
+
+
+
+if(
+resetChallenge &&
+mazeType==='ghost'
+){
+
+ghost={
+
+x:size-1,
+y:0
+
+};
+
+ghostMoveCounter=0;
+
+}
+
+
+
+if(
+resetChallenge &&
+mazeType==='oneway'
+){
+
+generateOneWayGates();
+
+}
+
+
+
+if(
+resetChallenge &&
+mazeType==='mirror'
+){
+
+mirrorNoticeShown=false;
+
+}
+
+
+
+if(
+mazeType==='memory'
+){
+
+memoryVisible=true;
 
 }
 
@@ -4982,6 +6652,7 @@ dailyMode =
 useDaily;
 
 
+
 if(
 useDaily
 ){
@@ -5010,32 +6681,31 @@ Math.random;
 }
 
 
+
 mazeType =
 selectedMazeType;
 
 
 
 if(
-selectedMazeType === 'mystery'
+selectedMazeType==='mystery'
 ){
 
-const mysteryModes = [
+const mysteryModes=[
 
 'keys',
-
 'memory',
-
 'portal',
-
 'twodots',
-
 'treasure',
-
 'moving',
-
 'traps',
-
-'ice'
+'ice',
+'ghost',
+'countdown',
+'coins',
+'mirror',
+'oneway'
 
 ];
 
@@ -5049,6 +6719,7 @@ rng()*mysteryModes.length
 ];
 
 }
+
 
 
 generateMaze();
@@ -5207,30 +6878,21 @@ document
 'keydown',
 e=>{
 
-const map = {
+const map={
 
 ArrowUp:'up',
-
 ArrowRight:'right',
-
 ArrowDown:'down',
-
 ArrowLeft:'left',
 
 w:'up',
-
 d:'right',
-
 s:'down',
-
 a:'left',
 
 W:'up',
-
 D:'right',
-
 S:'down',
-
 A:'left'
 
 };
@@ -5330,43 +6992,30 @@ Math.abs(dy)
 ){
 
 if(
-dx > 0
-){
-
+dx>0
+)
 return 'right';
-
-}
 
 
 if(
-dx < 0
-){
-
+dx<0
+)
 return 'left';
 
 }
 
-}
-
-
 else{
 
 if(
-dy > 0
-){
-
+dy>0
+)
 return 'down';
-
-}
 
 
 if(
-dy < 0
-){
-
+dy<0
+)
 return 'up';
-
-}
 
 }
 
@@ -5377,12 +7026,8 @@ return null;
 
 
 
-let dragging =
-false;
-
-
-let lastDragMove =
-0;
+let dragging=false;
+let lastDragMove=0;
 
 
 
@@ -5391,8 +7036,7 @@ wrap
 'pointerdown',
 e=>{
 
-dragging =
-true;
+dragging=true;
 
 
 wrap
@@ -5408,13 +7052,8 @@ e.clientY
 );
 
 
-if(dir){
-
-move(
-dir
-);
-
-}
+if(dir)
+move(dir);
 
 }
 );
@@ -5453,13 +7092,8 @@ e.clientY
 );
 
 
-if(dir){
-
-move(
-dir
-);
-
-}
+if(dir)
+move(dir);
 
 }
 );
@@ -5471,8 +7105,7 @@ wrap
 'pointerup',
 e=>{
 
-dragging =
-false;
+dragging=false;
 
 
 wrap
@@ -5490,8 +7123,7 @@ wrap
 'pointercancel',
 ()=>{
 
-dragging =
-false;
+dragging=false;
 
 }
 );
@@ -5502,8 +7134,7 @@ if(
 !window.PointerEvent
 ){
 
-let touchStart =
-null;
+let touchStart=null;
 
 
 wrap
@@ -5515,13 +7146,10 @@ const t =
 e.changedTouches[0];
 
 
-touchStart = {
+touchStart={
 
-x:
-t.clientX,
-
-y:
-t.clientY
+x:t.clientX,
+y:t.clientY
 
 };
 
@@ -5557,8 +7185,7 @@ t.clientY -
 touchStart.y;
 
 
-touchStart =
-null;
+touchStart=null;
 
 
 if(
@@ -5584,7 +7211,7 @@ Math.abs(dy)
 
 move(
 
-dx > 0
+dx>0
 
 ? 'right'
 
@@ -5594,12 +7221,11 @@ dx > 0
 
 }
 
-
 else{
 
 move(
 
-dy > 0
+dy>0
 
 ? 'down'
 

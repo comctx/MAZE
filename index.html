@@ -7,355 +7,132 @@
 <title>MAZE™ — Find Your Way Out</title>
 <style>
 :root{
-  --bg:#07111f;
-  --panel:#0e1b2e;
-  --panel2:#12243b;
-  --text:#f6f8ff;
-  --muted:#9fb0c8;
-  --accent:#65d8ff;
-  --accent2:#7b6cff;
-  --good:#6ee7a8;
-  --danger:#ff7f93;
-  --wall:#d9e7ff;
-  --border:rgba(255,255,255,.10);
-  --shadow:0 20px 55px rgba(0,0,0,.35);
+--bg:#07111f;
+--panel:#0e1b2e;
+--panel2:#12243b;
+--text:#f6f8ff;
+--muted:#9fb0c8;
+--accent:#65d8ff;
+--accent2:#7b6cff;
+--good:#6ee7a8;
+--danger:#ff7f93;
+--wall:#d9e7ff;
+--border:rgba(255,255,255,.10);
+--shadow:0 20px 55px rgba(0,0,0,.35);
 }
-
 *{box-sizing:border-box}
-
-html,body{
-  margin:0;
-  min-height:100%;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-}
-
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 body{
-  background:
-    radial-gradient(circle at 20% 0%,rgba(88,108,255,.22),transparent 28rem),
-    linear-gradient(180deg,#09182b 0%,#07111f 58%,#050b14 100%);
-  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+background:
+radial-gradient(circle at 20% 0%,rgba(88,108,255,.22),transparent 28rem),
+linear-gradient(180deg,#09182b 0%,#07111f 58%,#050b14 100%);
+padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
 }
-
 button,select{font:inherit}
 button{cursor:pointer}
-
-.app{
-  width:min(100%,820px);
-  margin:0 auto;
-  min-height:100vh;
-  padding:16px 14px 34px;
-}
-
-.topbar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-  margin-bottom:14px;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
+.app{width:min(100%,820px);margin:0 auto;min-height:100vh;padding:16px 14px 34px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}
+.brand{display:flex;align-items:center;gap:12px}
 .logo{
-  width:52px;
-  height:52px;
-  border-radius:16px;
-  display:grid;
-  place-items:center;
-  background:linear-gradient(135deg,#62dcff,#736dff 60%,#9459d8);
-  box-shadow:0 10px 32px rgba(82,130,255,.35);
-  font-weight:900;
-  font-size:24px;
+width:52px;height:52px;border-radius:16px;display:grid;place-items:center;
+background:linear-gradient(135deg,#62dcff,#736dff 60%,#9459d8);
+box-shadow:0 10px 32px rgba(82,130,255,.35);
+font-weight:900;font-size:24px;letter-spacing:-1px
 }
-
-h1{
-  margin:0;
-  font-size:clamp(30px,8vw,46px);
-  line-height:.95;
+h1{margin:0;font-size:clamp(30px,8vw,46px);line-height:.95}
+.subtitle{margin:4px 0 0;color:var(--muted);font-size:14px}
+.badge{font-size:12px;padding:7px 10px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.05);color:#dbe7ff}
+.controls-card,.maze-card,.stats-card{
+border:1px solid var(--border);
+background:linear-gradient(180deg,rgba(18,36,59,.95),rgba(13,27,46,.95));
+box-shadow:var(--shadow);
+border-radius:22px;
 }
-
-.subtitle{
-  margin:4px 0 0;
-  color:var(--muted);
-  font-size:14px;
+.controls-card{padding:13px;margin-bottom:12px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+select,.control-btn{
+min-height:42px;border:1px solid var(--border);border-radius:13px;
+background:rgba(255,255,255,.055);color:#edf4ff;padding:9px 12px;font-weight:700
 }
-
-.badge{
-  font-size:12px;
-  padding:7px 10px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.05);
-  color:#dbe7ff;
-}
-
-.controls-card,
-.maze-card,
+select{flex:1;min-width:145px}
+.control-btn.primary{border:0;background:linear-gradient(135deg,#61cfff,#706bff);color:white}
+.control-btn.active{border-color:rgba(101,216,255,.45);background:rgba(101,216,255,.12)}
 .stats-card{
-  border:1px solid var(--border);
-  background:linear-gradient(180deg,rgba(18,36,59,.95),rgba(13,27,46,.95));
-  box-shadow:var(--shadow);
-  border-radius:22px;
+display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px 12px;margin-bottom:12px
 }
-
-.controls-card{
-  padding:13px;
-  margin-bottom:12px;
-}
-
-.row{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  align-items:center;
-}
-
-select,
-.control-btn{
-  min-height:42px;
-  border:1px solid var(--border);
-  border-radius:13px;
-  background:rgba(255,255,255,.055);
-  color:#edf4ff;
-  padding:9px 12px;
-  font-weight:700;
-}
-
-select{
-  flex:1;
-  min-width:145px;
-}
-
-.control-btn.primary{
-  border:0;
-  background:linear-gradient(135deg,#61cfff,#706bff);
-  color:white;
-}
-
-.control-btn.active{
-  border-color:rgba(101,216,255,.45);
-  background:rgba(101,216,255,.12);
-}
-
-.stats-card{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  padding:10px 12px;
-  margin-bottom:12px;
-}
-
 .stat{text-align:center}
-
-.stat-label{
-  font-size:11px;
-  color:var(--muted);
-  text-transform:uppercase;
-  letter-spacing:.09em;
-}
-
-.stat-value{
-  font-size:19px;
-  font-weight:850;
-  margin-top:2px;
-}
-
-.maze-card{
-  padding:12px;
-  overflow:hidden;
-  position:relative;
-}
-
+.stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em}
+.stat-value{font-size:19px;font-weight:850;margin-top:2px}
+.maze-card{padding:12px;overflow:hidden;position:relative}
 .canvas-wrap{
-  width:100%;
-  aspect-ratio:1/1;
-  display:grid;
-  place-items:center;
-  cursor:crosshair;
-  border-radius:17px;
-  overflow:hidden;
-  background:#07101c;
-  position:relative;
-  touch-action:none;
+width:100%;aspect-ratio:1/1;display:grid;place-items:center;
+cursor:crosshair;
+border-radius:17px;overflow:hidden;background:#07101c;position:relative;touch-action:none
 }
-
-canvas{
-  width:100%;
-  height:100%;
-  display:block;
-  background:#07101c;
-}
-
+canvas{width:100%;height:100%;display:block;background:#07101c}
 .hint{
-  margin:10px 2px 0;
-  color:var(--muted);
-  font-size:13px;
-  text-align:center;
-  line-height:1.45;
+margin:10px 2px 0;color:var(--muted);font-size:13px;text-align:center;line-height:1.45
 }
-
 .mode-status{
-  margin-top:9px;
-  padding:9px 12px;
-  border:1px solid var(--border);
-  border-radius:13px;
-  background:rgba(255,255,255,.035);
-  color:#cfe0f7;
-  text-align:center;
-  font-size:13px;
-  font-weight:700;
+margin-top:9px;padding:9px 12px;border:1px solid var(--border);border-radius:13px;
+background:rgba(255,255,255,.035);color:#cfe0f7;text-align:center;font-size:13px;font-weight:700
 }
-
 .unlock-toast{
-  position:fixed;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%) scale(.85);
-  z-index:100;
-  padding:16px 26px;
-  border-radius:18px;
-  border:1px solid rgba(110,231,168,.45);
-  background:rgba(10,35,28,.94);
-  color:#9ff3c8;
-  font-size:clamp(24px,7vw,42px);
-  font-weight:900;
-  opacity:0;
-  pointer-events:none;
-  box-shadow:0 0 34px rgba(110,231,168,.38);
+position:fixed;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%) scale(.85);
+z-index:100;
+padding:16px 26px;
+border-radius:18px;
+border:1px solid rgba(110,231,168,.45);
+background:rgba(10,35,28,.94);
+color:#9ff3c8;
+font-size:clamp(24px,7vw,42px);
+font-weight:900;
+letter-spacing:.05em;
+opacity:0;
+pointer-events:none;
+box-shadow:0 0 34px rgba(110,231,168,.38);
 }
-
 .unlock-toast.show{
-  animation:unlockFlash 1.25s ease-out forwards;
+animation:unlockFlash 1.25s ease-out forwards;
 }
-
 @keyframes unlockFlash{
-  0%{opacity:0;transform:translate(-50%,-50%) scale(.75)}
-  18%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}
-  45%{opacity:1;transform:translate(-50%,-50%) scale(1)}
-  100%{opacity:0;transform:translate(-50%,-50%) scale(.96)}
+0%{opacity:0;transform:translate(-50%,-50%) scale(.75)}
+18%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}
+45%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+100%{opacity:0;transform:translate(-50%,-50%) scale(.96)}
 }
-
 .fireworks-canvas{
-  position:fixed;
-  inset:0;
-  width:100vw;
-  height:100vh;
-  display:none;
-  pointer-events:none;
-  z-index:80;
-  background:transparent;
+position:fixed;inset:0;width:100vw;height:100vh;display:none;
+pointer-events:none;z-index:80;background:transparent
 }
-
-.fireworks-canvas.show{
-  display:block;
-}
-
-footer{
-  text-align:center;
-  color:#71829b;
-  font-size:12px;
-  margin-top:24px;
-}
-
+.fireworks-canvas.show{display:block}
+footer{text-align:center;color:#71829b;font-size:12px;margin-top:24px}
 .modal{
-  position:fixed;
-  inset:0;
-  background:rgba(3,8,15,.76);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  z-index:50;
-  backdrop-filter:blur(6px);
+position:fixed;inset:0;background:rgba(3,8,15,.76);display:none;align-items:center;justify-content:center;
+padding:20px;z-index:50;backdrop-filter:blur(6px)
 }
-
-.modal.show{
-  display:flex;
-}
-
+.modal.show{display:flex}
 .modal-card{
-  width:min(100%,420px);
-  border-radius:24px;
-  padding:22px;
-  text-align:center;
-  border:1px solid var(--border);
-  background:linear-gradient(180deg,#132746,#0d1a2e);
-  box-shadow:var(--shadow);
+width:min(100%,420px);border-radius:24px;padding:22px;text-align:center;
+border:1px solid var(--border);background:linear-gradient(180deg,#132746,#0d1a2e);box-shadow:var(--shadow)
 }
-
-.trophy{
-  font-size:52px;
-}
-
-.modal h2{
-  font-size:31px;
-  margin:8px 0 4px;
-}
-
-.modal p{
-  color:#c5d1e4;
-  line-height:1.5;
-  margin:8px 0 16px;
-}
-
-.modal-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
-}
-
-.modal-actions button{
-  min-height:48px;
-  border-radius:14px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.06);
-  color:#fff;
-  font-weight:800;
-}
-
-.modal-actions .primary{
-  border:0;
-  background:linear-gradient(135deg,#61cfff,#706bff);
-}
-
+.trophy{font-size:52px}
+.modal h2{font-size:31px;margin:8px 0 4px}
+.modal p{color:#c5d1e4;line-height:1.5;margin:8px 0 16px}
+.modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.modal-actions button{min-height:48px;border-radius:14px;border:1px solid var(--border);background:rgba(255,255,255,.06);color:#fff;font-weight:800}
+.modal-actions .primary{border:0;background:linear-gradient(135deg,#61cfff,#706bff)}
 @media(max-width:560px){
-  .app{
-    padding-left:11px;
-    padding-right:11px;
-  }
-
-  .badge{
-    display:none;
-  }
-
-  .controls-card{
-    padding:10px;
-  }
-
-  .row{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-  }
-
-  select{
-    grid-column:1/-1;
-  }
-
-  .control-btn{
-    padding:8px 7px;
-    font-size:13px;
-  }
-
-  .maze-card{
-    padding:8px;
-    border-radius:18px;
-  }
+.app{padding-left:11px;padding-right:11px}
+.badge{display:none}
+.controls-card{padding:10px}
+.row{display:grid;grid-template-columns:1fr 1fr}
+select{grid-column:1/-1}
+.control-btn{padding:8px 7px;font-size:13px}
+.maze-card{padding:8px;border-radius:18px}
 }
 </style>
 </head>
@@ -365,96 +142,46 @@ footer{
 <div class="app">
 
 <header class="topbar">
-
 <div class="brand">
-
 <div class="logo">M</div>
-
 <div>
 <h1>MAZE™</h1>
 <div class="subtitle">Find Your Way Out</div>
 </div>
-
 </div>
-
-<div class="badge">
-Unlimited mazes
-</div>
-
+<div class="badge">Unlimited mazes</div>
 </header>
-
 
 <section class="controls-card">
 
 <div class="row">
 
 <select id="difficulty" aria-label="Difficulty">
-
-<option value="11">
-Easy
-</option>
-
-<option value="17" selected>
-Medium
-</option>
-
-<option value="25">
-Hard
-</option>
-
-<option value="35">
-Extreme
-</option>
-
+<option value="11">Easy</option>
+<option value="17" selected>Medium</option>
+<option value="25">Hard</option>
+<option value="35">Extreme</option>
 </select>
-
 
 <select id="mazeType" aria-label="Maze type">
-
-<option value="classic">
-Classic Maze
-</option>
-
-<option value="keys">
-🔑 Keys & Doors
-</option>
-
-<option value="memory">
-🧠 Memory Maze
-</option>
-
-<option value="portal">
-🌀 Portal Maze
-</option>
-
-<option value="twodots">
-🎯 Two Dots
-</option>
-
+<option value="classic">Classic Maze</option>
+<option value="keys">🔑 Keys & Doors</option>
+<option value="memory">🧠 Memory Maze</option>
+<option value="portal">🌀 Portal Maze</option>
+<option value="twodots">🎯 Two Dots</option>
 </select>
 
+<button id="newMaze" class="control-btn primary">New Maze</button>
 
-<button id="newMaze" class="control-btn primary">
-New Maze
-</button>
+<button id="restart" class="control-btn">Restart</button>
 
+<button id="flashlight" class="control-btn">🔦 Flashlight</button>
 
-<button id="restart" class="control-btn">
-Restart
-</button>
+<button id="sound" class="control-btn">🔊 Sound ON</button>
 
-
-<button id="flashlight" class="control-btn">
-🔦 Flashlight
-</button>
-
-
-<button id="daily" class="control-btn">
-📅 Daily Maze
-</button>
+<button id="daily" class="control-btn">📅 Daily Maze</button>
 
 </div>
-
 
 <div id="modeStatus" class="mode-status">
 Classic Maze — reach the glowing exit.
@@ -589,6 +316,9 @@ document.getElementById('best');
 const flashlightBtn =
 document.getElementById('flashlight');
 
+const soundBtn =
+document.getElementById('sound');
+
 const modal =
 document.getElementById('winModal');
 
@@ -648,6 +378,360 @@ let fireworksAnimation = null;
 
 let fireworksStopTimer = null;
 
+let soundOn =
+localStorage.getItem('maze_sound') !== 'off';
+
+let audioCtx = null;
+
+
+
+function ensureAudio(){
+
+if(!soundOn)
+return null;
+
+
+const AudioClass =
+window.AudioContext ||
+window.webkitAudioContext;
+
+
+if(!AudioClass)
+return null;
+
+
+if(!audioCtx)
+audioCtx =
+new AudioClass();
+
+
+if(
+audioCtx.state === 'suspended'
+){
+
+audioCtx.resume();
+
+}
+
+
+return audioCtx;
+
+}
+
+
+
+function playTone(
+freq,
+duration=.08,
+type='sine',
+volume=.045,
+delay=0,
+endFreq=null
+){
+
+if(!soundOn)
+return;
+
+
+const ac =
+ensureAudio();
+
+
+if(!ac)
+return;
+
+
+const now =
+ac.currentTime + delay;
+
+
+const osc =
+ac.createOscillator();
+
+
+const gain =
+ac.createGain();
+
+
+osc.type =
+type;
+
+
+osc.frequency
+.setValueAtTime(
+Math.max(40,freq),
+now
+);
+
+
+if(endFreq){
+
+osc.frequency
+.exponentialRampToValueAtTime(
+Math.max(40,endFreq),
+now + duration
+);
+
+}
+
+
+gain.gain
+.setValueAtTime(
+.0001,
+now
+);
+
+
+gain.gain
+.exponentialRampToValueAtTime(
+Math.max(.0002,volume),
+now + Math.min(.018,duration*.25)
+);
+
+
+gain.gain
+.exponentialRampToValueAtTime(
+.0001,
+now + duration
+);
+
+
+osc.connect(
+gain
+);
+
+
+gain.connect(
+ac.destination
+);
+
+
+osc.start(
+now
+);
+
+
+osc.stop(
+now + duration + .03
+);
+
+}
+
+
+
+function playMoveSound(){
+
+playTone(
+520,
+.028,
+'sine',
+.012
+);
+
+}
+
+
+
+function playKeySound(){
+
+playTone(
+880,
+.07,
+'triangle',
+.05
+);
+
+
+playTone(
+1175,
+.10,
+'triangle',
+.045,
+.055
+);
+
+}
+
+
+
+function playUnlockSound(){
+
+playTone(
+523.25,
+.10,
+'sine',
+.05
+);
+
+
+playTone(
+659.25,
+.11,
+'sine',
+.05,
+.08
+);
+
+
+playTone(
+783.99,
+.16,
+'sine',
+.055,
+.16
+);
+
+}
+
+
+
+function playWrongSound(){
+
+playTone(
+190,
+.18,
+'sawtooth',
+.04
+);
+
+
+playTone(
+135,
+.24,
+'sawtooth',
+.035,
+.10
+);
+
+}
+
+
+
+function playCorrectSound(){
+
+playTone(
+659.25,
+.08,
+'triangle',
+.05
+);
+
+
+playTone(
+880,
+.10,
+'triangle',
+.05,
+.07
+);
+
+
+playTone(
+1046.5,
+.16,
+'triangle',
+.055,
+.14
+);
+
+}
+
+
+
+function playPortalSound(){
+
+playTone(
+180,
+.30,
+'sine',
+.038,
+0,
+900
+);
+
+
+playTone(
+320,
+.22,
+'triangle',
+.022,
+.04,
+1200
+);
+
+}
+
+
+
+function playVictorySound(){
+
+playTone(
+523.25,
+.16,
+'triangle',
+.05
+);
+
+
+playTone(
+659.25,
+.16,
+'triangle',
+.05,
+.13
+);
+
+
+playTone(
+783.99,
+.18,
+'triangle',
+.055,
+.26
+);
+
+
+playTone(
+1046.5,
+.34,
+'triangle',
+.065,
+.39
+);
+
+
+playTone(
+783.99,
+.30,
+'sine',
+.025,
+.42
+);
+
+}
+
+
+
+function updateSoundButton(){
+
+soundBtn
+.classList
+.toggle(
+'active',
+soundOn
+);
+
+
+soundBtn.textContent =
+
+soundOn
+
+? '🔊 Sound ON'
+
+: '🔇 Sound OFF';
+
+}
+
 
 
 function mulberry32(a){
@@ -657,11 +741,13 @@ return function(){
 let t =
 a += 0x6D2B79F5;
 
+
 t =
 Math.imul(
 t ^ t >>> 15,
 t | 1
 );
+
 
 t ^=
 t +
@@ -669,6 +755,7 @@ Math.imul(
 t ^ t >>> 7,
 t | 61
 );
+
 
 return (
 (t ^ t >>> 14) >>> 0
@@ -685,6 +772,7 @@ function hashString(str){
 let h =
 2166136261 >>> 0;
 
+
 for(
 let i=0;
 i<str.length;
@@ -694,6 +782,7 @@ i++
 h ^=
 str.charCodeAt(i);
 
+
 h =
 Math.imul(
 h,
@@ -702,13 +791,17 @@ h,
 
 }
 
+
 return h >>> 0;
 
 }
 
 
 
-function makeCell(x,y){
+function makeCell(
+x,
+y
+){
 
 return {
 
@@ -735,13 +828,19 @@ left:true
 
 
 
-function samePos(a,b){
+function samePos(
+a,
+b
+){
 
 return (
 
 a &&
+
 b &&
+
 a.x === b.x &&
+
 a.y === b.y
 
 );
@@ -750,7 +849,9 @@ a.y === b.y
 
 
 
-function randomOpenCell(excluded=[]){
+function randomOpenCell(
+excluded=[]
+){
 
 let pick;
 
@@ -792,15 +893,15 @@ p=>samePos(p,pick)
 ||
 
 (
-pick.x === 0 &&
-pick.y === 0
+pick.x===0 &&
+pick.y===0
 )
 
 ||
 
 (
-pick.x === size-1 &&
-pick.y === size-1
+pick.x===size-1 &&
+pick.y===size-1
 )
 
 )
@@ -814,7 +915,9 @@ return pick;
 
 
 
-function updateModeStatus(message=''){
+function updateModeStatus(
+message=''
+){
 
 if(message){
 
@@ -927,7 +1030,9 @@ setTimeout(
 
 
 
-function flashMessage(message){
+function flashMessage(
+message
+){
 
 unlockToast.textContent =
 message;
@@ -1193,7 +1298,7 @@ current;
 
 
 if(
-y > 0 &&
+y>0 &&
 !grid[y-1][x].visited
 ){
 
@@ -1211,7 +1316,7 @@ dir:
 
 
 if(
-x < size-1 &&
+x<size-1 &&
 !grid[y][x+1].visited
 ){
 
@@ -1229,7 +1334,7 @@ dir:
 
 
 if(
-y < size-1 &&
+y<size-1 &&
 !grid[y+1][x].visited
 ){
 
@@ -1247,7 +1352,7 @@ dir:
 
 
 if(
-x > 0 &&
+x>0 &&
 !grid[y][x-1].visited
 ){
 
@@ -2100,15 +2205,6 @@ flashlight
 ctx.save();
 
 
-/*
-TRUE SPOTLIGHT
-
-The maze stays completely normal and bright
-inside the center of the beam.
-
-The outside fades quickly to nearly black.
-*/
-
 const radius =
 Math.max(
 
@@ -2136,11 +2232,6 @@ radius
 );
 
 
-/*
-Center is completely transparent,
-so the maze underneath stays at full brightness.
-*/
-
 light.addColorStop(
 0,
 'rgba(0,0,0,0)'
@@ -2152,10 +2243,6 @@ light.addColorStop(
 'rgba(0,0,0,0)'
 );
 
-
-/*
-Begin the flashlight edge.
-*/
 
 light.addColorStop(
 .72,
@@ -2169,10 +2256,6 @@ light.addColorStop(
 );
 
 
-/*
-Outside the flashlight becomes nearly black.
-*/
-
 light.addColorStop(
 1,
 'rgba(0,0,0,.985)'
@@ -2182,11 +2265,6 @@ light.addColorStop(
 ctx.fillStyle =
 light;
 
-
-/*
-The radial gradient automatically keeps
-the area outside the radius nearly black.
-*/
 
 ctx.fillRect(
 0,
@@ -2199,10 +2277,6 @@ w
 ctx.restore();
 
 
-
-/*
-Redraw the player above the flashlight.
-*/
 
 ctx.strokeStyle =
 'rgba(255,255,255,1)';
@@ -2286,6 +2360,7 @@ moveAnimation
 cancelAnimationFrame(
 moveAnimation
 );
+
 
 moveAnimation =
 null;
@@ -2577,6 +2652,9 @@ stepsEl.textContent =
 steps;
 
 
+playMoveSound();
+
+
 
 if(
 mazeType === 'keys' &&
@@ -2596,6 +2674,15 @@ null;
 
 
 updateModeStatus();
+
+
+playKeySound();
+
+
+setTimeout(
+playUnlockSound,
+110
+);
 
 
 flashUnlocked();
@@ -2647,6 +2734,15 @@ true;
 updateModeStatus();
 
 
+playCorrectSound();
+
+
+setTimeout(
+playUnlockSound,
+120
+);
+
+
 flashMessage(
 '🎯 CORRECT! EXIT UNLOCKED!'
 );
@@ -2675,6 +2771,9 @@ y:0
 updateModeStatus(
 '❌ Wrong dot — back to START! Find the other dot.'
 );
+
+
+playWrongSound();
 
 
 flashMessage(
@@ -2718,6 +2817,9 @@ updateModeStatus(
 '🌀 Portal jump! You were transported across the maze.'
 );
 
+
+playPortalSound();
+
 }
 
 
@@ -2736,6 +2838,9 @@ player = {
 updateModeStatus(
 '🌀 Portal jump! You were transported across the maze.'
 );
+
+
+playPortalSound();
 
 }
 
@@ -2840,6 +2945,7 @@ cancelAnimationFrame(
 fireworksAnimation
 );
 
+
 fireworksAnimation =
 null;
 
@@ -2942,6 +3048,7 @@ const colors = [
 ];
 
 
+
 function burst(
 x,
 y,
@@ -3034,6 +3141,7 @@ performance.now();
 
 const started =
 performance.now();
+
 
 
 function frame(now){
@@ -3275,6 +3383,9 @@ winText.textContent =
 startFireworks();
 
 
+playVictorySound();
+
+
 modal
 .classList
 .add(
@@ -3345,6 +3456,7 @@ moveAnimation
 cancelAnimationFrame(
 moveAnimation
 );
+
 
 moveAnimation =
 null;
@@ -3587,7 +3699,59 @@ draw();
 
 
 
-document.addEventListener(
+soundBtn
+.addEventListener(
+'click',
+()=>{
+
+soundOn =
+!soundOn;
+
+
+localStorage
+.setItem(
+'maze_sound',
+soundOn
+? 'on'
+: 'off'
+);
+
+
+updateSoundButton();
+
+
+if(
+soundOn
+){
+
+ensureAudio();
+
+
+playTone(
+700,
+.07,
+'sine',
+.035
+);
+
+
+playTone(
+950,
+.10,
+'sine',
+.035,
+.06
+);
+
+}
+
+}
+);
+
+
+
+document
+.addEventListener(
 'keydown',
 e=>{
 
@@ -3777,7 +3941,8 @@ let lastDragMove =
 
 
 
-wrap.addEventListener(
+wrap
+.addEventListener(
 'pointerdown',
 e=>{
 
@@ -3785,7 +3950,8 @@ dragging =
 true;
 
 
-wrap.setPointerCapture?.(
+wrap
+.setPointerCapture?.(
 e.pointerId
 );
 
@@ -3812,7 +3978,8 @@ dir
 
 
 
-wrap.addEventListener(
+wrap
+.addEventListener(
 'pointermove',
 e=>{
 
@@ -3864,7 +4031,8 @@ dir
 
 
 
-wrap.addEventListener(
+wrap
+.addEventListener(
 'pointerup',
 e=>{
 
@@ -3872,7 +4040,8 @@ dragging =
 false;
 
 
-wrap.releasePointerCapture?.(
+wrap
+.releasePointerCapture?.(
 e.pointerId
 );
 
@@ -3881,7 +4050,8 @@ e.pointerId
 
 
 
-wrap.addEventListener(
+wrap
+.addEventListener(
 'pointercancel',
 ()=>{
 
@@ -3901,7 +4071,8 @@ let touchStart =
 null;
 
 
-wrap.addEventListener(
+wrap
+.addEventListener(
 'touchstart',
 e=>{
 
@@ -3926,7 +4097,8 @@ passive:true
 );
 
 
-wrap.addEventListener(
+wrap
+.addEventListener(
 'touchend',
 e=>{
 
@@ -4036,11 +4208,15 @@ document
 
 
 
-window.addEventListener(
+window
+.addEventListener(
 'resize',
 resizeCanvas
 );
 
+
+
+updateSoundButton();
 
 
 newMaze(

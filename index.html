@@ -20,7 +20,9 @@
   --border:rgba(255,255,255,.10);
   --shadow:0 20px 55px rgba(0,0,0,.35);
 }
+
 *{box-sizing:border-box}
+
 html,body{
   margin:0;
   min-height:100%;
@@ -28,20 +30,24 @@ html,body{
   color:var(--text);
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
 }
+
 body{
   background:
     radial-gradient(circle at 20% 0%,rgba(88,108,255,.22),transparent 28rem),
     linear-gradient(180deg,#09182b 0%,#07111f 58%,#050b14 100%);
   padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
 }
+
 button,select{font:inherit}
 button{cursor:pointer}
+
 .app{
   width:min(100%,820px);
   margin:0 auto;
   min-height:100vh;
   padding:16px 14px 34px
 }
+
 .topbar{
   display:flex;
   align-items:center;
@@ -49,11 +55,13 @@ button{cursor:pointer}
   gap:16px;
   margin-bottom:14px
 }
+
 .brand{
   display:flex;
   align-items:center;
   gap:12px
 }
+
 .logo{
   width:52px;
   height:52px;
@@ -66,16 +74,19 @@ button{cursor:pointer}
   font-size:24px;
   letter-spacing:-1px
 }
+
 h1{
   margin:0;
   font-size:clamp(30px,8vw,46px);
   line-height:.95
 }
+
 .subtitle{
   margin:4px 0 0;
   color:var(--muted);
   font-size:14px
 }
+
 .badge{
   font-size:12px;
   padding:7px 10px;
@@ -84,23 +95,30 @@ h1{
   background:rgba(255,255,255,.05);
   color:#dbe7ff
 }
-.controls-card,.maze-card,.stats-card{
+
+.controls-card,
+.maze-card,
+.stats-card{
   border:1px solid var(--border);
   background:linear-gradient(180deg,rgba(18,36,59,.95),rgba(13,27,46,.95));
   box-shadow:var(--shadow);
-  border-radius:22px;
+  border-radius:22px
 }
+
 .controls-card{
   padding:13px;
   margin-bottom:12px
 }
+
 .row{
   display:flex;
   gap:8px;
   flex-wrap:wrap;
   align-items:center
 }
-select,.control-btn{
+
+select,
+.control-btn{
   min-height:42px;
   border:1px solid var(--border);
   border-radius:13px;
@@ -109,19 +127,23 @@ select,.control-btn{
   padding:9px 12px;
   font-weight:700
 }
+
 select{
   flex:1;
   min-width:145px
 }
+
 .control-btn.primary{
   border:0;
   background:linear-gradient(135deg,#61cfff,#706bff);
   color:white
 }
+
 .control-btn.active{
   border-color:rgba(101,216,255,.45);
   background:rgba(101,216,255,.12)
 }
+
 .stats-card{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -129,23 +151,28 @@ select{
   padding:10px 12px;
   margin-bottom:12px
 }
+
 .stat{text-align:center}
+
 .stat-label{
   font-size:11px;
   color:var(--muted);
   text-transform:uppercase;
   letter-spacing:.09em
 }
+
 .stat-value{
   font-size:19px;
   font-weight:850;
   margin-top:2px
 }
+
 .maze-card{
   padding:12px;
   overflow:hidden;
   position:relative
 }
+
 .canvas-wrap{
   width:100%;
   aspect-ratio:1/1;
@@ -158,12 +185,14 @@ select{
   position:relative;
   touch-action:none
 }
+
 canvas{
   width:100%;
   height:100%;
   display:block;
   background:#07101c
 }
+
 .hint{
   margin:10px 2px 0;
   color:var(--muted);
@@ -171,6 +200,7 @@ canvas{
   text-align:center;
   line-height:1.45
 }
+
 .mode-status{
   margin-top:9px;
   padding:9px 12px;
@@ -182,6 +212,7 @@ canvas{
   font-size:13px;
   font-weight:700
 }
+
 .unlock-toast{
   position:fixed;
   left:50%;
@@ -198,11 +229,13 @@ canvas{
   letter-spacing:.05em;
   opacity:0;
   pointer-events:none;
-  box-shadow:0 0 34px rgba(110,231,168,.38);
+  box-shadow:0 0 34px rgba(110,231,168,.38)
 }
+
 .unlock-toast.show{
-  animation:unlockFlash 1.25s ease-out forwards;
+  animation:unlockFlash 1.25s ease-out forwards
 }
+
 @keyframes unlockFlash{
   0%{
     opacity:0;
@@ -221,12 +254,14 @@ canvas{
     transform:translate(-50%,-50%) scale(.96)
   }
 }
+
 footer{
   text-align:center;
   color:#71829b;
   font-size:12px;
   margin-top:24px
 }
+
 .modal{
   position:fixed;
   inset:0;
@@ -238,7 +273,9 @@ footer{
   z-index:50;
   backdrop-filter:blur(6px)
 }
+
 .modal.show{display:flex}
+
 .modal-card{
   width:min(100%,420px);
   border-radius:24px;
@@ -248,21 +285,26 @@ footer{
   background:linear-gradient(180deg,#132746,#0d1a2e);
   box-shadow:var(--shadow)
 }
+
 .trophy{font-size:52px}
+
 .modal h2{
   font-size:31px;
   margin:8px 0 4px
 }
+
 .modal p{
   color:#c5d1e4;
   line-height:1.5;
   margin:8px 0 16px
 }
+
 .modal-actions{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:9px
 }
+
 .modal-actions button{
   min-height:48px;
   border-radius:14px;
@@ -271,26 +313,40 @@ footer{
   color:#fff;
   font-weight:800
 }
+
 .modal-actions .primary{
   border:0;
   background:linear-gradient(135deg,#61cfff,#706bff)
 }
+
 @media(max-width:560px){
   .app{
     padding-left:11px;
     padding-right:11px
   }
-  .badge{display:none}
-  .controls-card{padding:10px}
+
+  .badge{
+    display:none
+  }
+
+  .controls-card{
+    padding:10px
+  }
+
   .row{
     display:grid;
     grid-template-columns:1fr 1fr
   }
-  select{grid-column:1/-1}
+
+  select{
+    grid-column:1/-1
+  }
+
   .control-btn{
     padding:8px 7px;
     font-size:13px
   }
+
   .maze-card{
     padding:8px;
     border-radius:18px
@@ -298,22 +354,29 @@ footer{
 }
 </style>
 </head>
+
 <body>
 
 <div class="app">
 
   <header class="topbar">
     <div class="brand">
+
       <div class="logo">M</div>
+
       <div>
         <h1>MAZE™</h1>
         <div class="subtitle">Find Your Way Out</div>
       </div>
+
     </div>
+
     <div class="badge">Unlimited mazes</div>
   </header>
 
+
   <section class="controls-card">
+
     <div class="row">
 
       <select id="difficulty" aria-label="Difficulty">
@@ -354,6 +417,7 @@ footer{
 
   </section>
 
+
   <section class="stats-card">
 
     <div class="stat">
@@ -373,6 +437,7 @@ footer{
 
   </section>
 
+
   <section class="maze-card">
 
     <div class="canvas-wrap" id="canvasWrap">
@@ -387,15 +452,18 @@ footer{
 
   </section>
 
+
   <div id="unlockToast" class="unlock-toast">
     🔓 UNLOCKED!
   </div>
+
 
   <footer>
     A DONCO-BAYCITY™ App
   </footer>
 
 </div>
+
 
 <div id="winModal" class="modal">
 
@@ -423,46 +491,28 @@ footer{
 
 </div>
 
+
 <script>
 
-const canvas =
-document.getElementById('maze');
+const canvas = document.getElementById('maze');
+const ctx = canvas.getContext('2d');
 
-const ctx =
-canvas.getContext('2d');
+const wrap = document.getElementById('canvasWrap');
 
-const wrap =
-document.getElementById('canvasWrap');
+const difficultyEl = document.getElementById('difficulty');
+const mazeTypeEl = document.getElementById('mazeType');
 
-const difficultyEl =
-document.getElementById('difficulty');
+const modeStatusEl = document.getElementById('modeStatus');
+const unlockToast = document.getElementById('unlockToast');
 
-const mazeTypeEl =
-document.getElementById('mazeType');
+const timeEl = document.getElementById('time');
+const stepsEl = document.getElementById('steps');
+const bestEl = document.getElementById('best');
 
-const modeStatusEl =
-document.getElementById('modeStatus');
+const flashlightBtn = document.getElementById('flashlight');
 
-const unlockToast =
-document.getElementById('unlockToast');
-
-const timeEl =
-document.getElementById('time');
-
-const stepsEl =
-document.getElementById('steps');
-
-const bestEl =
-document.getElementById('best');
-
-const flashlightBtn =
-document.getElementById('flashlight');
-
-const modal =
-document.getElementById('winModal');
-
-const winText =
-document.getElementById('winText');
+const modal = document.getElementById('winModal');
+const winText = document.getElementById('winText');
 
 
 let size = 17;
@@ -474,28 +524,30 @@ let player = {
   y:0
 };
 
-let startTime = null;
+let renderPlayer = {
+  x:0,
+  y:0
+};
 
+let moveAnimation = null;
+
+let startTime = null;
 let timer = null;
 
 let steps = 0;
-
 let won = false;
 
 let flashlight = false;
-
 let dailyMode = false;
 
 let mazeType = 'classic';
 
 let keyPos = null;
-
 let hasKey = false;
 
 let portals = [];
 
 let memoryVisible = true;
-
 let memoryTimer = null;
 
 let rng = Math.random;
@@ -506,65 +558,53 @@ function mulberry32(a){
 
   return function(){
 
-    let t =
-    a += 0x6D2B79F5;
+    let t = a += 0x6D2B79F5;
 
-    t =
-    Math.imul(
+    t = Math.imul(
       t ^ t >>> 15,
       t | 1
     );
 
-    t ^=
-    t +
-    Math.imul(
+    t ^= t + Math.imul(
       t ^ t >>> 7,
       t | 61
     );
 
-    return(
-      (
-        (
-          t ^ t >>> 14
-        ) >>> 0
-      )
-      /
-      4294967296
-    );
-  }
+    return (
+      (t ^ t >>> 14) >>> 0
+    ) / 4294967296;
+
+  };
+
 }
 
 
 
 function hashString(str){
 
-  let h =
-  2166136261 >>> 0;
+  let h = 2166136261 >>> 0;
 
-  for(
-    let i=0;
-    i<str.length;
-    i++
-  ){
+  for(let i=0;i<str.length;i++){
 
-    h ^=
-    str.charCodeAt(i);
+    h ^= str.charCodeAt(i);
 
-    h =
-    Math.imul(
+    h = Math.imul(
       h,
       16777619
     );
+
   }
 
   return h >>> 0;
+
 }
 
 
 
 function makeCell(x,y){
 
-  return{
+  return {
+
     x,
     y,
 
@@ -576,19 +616,22 @@ function makeCell(x,y){
       bottom:true,
       left:true
     }
+
   };
+
 }
 
 
 
 function samePos(a,b){
 
-  return(
+  return (
     a &&
     b &&
     a.x === b.x &&
     a.y === b.y
   );
+
 }
 
 
@@ -597,20 +640,16 @@ function randomOpenCell(excluded=[]){
 
   let pick;
 
-  let tries=0;
+  let tries = 0;
 
   do{
 
-    pick={
-      x:
-      Math.floor(
-        rng()*size
-      ),
+    pick = {
 
-      y:
-      Math.floor(
-        rng()*size
-      )
+      x:Math.floor(rng()*size),
+
+      y:Math.floor(rng()*size)
+
     };
 
     tries++;
@@ -620,12 +659,9 @@ function randomOpenCell(excluded=[]){
     tries < 500 &&
 
     (
+
       excluded.some(
-        p =>
-        samePos(
-          p,
-          pick
-        )
+        p => samePos(p,pick)
       )
 
       ||
@@ -641,239 +677,194 @@ function randomOpenCell(excluded=[]){
         pick.x === size-1 &&
         pick.y === size-1
       )
+
     )
+
   );
 
   return pick;
+
 }
 
 
 
-function updateModeStatus(
-  message=''
-){
+function updateModeStatus(message=''){
 
   if(message){
 
-    modeStatusEl.textContent =
-    message;
+    modeStatusEl.textContent = message;
 
     return;
-  }
-
-  if(
-    mazeType === 'keys'
-  ){
-
-    modeStatusEl.textContent =
-    hasKey
-
-    ? '🔑 Key found — the exit is unlocked!'
-
-    : '🔑 Find the gold key, then reach the exit.';
 
   }
 
-  else if(
-    mazeType === 'memory'
-  ){
 
-    modeStatusEl.textContent =
-    memoryVisible
+  if(mazeType === 'keys'){
 
-    ? '🧠 Memorize the maze — the walls disappear in 4 seconds.'
+    modeStatusEl.textContent = hasKey
 
-    : '🧠 Walls hidden — use your memory to find the exit.';
+      ? '🔑 Key found — the exit is unlocked!'
+
+      : '🔑 Find the gold key, then reach the exit.';
 
   }
 
-  else if(
-    mazeType === 'portal'
-  ){
+  else if(mazeType === 'memory'){
+
+    modeStatusEl.textContent = memoryVisible
+
+      ? '🧠 Memorize the maze — the walls disappear in 4 seconds.'
+
+      : '🧠 Walls hidden — use your memory to find the exit.';
+
+  }
+
+  else if(mazeType === 'portal'){
 
     modeStatusEl.textContent =
-    '🌀 Purple and gold portals teleport you across the maze.';
+      '🌀 Purple and gold portals teleport you across the maze.';
 
   }
 
   else{
 
     modeStatusEl.textContent =
-    'Classic Maze — reach the glowing exit.';
+      'Classic Maze — reach the glowing exit.';
 
   }
+
 }
 
 
 
 function flashUnlocked(){
 
-  unlockToast.classList.remove(
-    'show'
-  );
+  unlockToast.classList.remove('show');
 
   void unlockToast.offsetWidth;
 
-  unlockToast.classList.add(
-    'show'
-  );
+  unlockToast.classList.add('show');
 
   setTimeout(
-    ()=>{
-
-      unlockToast.classList.remove(
-        'show'
-      );
-
-    },
+    () => unlockToast.classList.remove('show'),
     1300
   );
+
 }
 
 
 
 function setupMode(){
 
-  mazeType =
-  mazeTypeEl.value;
+  mazeType = mazeTypeEl.value;
 
-  keyPos =
-  null;
+  keyPos = null;
 
-  hasKey =
-  false;
+  hasKey = false;
 
-  portals =
-  [];
+  portals = [];
 
-  memoryVisible =
-  true;
+  memoryVisible = true;
 
 
-  if(
-    mazeType === 'keys'
-  ){
+  if(mazeType === 'keys'){
 
-    keyPos =
-    randomOpenCell();
+    keyPos = randomOpenCell();
 
   }
 
-  else if(
-    mazeType === 'portal'
-  ){
+  else if(mazeType === 'portal'){
 
-    const first =
-    randomOpenCell();
+    const first = randomOpenCell();
 
-    const second =
-    randomOpenCell(
-      [first]
-    );
+    const second = randomOpenCell([first]);
 
-    portals=[
+    portals = [
       first,
       second
     ];
+
   }
 
+
   updateModeStatus();
+
 }
 
 
 
 function startMemoryCountdown(){
 
-  clearTimeout(
-    memoryTimer
-  );
+  clearTimeout(memoryTimer);
 
-  memoryTimer =
-  null;
+  memoryTimer = null;
 
 
-  if(
-    mazeType !== 'memory'
-  ){
+  if(mazeType !== 'memory'){
 
     updateModeStatus();
 
     return;
+
   }
 
 
-  memoryVisible =
-  true;
+  memoryVisible = true;
 
   updateModeStatus();
 
   draw();
 
 
-  memoryTimer =
-  setTimeout(
-    ()=>{
+  memoryTimer = setTimeout(()=>{
 
-      memoryVisible =
-      false;
+    memoryVisible = false;
 
-      updateModeStatus();
+    updateModeStatus();
 
-      draw();
+    draw();
 
-    },
-    4000
-  );
+  },4000);
+
 }
 
 
 
 function generateMaze(){
 
-  grid =
-  Array.from(
-    {
-      length:size
-    },
+  grid = Array.from(
+
+    {length:size},
 
     (_,y)=>
 
-    Array.from(
-      {
-        length:size
-      },
+      Array.from(
 
-      (_,x)=>
-      makeCell(
-        x,
-        y
+        {length:size},
+
+        (_,x)=>makeCell(x,y)
+
       )
-    )
+
   );
 
 
-  const stack =
-  [];
+  const stack = [];
 
 
-  let current =
-  grid[0][0];
+  let current = grid[0][0];
 
-
-  current.visited =
-  true;
+  current.visited = true;
 
 
   while(true){
 
-    const neighbors =
-    [];
+    const neighbors = [];
 
     const {
       x,
       y
-    } =
-    current;
+    } = current;
 
 
     if(
@@ -882,12 +873,10 @@ function generateMaze(){
     ){
 
       neighbors.push({
-        cell:
-        grid[y-1][x],
-
-        dir:
-        'top'
+        cell:grid[y-1][x],
+        dir:'top'
       });
+
     }
 
 
@@ -897,12 +886,10 @@ function generateMaze(){
     ){
 
       neighbors.push({
-        cell:
-        grid[y][x+1],
-
-        dir:
-        'right'
+        cell:grid[y][x+1],
+        dir:'right'
       });
+
     }
 
 
@@ -912,12 +899,10 @@ function generateMaze(){
     ){
 
       neighbors.push({
-        cell:
-        grid[y+1][x],
-
-        dir:
-        'bottom'
+        cell:grid[y+1][x],
+        dir:'bottom'
       });
+
     }
 
 
@@ -927,100 +912,74 @@ function generateMaze(){
     ){
 
       neighbors.push({
-        cell:
-        grid[y][x-1],
-
-        dir:
-        'left'
+        cell:grid[y][x-1],
+        dir:'left'
       });
+
     }
 
 
-    if(
-      neighbors.length
-    ){
+    if(neighbors.length){
 
       const pick =
-      neighbors[
-        Math.floor(
-          rng()*
-          neighbors.length
-        )
-      ];
+        neighbors[
+          Math.floor(
+            rng()*neighbors.length
+          )
+        ];
 
 
-      const next =
-      pick.cell;
+      const next = pick.cell;
 
 
-      if(
-        pick.dir === 'top'
-      ){
+      if(pick.dir === 'top'){
 
-        current.walls.top =
-        false;
+        current.walls.top = false;
 
-        next.walls.bottom =
-        false;
+        next.walls.bottom = false;
+
       }
 
 
-      if(
-        pick.dir === 'right'
-      ){
+      if(pick.dir === 'right'){
 
-        current.walls.right =
-        false;
+        current.walls.right = false;
 
-        next.walls.left =
-        false;
+        next.walls.left = false;
+
       }
 
 
-      if(
-        pick.dir === 'bottom'
-      ){
+      if(pick.dir === 'bottom'){
 
-        current.walls.bottom =
-        false;
+        current.walls.bottom = false;
 
-        next.walls.top =
-        false;
+        next.walls.top = false;
+
       }
 
 
-      if(
-        pick.dir === 'left'
-      ){
+      if(pick.dir === 'left'){
 
-        current.walls.left =
-        false;
+        current.walls.left = false;
 
-        next.walls.right =
-        false;
+        next.walls.right = false;
+
       }
 
 
-      stack.push(
-        current
-      );
+      stack.push(current);
 
 
-      current =
-      next;
+      current = next;
 
-
-      current.visited =
-      true;
+      current.visited = true;
 
     }
 
-    else if(
-      stack.length
-    ){
+    else if(stack.length){
 
-      current =
-      stack.pop();
+      current = stack.pop();
 
     }
 
@@ -1029,7 +988,9 @@ function generateMaze(){
       break;
 
     }
+
   }
+
 }
 
 
@@ -1037,31 +998,27 @@ function generateMaze(){
 function resizeCanvas(){
 
   const rect =
-  wrap.getBoundingClientRect();
+    wrap.getBoundingClientRect();
 
 
   const dpr =
-  window.devicePixelRatio || 1;
+    window.devicePixelRatio || 1;
 
 
   canvas.width =
-  Math.floor(
-    rect.width*dpr
-  );
+    Math.floor(rect.width*dpr);
 
 
   canvas.height =
-  Math.floor(
-    rect.width*dpr
-  );
+    Math.floor(rect.width*dpr);
 
 
   canvas.style.width =
-  rect.width+'px';
+    rect.width+'px';
 
 
   canvas.style.height =
-  rect.width+'px';
+    rect.width+'px';
 
 
   ctx.setTransform(
@@ -1075,6 +1032,7 @@ function resizeCanvas(){
 
 
   draw();
+
 }
 
 
@@ -1082,11 +1040,11 @@ function resizeCanvas(){
 function draw(){
 
   const w =
-  wrap.clientWidth;
+    wrap.clientWidth;
 
 
   const cell =
-  w/size;
+    w/size;
 
 
   ctx.clearRect(
@@ -1098,7 +1056,7 @@ function draw(){
 
 
   ctx.fillStyle =
-  '#07101c';
+    '#07101c';
 
 
   ctx.fillRect(
@@ -1110,58 +1068,57 @@ function draw(){
 
 
   const ex =
-  (size-1)*cell
-  +
-  cell/2;
+    (size-1)*cell + cell/2;
 
 
   const ey =
-  (size-1)*cell
-  +
-  cell/2;
+    (size-1)*cell + cell/2;
 
 
   const exitLocked =
-  mazeType === 'keys'
-  &&
-  !hasKey;
+    mazeType === 'keys' &&
+    !hasKey;
 
 
   const grad =
-  ctx.createRadialGradient(
-    ex,
-    ey,
-    0,
-    ex,
-    ey,
-    cell*.9
-  );
+    ctx.createRadialGradient(
+      ex,
+      ey,
+      0,
+      ex,
+      ey,
+      cell*.9
+    );
 
 
   grad.addColorStop(
+
     0,
 
     exitLocked
 
-    ? 'rgba(255,127,147,.82)'
+      ? 'rgba(255,127,147,.82)'
 
-    : 'rgba(110,231,168,.8)'
+      : 'rgba(110,231,168,.8)'
+
   );
 
 
   grad.addColorStop(
+
     1,
 
     exitLocked
 
-    ? 'rgba(255,127,147,0)'
+      ? 'rgba(255,127,147,0)'
 
-    : 'rgba(110,231,168,0)'
+      : 'rgba(110,231,168,0)'
+
   );
 
 
   ctx.fillStyle =
-  grad;
+    grad;
 
 
   ctx.fillRect(
@@ -1173,32 +1130,29 @@ function draw(){
 
 
   ctx.strokeStyle =
-  '#d9e7ff';
+    '#d9e7ff';
 
 
   ctx.lineWidth =
-  Math.max(
-    1.2,
-    Math.min(
-      3,
-      24/size
-    )
-  );
+    Math.max(
+      1.2,
+      Math.min(
+        3,
+        24/size
+      )
+    );
 
 
   ctx.lineCap =
-  'square';
+    'square';
 
 
   const showWalls =
-  mazeType !== 'memory'
-  ||
-  memoryVisible;
+    mazeType !== 'memory' ||
+    memoryVisible;
 
 
-  if(
-    showWalls
-  ){
+  if(showWalls){
 
     for(
       let y=0;
@@ -1213,23 +1167,21 @@ function draw(){
       ){
 
         const c =
-        grid[y][x];
+          grid[y][x];
 
 
         const px =
-        x*cell;
+          x*cell;
 
 
         const py =
-        y*cell;
+          y*cell;
 
 
         ctx.beginPath();
 
 
-        if(
-          c.walls.top
-        ){
+        if(c.walls.top){
 
           ctx.moveTo(
             px,
@@ -1240,12 +1192,11 @@ function draw(){
             px+cell,
             py
           );
+
         }
 
 
-        if(
-          c.walls.right
-        ){
+        if(c.walls.right){
 
           ctx.moveTo(
             px+cell,
@@ -1256,12 +1207,11 @@ function draw(){
             px+cell,
             py+cell
           );
+
         }
 
 
-        if(
-          c.walls.bottom
-        ){
+        if(c.walls.bottom){
 
           ctx.moveTo(
             px,
@@ -1272,12 +1222,11 @@ function draw(){
             px+cell,
             py+cell
           );
+
         }
 
 
-        if(
-          c.walls.left
-        ){
+        if(c.walls.left){
 
           ctx.moveTo(
             px,
@@ -1288,12 +1237,14 @@ function draw(){
             px,
             py+cell
           );
+
         }
 
 
         ctx.stroke();
 
       }
+
     }
 
   }
@@ -1301,11 +1252,11 @@ function draw(){
   else{
 
     ctx.strokeStyle =
-    'rgba(217,231,255,.18)';
+      'rgba(217,231,255,.18)';
 
 
     ctx.lineWidth =
-    2;
+      2;
 
 
     ctx.strokeRect(
@@ -1319,7 +1270,7 @@ function draw(){
 
 
   ctx.fillStyle =
-  '#65d8ff';
+    '#65d8ff';
 
 
   ctx.beginPath();
@@ -1341,11 +1292,9 @@ function draw(){
 
 
   ctx.fillStyle =
-  exitLocked
-
-  ? '#ff7f93'
-
-  : '#6ee7a8';
+    exitLocked
+      ? '#ff7f93'
+      : '#6ee7a8';
 
 
   ctx.beginPath();
@@ -1366,19 +1315,17 @@ function draw(){
   ctx.fill();
 
 
-  if(
-    exitLocked
-  ){
+  if(exitLocked){
 
     ctx.strokeStyle =
-    '#ffffff';
+      '#ffffff';
 
 
     ctx.lineWidth =
-    Math.max(
-      1.5,
-      cell*.08
-    );
+      Math.max(
+        1.5,
+        cell*.08
+      );
 
 
     ctx.strokeRect(
@@ -1407,32 +1354,27 @@ function draw(){
 
 
   if(
-    mazeType === 'keys'
-    &&
+    mazeType === 'keys' &&
     keyPos
   ){
 
     const kx =
-    keyPos.x*cell
-    +
-    cell/2;
+      keyPos.x*cell + cell/2;
 
 
     const ky =
-    keyPos.y*cell
-    +
-    cell/2;
+      keyPos.y*cell + cell/2;
 
 
     ctx.strokeStyle =
-    '#ffd76a';
+      '#ffd76a';
 
 
     ctx.lineWidth =
-    Math.max(
-      2,
-      cell*.10
-    );
+      Math.max(
+        2,
+        cell*.10
+      );
 
 
     ctx.beginPath();
@@ -1492,12 +1434,11 @@ function draw(){
 
 
   if(
-    mazeType === 'portal'
-    &&
+    mazeType === 'portal' &&
     portals.length === 2
   ){
 
-    const colors=[
+    const colors = [
       '#9a6cff',
       '#ffd166'
     ];
@@ -1507,37 +1448,33 @@ function draw(){
       (p,i)=>{
 
         const qx =
-        p.x*cell
-        +
-        cell/2;
+          p.x*cell + cell/2;
 
 
         const qy =
-        p.y*cell
-        +
-        cell/2;
+          p.y*cell + cell/2;
 
 
         ctx.strokeStyle =
-        colors[i];
+          colors[i];
 
 
         ctx.lineWidth =
-        Math.max(
-          2.5,
-          cell*.12
-        );
+          Math.max(
+            2.5,
+            cell*.12
+          );
 
 
         ctx.shadowColor =
-        colors[i];
+          colors[i];
 
 
         ctx.shadowBlur =
-        Math.max(
-          7,
-          cell*.5
-        );
+          Math.max(
+            7,
+            cell*.5
+          );
 
 
         ctx.beginPath();
@@ -1559,45 +1496,42 @@ function draw(){
 
 
         ctx.shadowBlur =
-        0;
+          0;
 
       }
     );
+
   }
 
 
   const px =
-  player.x*cell
-  +
-  cell/2;
+    renderPlayer.x*cell + cell/2;
 
 
   const py =
-  player.y*cell
-  +
-  cell/2;
+    renderPlayer.y*cell + cell/2;
 
 
   ctx.strokeStyle =
-  'rgba(255,255,255,.95)';
+    'rgba(255,255,255,.95)';
 
 
   ctx.lineWidth =
-  Math.max(
-    2,
-    cell*.10
-  );
+    Math.max(
+      2,
+      cell*.10
+    );
 
 
   ctx.shadowColor =
-  '#65d8ff';
+    '#65d8ff';
 
 
   ctx.shadowBlur =
-  Math.max(
-    10,
-    cell*.8
-  );
+    Math.max(
+      10,
+      cell*.8
+    );
 
 
   ctx.beginPath();
@@ -1619,7 +1553,7 @@ function draw(){
 
 
   ctx.fillStyle =
-  '#65d8ff';
+    '#65d8ff';
 
 
   ctx.beginPath();
@@ -1641,18 +1575,16 @@ function draw(){
 
 
   ctx.shadowBlur =
-  0;
+    0;
 
 
-  if(
-    flashlight
-  ){
+  if(flashlight){
 
     ctx.save();
 
 
     ctx.fillStyle =
-    'rgba(0,0,0,.93)';
+      'rgba(0,0,0,.93)';
 
 
     ctx.fillRect(
@@ -1664,28 +1596,28 @@ function draw(){
 
 
     ctx.globalCompositeOperation =
-    'destination-out';
+      'destination-out';
 
 
     const radius =
-    Math.max(
-      cell*2.4,
-      Math.min(
-        w*.19,
-        95
-      )
-    );
+      Math.max(
+        cell*2.4,
+        Math.min(
+          w*.19,
+          95
+        )
+      );
 
 
     const light =
-    ctx.createRadialGradient(
-      px,
-      py,
-      radius*.25,
-      px,
-      py,
-      radius
-    );
+      ctx.createRadialGradient(
+        px,
+        py,
+        radius*.25,
+        px,
+        py,
+        radius
+      );
 
 
     light.addColorStop(
@@ -1707,7 +1639,7 @@ function draw(){
 
 
     ctx.fillStyle =
-    light;
+      light;
 
 
     ctx.beginPath();
@@ -1729,22 +1661,22 @@ function draw(){
 
 
     ctx.strokeStyle =
-    'rgba(255,255,255,.95)';
+      'rgba(255,255,255,.95)';
 
 
     ctx.lineWidth =
-    Math.max(
-      2,
-      cell*.10
-    );
+      Math.max(
+        2,
+        cell*.10
+      );
 
 
     ctx.shadowColor =
-    '#65d8ff';
+      '#65d8ff';
 
 
     ctx.shadowBlur =
-    12;
+      12;
 
 
     ctx.beginPath();
@@ -1766,7 +1698,7 @@ function draw(){
 
 
     ctx.fillStyle =
-    '#65d8ff';
+      '#65d8ff';
 
 
     ctx.beginPath();
@@ -1788,9 +1720,109 @@ function draw(){
 
 
     ctx.shadowBlur =
-    0;
+      0;
 
   }
+
+}
+
+
+
+function animatePlayerTo(
+  targetX,
+  targetY,
+  duration=85
+){
+
+  if(moveAnimation){
+
+    cancelAnimationFrame(
+      moveAnimation
+    );
+
+
+    moveAnimation =
+      null;
+
+  }
+
+
+  const startX =
+    renderPlayer.x;
+
+
+  const startY =
+    renderPlayer.y;
+
+
+  const started =
+    performance.now();
+
+
+  function frame(now){
+
+    const raw =
+      Math.min(
+        1,
+        (now-started)/duration
+      );
+
+
+    const eased =
+      1-Math.pow(
+        1-raw,
+        3
+      );
+
+
+    renderPlayer.x =
+      startX +
+      (targetX-startX)*eased;
+
+
+    renderPlayer.y =
+      startY +
+      (targetY-startY)*eased;
+
+
+    draw();
+
+
+    if(raw < 1){
+
+      moveAnimation =
+        requestAnimationFrame(
+          frame
+        );
+
+    }
+
+    else{
+
+      renderPlayer.x =
+        targetX;
+
+
+      renderPlayer.y =
+        targetY;
+
+
+      moveAnimation =
+        null;
+
+
+      draw();
+
+    }
+
+  }
+
+
+  moveAnimation =
+    requestAnimationFrame(
+      frame
+    );
+
 }
 
 
@@ -1798,90 +1830,75 @@ function draw(){
 function formatTime(sec){
 
   const m =
-  Math.floor(
-    sec/60
-  );
+    Math.floor(
+      sec/60
+    );
 
 
   const s =
-  sec%60;
+    sec%60;
 
 
-  return(
-    `${m}:` +
-    `${String(s).padStart(2,'0')}`
-  );
+  return `${m}:${String(s).padStart(2,'0')}`;
+
 }
 
 
 
 function startClock(){
 
-  if(
-    startTime !== null
-  )
-  return;
+  if(startTime !== null)
+    return;
 
 
   startTime =
-  Date.now();
+    Date.now();
 
 
   timer =
-  setInterval(
-    ()=>{
+    setInterval(()=>{
 
       timeEl.textContent =
-      formatTime(
-        Math.floor(
-          (
-            Date.now()
-            -
-            startTime
-          )
-          /
-          1000
-        )
-      );
+        formatTime(
 
-    },
-    250
-  );
+          Math.floor(
+
+            (
+              Date.now()-startTime
+            )/1000
+
+          )
+
+        );
+
+    },250);
+
 }
 
 
 
 function currentSeconds(){
 
-  if(
-    startTime === null
-  )
-  return 0;
+  if(startTime === null)
+    return 0;
 
 
-  return(
-    Math.floor(
-      (
-        Date.now()
-        -
-        startTime
-      )
-      /
-      1000
-    )
+  return Math.floor(
+
+    (
+      Date.now()-startTime
+    )/1000
+
   );
+
 }
 
 
 
 function bestKey(){
 
-  return(
-    `maze_best_` +
-    `${size}_` +
-    `${mazeType}_` +
-    `${flashlight ? 'flash' : 'normal'}`
-  );
+  return `maze_best_${size}_${mazeType}_${flashlight?'flash':'normal'}`;
+
 }
 
 
@@ -1889,19 +1906,15 @@ function bestKey(){
 function updateBest(){
 
   const b =
-  localStorage.getItem(
-    bestKey()
-  );
+    localStorage.getItem(
+      bestKey()
+    );
 
 
   bestEl.textContent =
-  b
-
-  ? formatTime(
-      Number(b)
-    )
-
-  : '—';
+    b
+      ? formatTime(Number(b))
+      : '—';
 
 }
 
@@ -1910,65 +1923,75 @@ function updateBest(){
 function move(dir){
 
   if(won)
-  return;
+    return;
 
 
   const c =
-  grid[player.y][player.x];
+    grid[player.y][player.x];
 
 
   let nx =
-  player.x;
+    player.x;
 
 
   let ny =
-  player.y;
+    player.y;
 
 
   if(
-    dir === 'up'
-    &&
+    dir === 'up' &&
     !c.walls.top
-  )
-  ny--;
+  ){
+
+    ny--;
+
+  }
 
 
   if(
-    dir === 'right'
-    &&
+    dir === 'right' &&
     !c.walls.right
-  )
-  nx++;
+  ){
+
+    nx++;
+
+  }
 
 
   if(
-    dir === 'down'
-    &&
+    dir === 'down' &&
     !c.walls.bottom
-  )
-  ny++;
+  ){
+
+    ny++;
+
+  }
 
 
   if(
-    dir === 'left'
-    &&
+    dir === 'left' &&
     !c.walls.left
-  )
-  nx--;
+  ){
+
+    nx--;
+
+  }
 
 
   if(
-    nx === player.x
-    &&
+    nx === player.x &&
     ny === player.y
-  )
-  return;
+  ){
+
+    return;
+
+  }
 
 
   startClock();
 
 
-  player={
+  player = {
     x:nx,
     y:ny
   };
@@ -1978,30 +2001,23 @@ function move(dir){
 
 
   stepsEl.textContent =
-  steps;
+    steps;
 
 
   if(
-    mazeType === 'keys'
-    &&
-    keyPos
-    &&
+    mazeType === 'keys' &&
+    keyPos &&
     samePos(
       player,
       keyPos
     )
   ){
 
-    hasKey =
-    true;
+    hasKey = true;
 
-
-    keyPos =
-    null;
-
+    keyPos = null;
 
     updateModeStatus();
-
 
     flashUnlocked();
 
@@ -2009,8 +2025,7 @@ function move(dir){
 
 
   if(
-    mazeType === 'portal'
-    &&
+    mazeType === 'portal' &&
     portals.length === 2
   ){
 
@@ -2021,7 +2036,7 @@ function move(dir){
       )
     ){
 
-      player={
+      player = {
         ...portals[1]
       };
 
@@ -2039,7 +2054,7 @@ function move(dir){
       )
     ){
 
-      player={
+      player = {
         ...portals[0]
       };
 
@@ -2049,21 +2064,53 @@ function move(dir){
       );
 
     }
+
   }
 
 
-  draw();
+  if(
+    mazeType === 'portal' &&
+    portals.length === 2 &&
+    (
+      samePos(
+        player,
+        portals[0]
+      )
+      ||
+      samePos(
+        player,
+        portals[1]
+      )
+    )
+  ){
+
+    renderPlayer = {
+      x:player.x,
+      y:player.y
+    };
+
+
+    draw();
+
+  }
+
+  else{
+
+    animatePlayerTo(
+      player.x,
+      player.y
+    );
+
+  }
 
 
   if(
-    player.x === size-1
-    &&
+    player.x === size-1 &&
     player.y === size-1
   ){
 
     if(
-      mazeType === 'keys'
-      &&
+      mazeType === 'keys' &&
       !hasKey
     ){
 
@@ -2078,7 +2125,9 @@ function move(dir){
       finish();
 
     }
+
   }
+
 }
 
 
@@ -2086,7 +2135,7 @@ function move(dir){
 function finish(){
 
   won =
-  true;
+    true;
 
 
   clearInterval(
@@ -2095,24 +2144,23 @@ function finish(){
 
 
   const secs =
-  currentSeconds();
+    currentSeconds();
 
 
   const key =
-  bestKey();
+    bestKey();
 
 
   const old =
-  Number(
-    localStorage.getItem(
-      key
-    )
-  );
+    Number(
+      localStorage.getItem(
+        key
+      )
+    );
 
 
   if(
-    !old
-    ||
+    !old ||
     secs < old
   ){
 
@@ -2128,29 +2176,22 @@ function finish(){
 
 
   const typeLabel =
-  mazeTypeEl.options[
-    mazeTypeEl.selectedIndex
-  ].text.replace(
-    /^[^A-Za-z]*/,
-    ''
-  );
+    mazeTypeEl.options[
+      mazeTypeEl.selectedIndex
+    ].text.replace(
+      /^[^A-Za-z]*/,
+      ''
+    );
 
 
   const modeText =
-  flashlight
-
-  ? ' with Flashlight Mode on'
-
-  : '';
+    flashlight
+      ? ' with Flashlight Mode on'
+      : '';
 
 
   winText.textContent =
-  `You finished the ` +
-  `${difficultyEl.options[difficultyEl.selectedIndex].text} ` +
-  `${typeLabel}` +
-  `${modeText} ` +
-  `in ${formatTime(secs)} ` +
-  `using ${steps} steps.`;
+    `You finished the ${difficultyEl.options[difficultyEl.selectedIndex].text} ${typeLabel}${modeText} in ${formatTime(secs)} using ${steps} steps.`;
 
 
   modal.classList.add(
@@ -2174,44 +2215,66 @@ function resetRun(){
 
 
   timer =
-  null;
+    null;
 
 
   memoryTimer =
-  null;
+    null;
 
 
   startTime =
-  null;
+    null;
 
 
   timeEl.textContent =
-  '0:00';
+    '0:00';
 
 
   steps =
-  0;
+    0;
 
 
   stepsEl.textContent =
-  '0';
+    '0';
 
 
-  player={
+  player = {
     x:0,
     y:0
   };
 
 
+  renderPlayer = {
+    x:0,
+    y:0
+  };
+
+
+  if(moveAnimation){
+
+    cancelAnimationFrame(
+      moveAnimation
+    );
+
+
+    moveAnimation =
+      null;
+
+  }
+
+
   won =
-  false;
+    false;
 
 
   if(
     mazeType === 'memory'
-  )
-  memoryVisible =
-  true;
+  ){
+
+    memoryVisible =
+      true;
+
+  }
 
 
   modal.classList.remove(
@@ -2228,65 +2291,52 @@ function resetRun(){
 
 
 
-function newMaze(
-  useDaily=false
-){
+function newMaze(useDaily=false){
 
   size =
-  Number(
-    difficultyEl.value
-  );
+    Number(
+      difficultyEl.value
+    );
 
 
   mazeType =
-  mazeTypeEl.value;
+    mazeTypeEl.value;
 
 
   dailyMode =
-  useDaily;
+    useDaily;
 
 
-  if(
-    useDaily
-  ){
+  if(useDaily){
 
     const d =
-    new Date();
+      new Date();
 
 
     const key =
-    `${d.getFullYear()}-` +
-    `${d.getMonth()+1}-` +
-    `${d.getDate()}-` +
-    `${size}-` +
-    `${mazeType}`;
+      `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}-${size}-${mazeType}`;
 
 
     rng =
-    mulberry32(
-      hashString(
-        key
-      )
-    );
+      mulberry32(
+        hashString(key)
+      );
 
   }
 
   else{
 
     rng =
-    Math.random;
+      Math.random;
 
   }
 
 
   generateMaze();
 
-
   setupMode();
 
-
   resetRun();
-
 
   updateBest();
 
@@ -2295,9 +2345,7 @@ function newMaze(
 
 
 document
-.getElementById(
-  'newMaze'
-)
+.getElementById('newMaze')
 .addEventListener(
   'click',
   ()=>newMaze(false)
@@ -2306,9 +2354,7 @@ document
 
 
 document
-.getElementById(
-  'daily'
-)
+.getElementById('daily')
 .addEventListener(
   'click',
   ()=>newMaze(true)
@@ -2317,9 +2363,7 @@ document
 
 
 document
-.getElementById(
-  'restart'
-)
+.getElementById('restart')
 .addEventListener(
   'click',
   resetRun
@@ -2349,25 +2393,24 @@ flashlightBtn
   ()=>{
 
     flashlight =
-    !flashlight;
+      !flashlight;
 
 
-    flashlightBtn.classList.toggle(
-      'active',
-      flashlight
-    );
+    flashlightBtn
+      .classList
+      .toggle(
+        'active',
+        flashlight
+      );
 
 
     flashlightBtn.textContent =
-    flashlight
-
-    ? '🔦 Flashlight ON'
-
-    : '🔦 Flashlight';
+      flashlight
+        ? '🔦 Flashlight ON'
+        : '🔦 Flashlight';
 
 
     updateBest();
-
 
     draw();
 
@@ -2376,11 +2419,12 @@ flashlightBtn
 
 
 
-document.addEventListener(
+document
+.addEventListener(
   'keydown',
   e=>{
 
-    const map={
+    const map = {
 
       ArrowUp:'up',
 
@@ -2405,21 +2449,20 @@ document.addEventListener(
       S:'down',
 
       A:'left'
+
     };
 
 
-    if(
-      map[e.key]
-    ){
+    if(map[e.key]){
 
       e.preventDefault();
-
 
       move(
         map[e.key]
       );
 
     }
+
   }
 );
 
@@ -2431,109 +2474,87 @@ function directionFromPointer(
 ){
 
   const rect =
-  canvas.getBoundingClientRect();
+    canvas.getBoundingClientRect();
 
 
   const localX =
-  clientX
-  -
-  rect.left;
+    clientX - rect.left;
 
 
   const localY =
-  clientY
-  -
-  rect.top;
+    clientY - rect.top;
 
 
   const cell =
-  rect.width
-  /
-  size;
+    rect.width / size;
 
 
   const targetX =
-  Math.max(
-    0,
-    Math.min(
-      size-1,
-      Math.floor(
-        localX/cell
+    Math.max(
+      0,
+      Math.min(
+        size-1,
+        Math.floor(localX/cell)
       )
-    )
-  );
+    );
 
 
   const targetY =
-  Math.max(
-    0,
-    Math.min(
-      size-1,
-      Math.floor(
-        localY/cell
+    Math.max(
+      0,
+      Math.min(
+        size-1,
+        Math.floor(localY/cell)
       )
-    )
-  );
+    );
 
 
   const dx =
-  targetX
-  -
-  player.x;
+    targetX-player.x;
 
 
   const dy =
-  targetY
-  -
-  player.y;
+    targetY-player.y;
 
 
   if(
-    Math.abs(dx)
-    >
+    Math.abs(dx) >
     Math.abs(dy)
   ){
 
-    if(
-      dx > 0
-    )
-    return 'right';
+    if(dx > 0)
+      return 'right';
 
 
-    if(
-      dx < 0
-    )
-    return 'left';
+    if(dx < 0)
+      return 'left';
 
   }
 
   else{
 
-    if(
-      dy > 0
-    )
-    return 'down';
+    if(dy > 0)
+      return 'down';
 
 
-    if(
-      dy < 0
-    )
-    return 'up';
+    if(dy < 0)
+      return 'up';
 
   }
 
 
   return null;
+
 }
 
 
 
 let dragging =
-false;
+  false;
 
 
 let lastDragMove =
-0;
+  0;
 
 
 
@@ -2542,7 +2563,7 @@ wrap.addEventListener(
   e=>{
 
     dragging =
-    true;
+      true;
 
 
     wrap.setPointerCapture?.(
@@ -2551,14 +2572,14 @@ wrap.addEventListener(
 
 
     const dir =
-    directionFromPointer(
-      e.clientX,
-      e.clientY
-    );
+      directionFromPointer(
+        e.clientX,
+        e.clientY
+      );
 
 
     if(dir)
-    move(dir);
+      move(dir);
 
   }
 );
@@ -2569,39 +2590,36 @@ wrap.addEventListener(
   'pointermove',
   e=>{
 
-    if(
-      !dragging
-    )
-    return;
+    if(!dragging)
+      return;
 
 
     const now =
-    Date.now();
+      Date.now();
 
 
     if(
-      now
-      -
-      lastDragMove
-      <
-      70
-    )
-    return;
+      now-lastDragMove < 40
+    ){
+
+      return;
+
+    }
 
 
     lastDragMove =
-    now;
+      now;
 
 
     const dir =
-    directionFromPointer(
-      e.clientX,
-      e.clientY
-    );
+      directionFromPointer(
+        e.clientX,
+        e.clientY
+      );
 
 
     if(dir)
-    move(dir);
+      move(dir);
 
   }
 );
@@ -2613,7 +2631,7 @@ wrap.addEventListener(
   e=>{
 
     dragging =
-    false;
+      false;
 
 
     wrap.releasePointerCapture?.(
@@ -2630,19 +2648,17 @@ wrap.addEventListener(
   ()=>{
 
     dragging =
-    false;
+      false;
 
   }
 );
 
 
 
-if(
-  !window.PointerEvent
-){
+if(!window.PointerEvent){
 
   let touchStart =
-  null;
+    null;
 
 
   wrap.addEventListener(
@@ -2650,10 +2666,10 @@ if(
     e=>{
 
       const t =
-      e.changedTouches[0];
+        e.changedTouches[0];
 
 
-      touchStart={
+      touchStart = {
         x:t.clientX,
         y:t.clientY
       };
@@ -2669,53 +2685,47 @@ if(
     'touchend',
     e=>{
 
-      if(
-        !touchStart
-      )
-      return;
+      if(!touchStart)
+        return;
 
 
       const t =
-      e.changedTouches[0];
+        e.changedTouches[0];
 
 
       const dx =
-      t.clientX
-      -
-      touchStart.x;
+        t.clientX-touchStart.x;
 
 
       const dy =
-      t.clientY
-      -
-      touchStart.y;
+        t.clientY-touchStart.y;
 
 
       touchStart =
-      null;
+        null;
 
 
       if(
         Math.max(
           Math.abs(dx),
           Math.abs(dy)
-        )
-        <
-        18
-      )
-      return;
+        ) < 18
+      ){
+
+        return;
+
+      }
 
 
       if(
-        Math.abs(dx)
-        >
+        Math.abs(dx) >
         Math.abs(dy)
       ){
 
         move(
           dx > 0
-          ? 'right'
-          : 'left'
+            ? 'right'
+            : 'left'
         );
 
       }
@@ -2724,8 +2734,8 @@ if(
 
         move(
           dy > 0
-          ? 'down'
-          : 'up'
+            ? 'down'
+            : 'up'
         );
 
       }
@@ -2735,14 +2745,13 @@ if(
       passive:true
     }
   );
+
 }
 
 
 
 document
-.getElementById(
-  'playAgain'
-)
+.getElementById('playAgain')
 .addEventListener(
   'click',
   resetRun
@@ -2751,9 +2760,7 @@ document
 
 
 document
-.getElementById(
-  'nextMaze'
-)
+.getElementById('nextMaze')
 .addEventListener(
   'click',
   ()=>newMaze(false)
@@ -2775,5 +2782,6 @@ requestAnimationFrame(
 );
 
 </script>
+
 </body>
 </html>

@@ -136,11 +136,8 @@ select{grid-column:1/-1}
 }
 </style>
 </head>
-
 <body>
-
 <div class="app">
-
 <header class="topbar">
 <div class="brand">
 <div class="logo">M</div>
@@ -153,7 +150,6 @@ select{grid-column:1/-1}
 </header>
 
 <section class="controls-card">
-
 <div class="row">
 
 <select id="difficulty" aria-label="Difficulty">
@@ -169,16 +165,17 @@ select{grid-column:1/-1}
 <option value="memory">🧠 Memory Maze</option>
 <option value="portal">🌀 Portal Maze</option>
 <option value="twodots">🎯 Two Dots</option>
+<option value="treasure">💎 Treasure Hunt</option>
+<option value="moving">🧱 Moving Walls</option>
+<option value="traps">⚠️ Trap Tiles</option>
+<option value="ice">🧊 Ice Maze</option>
+<option value="mystery">❓ Mystery Mode</option>
 </select>
 
 <button id="newMaze" class="control-btn primary">New Maze</button>
-
 <button id="restart" class="control-btn">Restart</button>
-
 <button id="flashlight" class="control-btn">🔦 Flashlight</button>
-
 <button id="sound" class="control-btn">🔊 Sound ON</button>
-
 <button id="daily" class="control-btn">📅 Daily Maze</button>
 
 </div>
@@ -188,7 +185,6 @@ Classic Maze — reach the glowing exit.
 </div>
 
 </section>
-
 
 <section class="stats-card">
 
@@ -209,7 +205,6 @@ Classic Maze — reach the glowing exit.
 
 </section>
 
-
 <section class="maze-card">
 
 <div class="canvas-wrap" id="canvasWrap">
@@ -217,18 +212,16 @@ Classic Maze — reach the glowing exit.
 </div>
 
 <p class="hint">
-Drag your finger or mouse through the maze.
-On a computer, you can also use the arrow keys or WASD.
-Choose Classic, Keys & Doors, Memory, Portal, or Two Dots above.
+Drag your finger or mouse through the maze. On a computer, use the arrow keys or WASD.
+Try Classic, Keys & Doors, Memory, Portal, Two Dots, Treasure Hunt, Moving Walls,
+Trap Tiles, Ice Maze, or Mystery Mode.
 </p>
 
 </section>
 
-
 <div id="unlockToast" class="unlock-toast">
 🔓 UNLOCKED!
 </div>
-
 
 <footer>
 A DONCO-BAYCITY™ App
@@ -236,16 +229,9 @@ A DONCO-BAYCITY™ App
 
 </div>
 
-
-<canvas
-id="fireworksCanvas"
-class="fireworks-canvas"
-aria-hidden="true">
-</canvas>
-
+<canvas id="fireworksCanvas" class="fireworks-canvas" aria-hidden="true"></canvas>
 
 <div id="winModal" class="modal">
-
 <div class="modal-card">
 
 <div class="trophy">
@@ -269,11 +255,8 @@ New Maze
 </button>
 
 </div>
-
 </div>
-
 </div>
-
 
 <script>
 
@@ -340,48 +323,86 @@ x:0,
 y:0
 };
 
-let moveAnimation = null;
+let moveAnimation =
+null;
 
-let startTime = null;
+let startTime =
+null;
 
-let timer = null;
+let timer =
+null;
 
-let steps = 0;
+let steps =
+0;
 
-let won = false;
+let won =
+false;
 
-let flashlight = false;
+let flashlight =
+false;
 
-let dailyMode = false;
+let dailyMode =
+false;
 
-let mazeType = 'classic';
+let selectedMazeType =
+'classic';
 
-let keyPos = null;
+let mazeType =
+'classic';
 
-let hasKey = false;
+let keyPos =
+null;
 
-let portals = [];
+let hasKey =
+false;
 
-let mysteryDots = [];
+let portals =
+[];
 
-let correctDotIndex = 0;
+let mysteryDots =
+[];
 
-let dotSolved = false;
+let correctDotIndex =
+0;
 
-let memoryVisible = true;
+let dotSolved =
+false;
 
-let memoryTimer = null;
+let memoryVisible =
+true;
 
-let rng = Math.random;
+let memoryTimer =
+null;
 
-let fireworksAnimation = null;
+let treasures =
+[];
 
-let fireworksStopTimer = null;
+let treasuresCollected =
+0;
+
+let trapTiles =
+[];
+
+let movingWallTimer =
+null;
+
+let movingWallBase =
+null;
+
+let rng =
+Math.random;
+
+let fireworksAnimation =
+null;
+
+let fireworksStopTimer =
+null;
 
 let soundOn =
 localStorage.getItem('maze_sound') !== 'off';
 
-let audioCtx = null;
+let audioCtx =
+null;
 
 
 
@@ -712,6 +733,97 @@ playTone(
 
 
 
+function playGemSound(index=0){
+
+const notes = [
+659.25,
+783.99,
+987.77
+];
+
+
+playTone(
+notes[index%notes.length],
+.10,
+'triangle',
+.05
+);
+
+
+playTone(
+notes[index%notes.length]*1.5,
+.14,
+'sine',
+.035,
+.06
+);
+
+}
+
+
+
+function playTrapSound(){
+
+playTone(
+260,
+.10,
+'square',
+.035
+);
+
+
+playTone(
+110,
+.26,
+'sawtooth',
+.04,
+.07
+);
+
+}
+
+
+
+function playWallShiftSound(){
+
+playTone(
+120,
+.16,
+'triangle',
+.025,
+0,
+210
+);
+
+
+playTone(
+92,
+.20,
+'sine',
+.025,
+.05,
+165
+);
+
+}
+
+
+
+function playIceSound(){
+
+playTone(
+780,
+.16,
+'sine',
+.018,
+0,
+1180
+);
+
+}
+
+
+
 function updateSoundButton(){
 
 soundBtn
@@ -836,11 +948,8 @@ b
 return (
 
 a &&
-
 b &&
-
 a.x === b.x &&
-
 a.y === b.y
 
 );
@@ -929,17 +1038,30 @@ return;
 }
 
 
+const mysteryPrefix =
+
+selectedMazeType === 'mystery'
+
+? '❓ Mystery revealed — '
+
+: '';
+
+
 if(
 mazeType === 'keys'
 ){
 
 modeStatusEl.textContent =
 
+mysteryPrefix +
+
+(
 hasKey
 
 ? '🔑 Key found — the exit is unlocked!'
 
-: '🔑 Find the gold key, then reach the exit.';
+: '🔑 Find the gold key, then reach the exit.'
+);
 
 }
 
@@ -950,11 +1072,15 @@ mazeType === 'memory'
 
 modeStatusEl.textContent =
 
+mysteryPrefix +
+
+(
 memoryVisible
 
 ? '🧠 Memorize the maze — the walls disappear in 4 seconds.'
 
-: '🧠 Walls hidden — use your memory to find the exit.';
+: '🧠 Walls hidden — use your memory to find the exit.'
+);
 
 }
 
@@ -964,6 +1090,9 @@ mazeType === 'portal'
 ){
 
 modeStatusEl.textContent =
+
+mysteryPrefix +
+
 '🌀 Purple and gold portals teleport you across the maze.';
 
 }
@@ -975,11 +1104,67 @@ mazeType === 'twodots'
 
 modeStatusEl.textContent =
 
+mysteryPrefix +
+
+(
 dotSolved
 
 ? '🎯 Correct dot! The exit is open — now escape.'
 
-: '🎯 Find the correct mystery dot. The wrong one sends you back to START.';
+: '🎯 Find the correct mystery dot. The wrong one sends you back to START.'
+);
+
+}
+
+
+else if(
+mazeType === 'treasure'
+){
+
+modeStatusEl.textContent =
+
+mysteryPrefix +
+
+`💎 Collect all 3 gems — ${treasuresCollected}/3 found.`;
+
+}
+
+
+else if(
+mazeType === 'moving'
+){
+
+modeStatusEl.textContent =
+
+mysteryPrefix +
+
+'🧱 The maze changes every few seconds. Keep watching the walls!';
+
+}
+
+
+else if(
+mazeType === 'traps'
+){
+
+modeStatusEl.textContent =
+
+mysteryPrefix +
+
+'⚠️ Avoid the glowing trap tiles — they teleport you away.';
+
+}
+
+
+else if(
+mazeType === 'ice'
+){
+
+modeStatusEl.textContent =
+
+mysteryPrefix +
+
+'🧊 Ice Maze — one move slides you until you hit a wall.';
 
 }
 
@@ -1081,10 +1266,6 @@ unlockToast.textContent =
 
 function setupMode(){
 
-mazeType =
-mazeTypeEl.value;
-
-
 keyPos =
 null;
 
@@ -1111,6 +1292,19 @@ false;
 
 memoryVisible =
 true;
+
+
+treasures =
+[];
+
+
+treasuresCollected =
+0;
+
+
+trapTiles =
+[];
+
 
 
 if(
@@ -1182,7 +1376,862 @@ rng()*2
 }
 
 
+else if(
+mazeType === 'treasure'
+){
+
+for(
+let i=0;
+i<3;
+i++
+){
+
+treasures.push({
+
+...randomOpenCell(
+treasures
+),
+
+collected:false
+
+});
+
+}
+
+}
+
+
+else if(
+mazeType === 'traps'
+){
+
+for(
+let i=0;
+i<4;
+i++
+){
+
+trapTiles.push(
+randomOpenCell(
+trapTiles
+)
+);
+
+}
+
+}
+
+
 updateModeStatus();
+
+}
+
+
+
+function modeLabel(type){
+
+const labels = {
+
+classic:'Classic Maze',
+
+keys:'Keys & Doors',
+
+memory:'Memory Maze',
+
+portal:'Portal Maze',
+
+twodots:'Two Dots',
+
+treasure:'Treasure Hunt',
+
+moving:'Moving Walls',
+
+traps:'Trap Tiles',
+
+ice:'Ice Maze'
+
+};
+
+
+return labels[type] ||
+'Maze';
+
+}
+
+
+
+function cloneWalls(){
+
+return grid.map(
+row=>
+row.map(
+c=>({...c.walls})
+)
+);
+
+}
+
+
+
+function restoreWalls(
+snapshot
+){
+
+if(!snapshot)
+return;
+
+
+for(
+let y=0;
+y<size;
+y++
+){
+
+for(
+let x=0;
+x<size;
+x++
+){
+
+grid[y][x].walls =
+{
+...snapshot[y][x]
+};
+
+}
+
+}
+
+}
+
+
+
+function setWallBetween(
+x,
+y,
+nx,
+ny,
+closed
+){
+
+if(
+nx === x+1
+){
+
+grid[y][x].walls.right =
+closed;
+
+
+grid[ny][nx].walls.left =
+closed;
+
+}
+
+
+else if(
+nx === x-1
+){
+
+grid[y][x].walls.left =
+closed;
+
+
+grid[ny][nx].walls.right =
+closed;
+
+}
+
+
+else if(
+ny === y+1
+){
+
+grid[y][x].walls.bottom =
+closed;
+
+
+grid[ny][nx].walls.top =
+closed;
+
+}
+
+
+else if(
+ny === y-1
+){
+
+grid[y][x].walls.top =
+closed;
+
+
+grid[ny][nx].walls.bottom =
+closed;
+
+}
+
+}
+
+
+
+function pathExists(
+start,
+end
+){
+
+const q = [
+
+{
+x:start.x,
+y:start.y
+}
+
+];
+
+
+const seen =
+new Set(
+[
+`${start.x},${start.y}`
+]
+);
+
+
+while(
+q.length
+){
+
+const p =
+q.shift();
+
+
+if(
+p.x === end.x &&
+p.y === end.y
+){
+
+return true;
+
+}
+
+
+const c =
+grid[p.y][p.x];
+
+
+const moves = [
+
+[
+'top',
+0,
+-1
+],
+
+[
+'right',
+1,
+0
+],
+
+[
+'bottom',
+0,
+1
+],
+
+[
+'left',
+-1,
+0
+]
+
+];
+
+
+for(
+const [
+wall,
+dx,
+dy
+]
+of moves
+){
+
+if(
+c.walls[wall]
+)
+continue;
+
+
+const nx =
+p.x + dx;
+
+
+const ny =
+p.y + dy;
+
+
+if(
+nx < 0 ||
+ny < 0 ||
+nx >= size ||
+ny >= size
+)
+continue;
+
+
+const key =
+`${nx},${ny}`;
+
+
+if(
+!seen.has(key)
+){
+
+seen.add(
+key
+);
+
+
+q.push({
+
+x:nx,
+y:ny
+
+});
+
+}
+
+}
+
+}
+
+
+return false;
+
+}
+
+
+
+function shiftOneWall(){
+
+if(
+mazeType !== 'moving' ||
+won
+)
+return;
+
+
+for(
+let attempt=0;
+attempt<60;
+attempt++
+){
+
+const x =
+Math.floor(
+rng()*size
+);
+
+
+const y =
+Math.floor(
+rng()*size
+);
+
+
+const horizontal =
+rng() < .5;
+
+
+let nx =
+x +
+(horizontal?1:0);
+
+
+let ny =
+y +
+(horizontal?0:1);
+
+
+if(
+nx >= size ||
+ny >= size
+)
+continue;
+
+
+if(
+
+(
+x===player.x &&
+y===player.y
+)
+
+||
+
+(
+nx===player.x &&
+ny===player.y
+)
+
+)
+continue;
+
+
+if(
+
+(
+x===0 &&
+y===0
+)
+
+||
+
+(
+nx===0 &&
+ny===0
+)
+
+)
+continue;
+
+
+if(
+
+(
+x===size-1 &&
+y===size-1
+)
+
+||
+
+(
+nx===size-1 &&
+ny===size-1
+)
+
+)
+continue;
+
+
+const oldClosed =
+
+horizontal
+
+? grid[y][x].walls.right
+
+: grid[y][x].walls.bottom;
+
+
+setWallBetween(
+x,
+y,
+nx,
+ny,
+!oldClosed
+);
+
+
+if(
+pathExists(
+
+player,
+
+{
+x:size-1,
+y:size-1
+}
+
+)
+){
+
+playWallShiftSound();
+
+
+draw();
+
+
+updateModeStatus(
+'🧱 WHOOSH — a wall just shifted!'
+);
+
+
+setTimeout(
+()=>{
+
+if(
+mazeType === 'moving' &&
+!won
+){
+
+updateModeStatus();
+
+}
+
+},
+1200
+);
+
+
+return;
+
+}
+
+
+setWallBetween(
+x,
+y,
+nx,
+ny,
+oldClosed
+);
+
+}
+
+}
+
+
+
+function startMovingWalls(){
+
+clearInterval(
+movingWallTimer
+);
+
+
+movingWallTimer =
+null;
+
+
+if(
+mazeType !== 'moving'
+)
+return;
+
+
+movingWallTimer =
+setInterval(
+shiftOneWall,
+4500
+);
+
+}
+
+
+
+function handleTreasure(){
+
+if(
+mazeType !== 'treasure'
+)
+return;
+
+
+for(
+let i=0;
+i<treasures.length;
+i++
+){
+
+const gem =
+treasures[i];
+
+
+if(
+!gem.collected &&
+samePos(
+player,
+gem
+)
+){
+
+gem.collected =
+true;
+
+
+treasuresCollected++;
+
+
+playGemSound(
+i
+);
+
+
+if(
+treasuresCollected === 3
+){
+
+playUnlockSound();
+
+
+flashMessage(
+'💎 ALL GEMS FOUND — EXIT UNLOCKED!'
+);
+
+}
+
+
+else{
+
+flashMessage(
+`💎 GEM ${treasuresCollected} OF 3!`
+);
+
+}
+
+
+updateModeStatus();
+
+
+break;
+
+}
+
+}
+
+}
+
+
+
+function handleTrap(){
+
+if(
+mazeType !== 'traps'
+)
+return false;
+
+
+if(
+!trapTiles.some(
+t=>samePos(
+player,
+t
+)
+)
+)
+return false;
+
+
+playTrapSound();
+
+
+const landing =
+randomOpenCell(
+trapTiles
+);
+
+
+player =
+{
+...landing
+};
+
+
+renderPlayer =
+{
+...landing
+};
+
+
+flashMessage(
+'⚠️ TRAP! TELEPORTED!'
+);
+
+
+updateModeStatus(
+'⚠️ Trap tile! You were teleported somewhere else.'
+);
+
+
+draw();
+
+
+setTimeout(
+()=>{
+
+if(
+mazeType === 'traps' &&
+!won
+){
+
+updateModeStatus();
+
+}
+
+},
+1300
+);
+
+
+return true;
+
+}
+
+
+
+function moveIce(
+dir
+){
+
+if(won)
+return;
+
+
+const delta = {
+
+up:[
+0,
+-1,
+'top'
+],
+
+right:[
+1,
+0,
+'right'
+],
+
+down:[
+0,
+1,
+'bottom'
+],
+
+left:[
+-1,
+0,
+'left'
+]
+
+}[dir];
+
+
+if(!delta)
+return;
+
+
+let x =
+player.x;
+
+
+let y =
+player.y;
+
+
+let traveled =
+0;
+
+
+while(true){
+
+const c =
+grid[y][x];
+
+
+if(
+c.walls[
+delta[2]
+]
+)
+break;
+
+
+const nx =
+x + delta[0];
+
+
+const ny =
+y + delta[1];
+
+
+if(
+nx < 0 ||
+ny < 0 ||
+nx >= size ||
+ny >= size
+)
+break;
+
+
+x =
+nx;
+
+
+y =
+ny;
+
+
+traveled++;
+
+}
+
+
+if(!traveled)
+return;
+
+
+startClock();
+
+
+steps +=
+traveled;
+
+
+stepsEl.textContent =
+steps;
+
+
+player =
+{
+x,
+y
+};
+
+
+playIceSound();
+
+
+const duration =
+Math.min(
+380,
+90 + traveled*28
+);
+
+
+animatePlayerTo(
+x,
+y,
+duration
+);
+
+
+if(
+player.x === size-1 &&
+player.y === size-1
+){
+
+setTimeout(
+()=>{
+
+if(
+
+!won &&
+
+player.x === size-1 &&
+
+player.y === size-1
+
+){
+
+finish();
+
+}
+
+},
+duration
+);
+
+}
 
 }
 
@@ -1222,7 +2271,6 @@ draw();
 
 memoryTimer =
 setTimeout(
-
 ()=>{
 
 memoryVisible =
@@ -1235,9 +2283,7 @@ updateModeStatus();
 draw();
 
 },
-
 4000
-
 );
 
 }
@@ -1393,6 +2439,7 @@ pick.dir === 'top'
 current.walls.top =
 false;
 
+
 next.walls.bottom =
 false;
 
@@ -1405,6 +2452,7 @@ pick.dir === 'right'
 
 current.walls.right =
 false;
+
 
 next.walls.left =
 false;
@@ -1419,6 +2467,7 @@ pick.dir === 'bottom'
 current.walls.bottom =
 false;
 
+
 next.walls.top =
 false;
 
@@ -1431,6 +2480,7 @@ pick.dir === 'left'
 
 current.walls.left =
 false;
+
 
 next.walls.right =
 false;
@@ -1551,13 +2601,54 @@ w
 );
 
 
+if(
+mazeType === 'ice'
+){
+
+const iceGlow =
+ctx.createLinearGradient(
+0,
+0,
+w,
+w
+);
+
+
+iceGlow.addColorStop(
+0,
+'rgba(80,190,255,.12)'
+);
+
+
+iceGlow.addColorStop(
+1,
+'rgba(180,235,255,.04)'
+);
+
+
+ctx.fillStyle =
+iceGlow;
+
+
+ctx.fillRect(
+0,
+0,
+w,
+w
+);
+
+}
+
+
 
 const ex =
-(size-1)*cell + cell/2;
+(size-1)*cell +
+cell/2;
 
 
 const ey =
-(size-1)*cell + cell/2;
+(size-1)*cell +
+cell/2;
 
 
 const exitLocked =
@@ -1572,6 +2663,13 @@ mazeType === 'keys' &&
 (
 mazeType === 'twodots' &&
 !dotSolved
+)
+
+||
+
+(
+mazeType === 'treasure' &&
+treasuresCollected < 3
 );
 
 
@@ -1881,11 +2979,13 @@ keyPos
 ){
 
 const kx =
-keyPos.x*cell + cell/2;
+keyPos.x*cell +
+cell/2;
 
 
 const ky =
-keyPos.y*cell + cell/2;
+keyPos.y*cell +
+cell/2;
 
 
 ctx.strokeStyle =
@@ -2038,11 +3138,13 @@ mysteryDots.forEach(
 (p)=>{
 
 const qx =
-p.x*cell + cell/2;
+p.x*cell +
+cell/2;
 
 
 const qy =
-p.y*cell + cell/2;
+p.y*cell +
+cell/2;
 
 
 const dotColor =
@@ -2121,12 +3223,191 @@ ctx.shadowBlur =
 
 
 
+if(
+mazeType === 'treasure'
+){
+
+treasures.forEach(
+(gem,i)=>{
+
+if(
+gem.collected
+)
+return;
+
+
+const gx =
+gem.x*cell +
+cell/2;
+
+
+const gy =
+gem.y*cell +
+cell/2;
+
+
+ctx.save();
+
+
+ctx.translate(
+gx,
+gy
+);
+
+
+ctx.rotate(
+Math.PI/4
+);
+
+
+ctx.fillStyle =
+[
+'#60e5ff',
+'#8dffb7',
+'#ffd76a'
+][i%3];
+
+
+ctx.shadowColor =
+ctx.fillStyle;
+
+
+ctx.shadowBlur =
+Math.max(
+8,
+cell*.55
+);
+
+
+const s =
+Math.max(
+4,
+cell*.20
+);
+
+
+ctx.fillRect(
+-s,
+-s,
+s*2,
+s*2
+);
+
+
+ctx.restore();
+
+
+ctx.shadowBlur =
+0;
+
+}
+);
+
+}
+
+
+
+if(
+mazeType === 'traps'
+){
+
+trapTiles.forEach(
+t=>{
+
+const tx =
+t.x*cell +
+cell/2;
+
+
+const ty =
+t.y*cell +
+cell/2;
+
+
+ctx.save();
+
+
+ctx.translate(
+tx,
+ty
+);
+
+
+ctx.rotate(
+Math.PI/4
+);
+
+
+ctx.fillStyle =
+'rgba(255,112,77,.90)';
+
+
+ctx.strokeStyle =
+'#ffd0c4';
+
+
+ctx.lineWidth =
+Math.max(
+1.5,
+cell*.07
+);
+
+
+ctx.shadowColor =
+'#ff704d';
+
+
+ctx.shadowBlur =
+Math.max(
+7,
+cell*.45
+);
+
+
+const s =
+Math.max(
+4,
+cell*.20
+);
+
+
+ctx.fillRect(
+-s,
+-s,
+s*2,
+s*2
+);
+
+
+ctx.strokeRect(
+-s,
+-s,
+s*2,
+s*2
+);
+
+
+ctx.restore();
+
+
+ctx.shadowBlur =
+0;
+
+}
+);
+
+}
+
+
+
 const px =
-renderPlayer.x*cell + cell/2;
+renderPlayer.x*cell +
+cell/2;
 
 
 const py =
-renderPlayer.y*cell + cell/2;
+renderPlayer.y*cell +
+cell/2;
 
 
 
@@ -2452,7 +3733,9 @@ frame
 
 
 
-function formatTime(sec){
+function formatTime(
+sec
+){
 
 const m =
 Math.floor(
@@ -2474,11 +3757,8 @@ function startClock(){
 
 if(
 startTime !== null
-){
-
+)
 return;
-
-}
 
 
 startTime =
@@ -2514,11 +3794,8 @@ function currentSeconds(){
 
 if(
 startTime === null
-){
-
+)
 return 0;
-
-}
 
 
 return Math.floor(
@@ -2535,7 +3812,16 @@ Date.now()-startTime
 
 function bestKey(){
 
-return `maze_best_${size}_${mazeType}_${flashlight?'flash':'normal'}`;
+const modeKey =
+
+selectedMazeType === 'mystery'
+
+? `mystery_${mazeType}`
+
+: selectedMazeType;
+
+
+return `maze_best_${size}_${modeKey}_${flashlight?'flash':'normal'}`;
 
 }
 
@@ -2563,11 +3849,21 @@ Number(b)
 
 
 
-function move(dir){
+function move(
+dir
+){
+
+if(won)
+return;
+
 
 if(
-won
+mazeType === 'ice'
 ){
+
+moveIce(
+dir
+);
 
 return;
 
@@ -2629,11 +3925,8 @@ nx--;
 if(
 nx === player.x &&
 ny === player.y
-){
-
+)
 return;
-
-}
 
 
 startClock();
@@ -2709,11 +4002,8 @@ mysteryDots[i];
 
 if(
 dot.wrong
-){
-
+)
 continue;
-
-}
 
 
 if(
@@ -2796,6 +4086,21 @@ return;
 
 
 
+handleTreasure();
+
+
+
+if(
+handleTrap()
+)
+return;
+
+
+
+let teleported =
+false;
+
+
 if(
 mazeType === 'portal' &&
 portals.length === 2
@@ -2808,9 +4113,14 @@ portals[0]
 )
 ){
 
-player = {
+player =
+{
 ...portals[1]
 };
+
+
+teleported =
+true;
 
 
 updateModeStatus(
@@ -2830,9 +4140,14 @@ portals[1]
 )
 ){
 
-player = {
+player =
+{
 ...portals[0]
 };
+
+
+teleported =
+true;
 
 
 updateModeStatus(
@@ -2849,27 +4164,7 @@ playPortalSound();
 
 
 if(
-
-mazeType === 'portal' &&
-
-portals.length === 2 &&
-
-(
-
-samePos(
-player,
-portals[0]
-)
-
-||
-
-samePos(
-player,
-portals[1]
-)
-
-)
-
+teleported
 ){
 
 renderPlayer = {
@@ -2918,6 +4213,18 @@ mazeType === 'twodots' &&
 
 updateModeStatus(
 '🔒 Exit locked — choose the correct mystery dot first.'
+);
+
+}
+
+
+else if(
+mazeType === 'treasure' &&
+treasuresCollected < 3
+){
+
+updateModeStatus(
+`🔒 Exit locked — collect all 3 gems. You have ${treasuresCollected}/3.`
 );
 
 }
@@ -3321,6 +4628,15 @@ timer
 );
 
 
+clearInterval(
+movingWallTimer
+);
+
+
+movingWallTimer =
+null;
+
+
 const secs =
 currentSeconds();
 
@@ -3353,9 +4669,13 @@ String(secs)
 updateBest();
 
 
-const typeLabel =
+const label =
 
-mazeTypeEl
+selectedMazeType === 'mystery'
+
+? `Mystery Mode (${modeLabel(mazeType)})`
+
+: mazeTypeEl
 .options[
 mazeTypeEl.selectedIndex
 ]
@@ -3377,7 +4697,7 @@ flashlight
 
 winText.textContent =
 
-`You finished the ${difficultyEl.options[difficultyEl.selectedIndex].text} ${typeLabel}${modeText} in ${formatTime(secs)} using ${steps} steps.`;
+`You finished the ${difficultyEl.options[difficultyEl.selectedIndex].text} ${label}${modeText} in ${formatTime(secs)} using ${steps} steps.`;
 
 
 startFireworks();
@@ -3413,11 +4733,20 @@ memoryTimer
 );
 
 
+clearInterval(
+movingWallTimer
+);
+
+
 timer =
 null;
 
 
 memoryTimer =
+null;
+
+
+movingWallTimer =
 null;
 
 
@@ -3466,6 +4795,19 @@ null;
 
 won =
 false;
+
+
+
+if(
+resetChallenge &&
+mazeType === 'moving'
+){
+
+restoreWalls(
+movingWallBase
+);
+
+}
 
 
 
@@ -3529,6 +4871,68 @@ rng()*2
 
 
 if(
+resetChallenge &&
+mazeType === 'treasure'
+){
+
+treasuresCollected =
+0;
+
+
+treasures =
+[];
+
+
+for(
+let i=0;
+i<3;
+i++
+){
+
+treasures.push({
+
+...randomOpenCell(
+treasures
+),
+
+collected:false
+
+});
+
+}
+
+}
+
+
+
+if(
+resetChallenge &&
+mazeType === 'traps'
+){
+
+trapTiles =
+[];
+
+
+for(
+let i=0;
+i<4;
+i++
+){
+
+trapTiles.push(
+randomOpenCell(
+trapTiles
+)
+);
+
+}
+
+}
+
+
+
+if(
 mazeType === 'memory'
 ){
 
@@ -3553,6 +4957,9 @@ draw();
 
 startMemoryCountdown();
 
+
+startMovingWalls();
+
 }
 
 
@@ -3567,7 +4974,7 @@ difficultyEl.value
 );
 
 
-mazeType =
+selectedMazeType =
 mazeTypeEl.value;
 
 
@@ -3584,7 +4991,7 @@ new Date();
 
 
 const key =
-`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}-${size}-${mazeType}`;
+`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}-${size}-${selectedMazeType}`;
 
 
 rng =
@@ -3603,7 +5010,52 @@ Math.random;
 }
 
 
+mazeType =
+selectedMazeType;
+
+
+
+if(
+selectedMazeType === 'mystery'
+){
+
+const mysteryModes = [
+
+'keys',
+
+'memory',
+
+'portal',
+
+'twodots',
+
+'treasure',
+
+'moving',
+
+'traps',
+
+'ice'
+
+];
+
+
+mazeType =
+
+mysteryModes[
+Math.floor(
+rng()*mysteryModes.length
+)
+];
+
+}
+
+
 generateMaze();
+
+
+movingWallBase =
+cloneWalls();
 
 
 setupMode();
@@ -3757,41 +5209,29 @@ e=>{
 
 const map = {
 
-ArrowUp:
-'up',
+ArrowUp:'up',
 
-ArrowRight:
-'right',
+ArrowRight:'right',
 
-ArrowDown:
-'down',
+ArrowDown:'down',
 
-ArrowLeft:
-'left',
+ArrowLeft:'left',
 
-w:
-'up',
+w:'up',
 
-d:
-'right',
+d:'right',
 
-s:
-'down',
+s:'down',
 
-a:
-'left',
+a:'left',
 
-W:
-'up',
+W:'up',
 
-D:
-'right',
+D:'right',
 
-S:
-'down',
+S:'down',
 
-A:
-'left'
+A:'left'
 
 };
 
@@ -3824,15 +5264,18 @@ canvas.getBoundingClientRect();
 
 
 const localX =
-clientX - rect.left;
+clientX -
+rect.left;
 
 
 const localY =
-clientY - rect.top;
+clientY -
+rect.top;
 
 
 const cell =
-rect.width / size;
+rect.width /
+size;
 
 
 const targetX =
@@ -3872,11 +5315,13 @@ localY/cell
 
 
 const dx =
-targetX-player.x;
+targetX -
+player.x;
 
 
 const dy =
-targetY-player.y;
+targetY -
+player.y;
 
 
 if(
@@ -3963,9 +5408,7 @@ e.clientY
 );
 
 
-if(
-dir
-){
+if(dir){
 
 move(
 dir
@@ -3985,11 +5428,8 @@ e=>{
 
 if(
 !dragging
-){
-
+)
 return;
-
-}
 
 
 const now =
@@ -3998,11 +5438,8 @@ Date.now();
 
 if(
 now-lastDragMove < 40
-){
-
+)
 return;
-
-}
 
 
 lastDragMove =
@@ -4016,9 +5453,7 @@ e.clientY
 );
 
 
-if(
-dir
-){
+if(dir){
 
 move(
 dir
@@ -4104,11 +5539,8 @@ e=>{
 
 if(
 !touchStart
-){
-
+)
 return;
-
-}
 
 
 const t =
@@ -4141,11 +5573,8 @@ Math.abs(dy)
 
 < 18
 
-){
-
+)
 return;
-
-}
 
 
 if(
@@ -4229,6 +5658,5 @@ resizeCanvas
 );
 
 </script>
-
 </body>
 </html>
